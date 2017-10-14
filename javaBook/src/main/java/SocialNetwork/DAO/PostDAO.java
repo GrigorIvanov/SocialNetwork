@@ -1,4 +1,4 @@
-package SocialNetwork.model;
+package SocialNetwork.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+
+import SocialNetwork.model.DBConnection;
+import SocialNetwork.model.Post;
+import SocialNetwork.model.User;
 
 public class PostDAO implements IPostDao {
 

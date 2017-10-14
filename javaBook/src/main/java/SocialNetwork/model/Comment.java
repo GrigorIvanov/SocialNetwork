@@ -4,12 +4,12 @@ public class Comment {
 	private Post commentedPost;
 	private String content;
 	private User commenter;
-	
+
 	public Comment(Post commentedPost, String content, User commenter) {
 		super();
-		this.commentedPost = commentedPost;
-		this.content = content;
-		this.commenter = commenter;
+		this.setCommentedPost(commentedPost);
+		this.setContent(content);
+		this.setCommenter(commenter);
 	}
 
 	public Post getCommentedPost() {
@@ -17,8 +17,9 @@ public class Comment {
 	}
 
 	public void setCommentedPost(Post commentedPost) {
-		if(commentedPost != null)
+		if (isNotNull(commentedPost)) {
 			this.commentedPost = commentedPost;
+		}
 	}
 
 	public String getContent() {
@@ -26,8 +27,9 @@ public class Comment {
 	}
 
 	public void setContent(String content) {
-		if(content != null)
+		if (isNotNull(content)) {
 			this.content = content;
+		}
 	}
 
 	public User getCommenter() {
@@ -35,9 +37,17 @@ public class Comment {
 	}
 
 	public void setCommenter(User commenter) {
-		if(commenter != null)
+		if (isNotNull(commenter)) {
 			this.commenter = commenter;
+		}
 	}
 
-	
+	public boolean isNotNull(Object o) {
+		if (o.equals(null)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 }

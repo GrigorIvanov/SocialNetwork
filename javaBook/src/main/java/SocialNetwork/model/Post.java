@@ -6,8 +6,8 @@ public class Post {
 	private User postedBy;
 	
 	public Post(String content, User postedBy) {
-		this.content = content;
-		this.postedBy = postedBy;
+		this.setContent(content);
+		this.setPostedBy(postedBy);
 	}
 
 	public Post(int postId, String content, User postedBy) {
@@ -20,8 +20,9 @@ public class Post {
 	}
 
 	public void setPostId(int postId) {
-		if(postId != 0)
+		if(isNotNull(postId)){
 			this.postId = postId;
+		}
 	}
 
 	public String getContent() {
@@ -29,8 +30,9 @@ public class Post {
 	}
 
 	public void setContent(String content) {
-		if(content != null)
+		if(isNotNull(content)){
 			this.content = content;
+		}
 	}
 
 	public User getPostedBy() {
@@ -38,8 +40,16 @@ public class Post {
 	}
 
 	public void setPostedBy(User postedBy) {
-		if(postedBy != null)
+		if(isNotNull(postedBy)){
 			this.postedBy = postedBy;
+		}
+	}
+	public boolean isNotNull(Object o) {
+		if (o.equals(null)) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	

@@ -6,8 +6,8 @@ public class Like {
 	
 	public Like(User userWhoLikedIt, Post post) {
 		super();
-		this.userWhoLikedIt = userWhoLikedIt;
-		this.post = post;
+		this.setUserWhoLikedIt(userWhoLikedIt);
+		this.setPost(post);
 	}
 
 	public User getUserWhoLikedIt() {
@@ -15,7 +15,7 @@ public class Like {
 	}
 
 	public void setUserWhoLikedIt(User userWhoLikedIt) {
-		if(userWhoLikedIt != null)
+		if(isNotNull(userWhoLikedIt))
 			this.userWhoLikedIt = userWhoLikedIt;
 	}
 
@@ -24,8 +24,15 @@ public class Like {
 	}
 
 	public void setPost(Post post) {
-		if(post != null)
+		if(isNotNull(post))
 			this.post = post;
+	}
+	public boolean isNotNull(Object o) {
+		if (o.equals(null)) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 }
