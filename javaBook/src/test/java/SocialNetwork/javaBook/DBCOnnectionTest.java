@@ -1,4 +1,4 @@
-package SocialNetwork.DAO;
+package SocialNetwork.javaBook;
 
 import static org.junit.Assert.*;
 

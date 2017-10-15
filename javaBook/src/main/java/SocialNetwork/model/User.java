@@ -19,13 +19,19 @@ public class User {
 		this.setEmail(email);
 		this.setPassword(password);
 	}
+	public User(int id, String firstName, String lastName, String email, String birthDate, String password) {
+		super();
+		this.setUserId(id);
+	}
 
 	public int getUserId() {
 		return userId;
 	}
 
 	public void setUserId(int id) {
+		if(isNotNull(id)){
 		this.userId = id;
+		}
 	}
 
 	public String getFirstName() {

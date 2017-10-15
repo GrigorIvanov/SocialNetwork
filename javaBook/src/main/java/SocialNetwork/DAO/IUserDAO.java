@@ -9,7 +9,7 @@ public interface IUserDAO {
 
 	void removeUser(int userId) throws UserExeption;
 
-	User getUserById(int userId);
+	User getUserById(int userId) throws UserExeption;
 
 	//User getUserByEmail(String email);
 
