@@ -11,17 +11,16 @@ import SocialNetwork.model.DBConnection;
 import SocialNetwork.model.Post;
 import SocialNetwork.model.User;
 
-public class PostDAO implements IPostDao {
+public class PostDAO extends AbstractDAO implements IPostDAO {
 
 	private static final String REMOVE_POST_STATEMENT = "DELETE FROM Posts WHERE post_id= ?";
 	private static final String ADD_POST_STATEMENT = "INSERT INTO Posts VALUES (null, ? , ? )";
 
 	public void addPost(Post post) {
 		if (post != null) {
-			Connection con = DBConnection.getInstance().getConnection();
 
 			try {
-				PreparedStatement ps = con.prepareStatement(ADD_POST_STATEMENT,
+				PreparedStatement ps = getCon().prepareStatement(ADD_POST_STATEMENT,
 						Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, post.getContent());
 				ps.setObject(2, post.getPostedBy());
@@ -39,9 +38,8 @@ public class PostDAO implements IPostDao {
 
 	public void removePost(int postId) {
 		if(postId != 0){ 
-			Connection con= DBConnection.getInstance().getConnection();
 			try {
-				PreparedStatement ps= con.prepareStatement(REMOVE_POST_STATEMENT);
+				PreparedStatement ps= getCon().prepareStatement(REMOVE_POST_STATEMENT);
 				ps.setInt(1, postId);
 				ps.executeUpdate();
 			} catch (SQLException e) {

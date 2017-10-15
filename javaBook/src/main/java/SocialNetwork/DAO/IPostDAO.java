@@ -4,7 +4,7 @@ import java.util.List;
 
 import SocialNetwork.model.Post;
 
-public interface IPostDao {
+public interface IPostDAO {
 	void addPost(Post post);
 
 	void removePost(int postId);

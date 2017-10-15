@@ -10,7 +10,7 @@ import SocialNetwork.model.DBConnection;
 import SocialNetwork.model.User;
 import SocialNetwork.model.UserExeption;
 
-public class UserDAO implements IUserDAO {
+public class UserDAO extends AbstractDAO implements IUserDAO {
 
 	private static final String SELECT_USER_BY_ID_STATEMENT = "SELECT * FROM Users WHERE user_id= ?";
 	private static final String DELETE_USER_STATEMENT = "DELETE FROM Users WHERE user_id= ?";
@@ -18,10 +18,8 @@ public class UserDAO implements IUserDAO {
 
 	public int addUser(User user) throws UserExeption {
 		if (user != null) {
-			Connection con = DBConnection.getInstance().getConnection();
-
 			try {
-				PreparedStatement ps = con.prepareStatement(ADD_USER_STATEMENT, Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement ps = getCon().prepareStatement(ADD_USER_STATEMENT, Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, user.getFirstName());
 				ps.setString(2, user.getLastName());
 				ps.setString(3, user.getEmail());
@@ -40,9 +38,8 @@ public class UserDAO implements IUserDAO {
 
 	public void removeUser(int userId) throws UserExeption {
 		if (userId != 0) {
-			Connection con = DBConnection.getInstance().getConnection();
 			try {
-				PreparedStatement ps = con.prepareStatement(DELETE_USER_STATEMENT);
+				PreparedStatement ps = getCon().prepareStatement(DELETE_USER_STATEMENT);
 				ps.setInt(1, userId);
 				ps.executeUpdate();
 			} catch (SQLException e) {
@@ -53,9 +50,8 @@ public class UserDAO implements IUserDAO {
 	}
 
 	public User getUserById(int userId) throws UserExeption {
-		Connection con = DBConnection.getInstance().getConnection();
 		try {
-			PreparedStatement ps = con.prepareStatement(SELECT_USER_BY_ID_STATEMENT);
+			PreparedStatement ps = getCon().prepareStatement(SELECT_USER_BY_ID_STATEMENT);
 			ps.setInt(1, userId);
 			ResultSet result = ps.executeQuery();
 			result.next();

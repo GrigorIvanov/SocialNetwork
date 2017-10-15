@@ -3,7 +3,7 @@ package SocialNetwork.DAO;
 import SocialNetwork.model.User;
 import SocialNetwork.model.UserExeption;
 
-public interface IUserDAO {
+public interface IUserDAO  {
 
 	int addUser(User user) throws UserExeption;
 
