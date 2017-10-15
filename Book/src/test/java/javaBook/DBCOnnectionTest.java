@@ -1,14 +1,12 @@
-package SocialNetwork.javaBook;
+package javaBook;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.Test;
 
-import SocialNetwork.DAO.AbstractDAO;
-import SocialNetwork.model.DBConnection;
+import book.java.DAO.AbstractDAO;
 
 public class DBCOnnectionTest extends AbstractDAO {
 
