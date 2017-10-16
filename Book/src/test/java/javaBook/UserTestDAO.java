@@ -48,7 +48,7 @@ public class UserTestDAO extends AbstractDAO  {
 		assertNotEquals(user.getLastName(), "");
 		assertNotEquals(user.getPassword(), "");
 		assertNotEquals(user.getEmail(), "");
-		assertNotEquals(user.getBirthDate(), null);
+		assertNotNull(user.getBirthDate());
 		// Remove the testUser
 		userDao.removeUser(id);
 

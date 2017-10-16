@@ -61,13 +61,13 @@ $(document).ready(function() {
     
 
    
-    <form name="login-form" class="login-form" action="./Login" method="post">
+    <form name="login-form" class="login-form" action="./Register" method="post">
 
     
     <div class="header">
-    <h1>Login</h1>
+    <h1>Register</h1>
 
-   <span><font size="3" color="#151414">Type your information to log in.</font></span>
+   <span><font size="3" color="#151414">Type your information to register.</font></span>
     </div>
     
     
@@ -75,25 +75,28 @@ $(document).ready(function() {
     <div class="content">
     <input name="username" type="text" class="input username" value="Username" onfocus="this.value=''" />
     <input name="password" type="password" class="input password" value="Password" onfocus="this.value=''" />
+    <input name="email" type="email" class="input email" value="Email" onfocus="this.value=''" />
+    <input name="email" type="date" class="input birth date" value="Birth date" onfocus="this.value=''" />
+    
     </div>
     
     
     
     <div class="footer">
-        <input type="submit" name="submit" value="Login" class="button" />
+        <input type="submit" name="submit" value="Register" class="button" />
        
     </div>
     
 
     </form>
     
-     <form name="login-form" class="login-form" action="./Register.jsp" method="post">
+     <form name="login-form" class="login-form" action="./index.html" method="get">
      
     
      
       <span><font size="3" color="#151414">You don't have registration? You can register here: </font></span>
      
-     <input type="submit" name="submit" value="Register" class="register" />
+     <input type="submit" name="submit" value="Login" class="login" />
     
      </form>
     
