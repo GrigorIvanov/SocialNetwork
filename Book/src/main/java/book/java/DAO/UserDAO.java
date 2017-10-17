@@ -1,10 +1,13 @@
+
 package book.java.DAO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import book.java.model.DBConnection;
 import book.java.model.User;
 import book.java.model.UserExeption;
 
@@ -12,7 +15,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 
 	private static final String SELECT_USER_BY_ID_STATEMENT = "SELECT * FROM Users WHERE user_id= ?";
 	private static final String DELETE_USER_STATEMENT = "DELETE FROM Users WHERE user_id= ?";
-	private static final String ADD_USER_STATEMENT = "INSERT INTO Users VALUES (null, ? , ? , ?, ?, md5(?))";
+	private static final String ADD_USER_STATEMENT = "INSERT INTO Users VALUES (null, ? , ? , ?, ?, ?)";
 
 	public int addUser(User user) throws UserExeption {
 		if (user != null) {
@@ -69,17 +72,27 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 
 	}
 
-	// public User getUserByEmail(String email) {
-	// Connection con= DBConnection.getInstance().getConnection();
-	// try {
-	// PreparedStatement ps= con.prepareStatement("SELECT * FROM users WHERE
-	// email = ?");
-	//
-	// return new User(firstName,lastName,email,birthDate);
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// }
+	
+
+	 public User getUserByEmail(String email) {
+		 Connection con= DBConnection.getInstance().getConnection();
+		 try {
+			 PreparedStatement ps= con.prepareStatement("SELECT * FROM users WHERE email = ?");
+			 ps.setString(1, email);
+			 ResultSet result = ps.executeQuery();
+			 result.next();
+			 String firstName = result.getString(2);
+			 String lastName = result.getString(3);
+			 String userEmail = result.getString(1);
+			 String birthDate = result.getString(5);
+			 String password = result.getString(6);
+			 return new User(firstName ,lastName ,userEmail ,birthDate ,password);
+	
+		 } catch (SQLException e) {
+			 e.printStackTrace();
+		 }
+		return null;
+	 }
 
 }
+

@@ -11,6 +11,6 @@ public interface IUserDAO  {
 
 	User getUserById(int userId) throws UserExeption;
 
-	//User getUserByEmail(String email);
+	User getUserByEmail(String email);
 
 }
