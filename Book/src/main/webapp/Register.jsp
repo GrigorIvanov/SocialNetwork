@@ -40,6 +40,13 @@ $(document).ready(function() {
     $(".password").blur(function() {
         $(".pass-icon").css("left","0px");
     });
+    $(".email").focus(function() {
+        $(".email-icon").css("left","-48px");
+    });
+    $(".email").blur(function() {
+        $(".email-icon").css("left","0px");
+    });
+    
 });
 </script>
 
@@ -57,6 +64,7 @@ $(document).ready(function() {
     <div id="wrapper">
     
     <div class="user-icon"></div>
+    <div class="pass-icon"></div>
     <div class="pass-icon"></div>
     
 
@@ -76,7 +84,7 @@ $(document).ready(function() {
     <input name="username" type="text" class="input username" value="Username" onfocus="this.value=''" />
     <input name="password" type="password" class="input password" value="Password" onfocus="this.value=''" />
     <input name="email" type="email" class="input email" value="Email" onfocus="this.value=''" />
-    <input name="email" type="date" class="input birth date" value="Birth date" onfocus="this.value=''" />
+    <input name="date" type="date" class="input birth date" value="Birth date" onfocus="this.value=''" />
     
     </div>
     
