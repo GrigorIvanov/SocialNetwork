@@ -40,13 +40,6 @@ $(document).ready(function() {
     $(".password").blur(function() {
         $(".pass-icon").css("left","0px");
     });
-    $(".email").focus(function() {
-        $(".email-icon").css("left","-48px");
-    });
-    $(".email").blur(function() {
-        $(".email-icon").css("left","0px");
-    });
-    
 });
 </script>
 
@@ -65,11 +58,11 @@ $(document).ready(function() {
     
     <div class="user-icon"></div>
     <div class="pass-icon"></div>
-    <div class="pass-icon"></div>
+
     
 
    
-    <form name="login-form" class="login-form" action="./Register" method="post">
+    <form name="login-form" class="login-form" action="./Reg" method="post">
 
     
     <div class="header">
@@ -83,9 +76,11 @@ $(document).ready(function() {
     <div class="content">
     <input name="username" type="text" class="input username" value="Username" onfocus="this.value=''" />
     <input name="password" type="password" class="input password" value="Password" onfocus="this.value=''" />
+    <br>
     <input name="email" type="email" class="input email" value="Email" onfocus="this.value=''" />
-    <input name="date" type="date" class="input birth date" value="Birth date" onfocus="this.value=''" />
-    
+    <br>
+    <label>birth date</label>
+    <input name="date" type="date"  value="Birth date"  />
     </div>
     
     
@@ -98,7 +93,7 @@ $(document).ready(function() {
 
     </form>
     
-     <form name="login-form" class="login-form" action="./index.html" method="get">
+     <form name="login-form" class="login-form" action="./index.html" method="post">
      
     
      
