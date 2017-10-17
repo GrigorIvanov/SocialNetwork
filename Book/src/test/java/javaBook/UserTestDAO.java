@@ -44,13 +44,14 @@ public class UserTestDAO extends AbstractDAO  {
 		// Check if all properties are set.
 		assertNotNull(user);
 		assertNotEquals(user.getUserId(), 0);
-		assertNotEquals(user.getFirstName(), "");
-		assertNotEquals(user.getLastName(), "");
-		assertNotEquals(user.getPassword(), "");
-		assertNotEquals(user.getEmail(), "");
+		assertNotNull(user.getFirstName());
+		assertNotNull(user.getFirstName());
+		assertNotNull(user.getLastName());
+		assertNotNull(user.getPassword());
+		assertNotNull(user.getEmail());
 		assertNotNull(user.getBirthDate());
 		// Remove the testUser
-		userDao.removeUser(id);
+		//userDao.removeUser(id);
 
 	}
 

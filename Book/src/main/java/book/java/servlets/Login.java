@@ -26,15 +26,20 @@ public class Login extends HttpServlet {
 		UserDAO ud = new UserDAO();
 		User user = null;
 		try {
-			user = ud.getUserById(1);//This will be ud.getUserByEmail(email);
-			if(user.getEmail().equals(email)&&matching(password, user.getPassword())){
-				//Redirect to the main page.
-			}else{
-				//Redirect to the same page plus error message.
-			}
+			user = ud.getUserByEmail(email);
 		} catch (UserExeption e) {
-			response.getWriter().println("No such user was found.");
+			response.getWriter().println("404");
+			e.printStackTrace();
+		}//This will be ud.getUserByEmail(email);
+		if(user.getEmail().equals(email)&&matching(password, user.getPassword())){
+			response.getWriter().println("Nike");
+			//Redirect to the main page.
+		}else{
+			response.getWriter().println("404");
+			//Redirect to the same page plus error message.
 		}
+		
+		
 		
 		
 //		if(email.equals("asd")&&password.equals("asd")){

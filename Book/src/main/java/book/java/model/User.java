@@ -20,7 +20,7 @@ public class User {
 		this.setPassword(password);
 	}
 	public User(int id, String firstName, String lastName, String email, String birthDate, String password) {
-		super();
+		this(firstName,lastName, email, birthDate, password);
 		this.setUserId(id);
 	}
 

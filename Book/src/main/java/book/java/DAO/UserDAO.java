@@ -15,7 +15,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 
 	private static final String SELECT_USER_BY_ID_STATEMENT = "SELECT * FROM Users WHERE user_id= ?";
 	private static final String DELETE_USER_STATEMENT = "DELETE FROM Users WHERE user_id= ?";
-	private static final String ADD_USER_STATEMENT = "INSERT INTO Users VALUES (null, ? , ? , ?, ?, ?)";
+	private static final String ADD_USER_STATEMENT = "INSERT INTO Users VALUES (null, ? , ? , ?, ?, md5(?))";
 
 	public int addUser(User user) throws UserExeption {
 		if (user != null) {
@@ -74,7 +74,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 
 	
 
-	 public User getUserByEmail(String email) {
+	 public User getUserByEmail(String email) throws UserExeption {
 		 Connection con= DBConnection.getInstance().getConnection();
 		 try {
 			 PreparedStatement ps= con.prepareStatement("SELECT * FROM users WHERE email = ?");
@@ -90,8 +90,8 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 	
 		 } catch (SQLException e) {
 			 e.printStackTrace();
+			 throw new UserExeption("Can't find user with that email.", e);
 		 }
-		return null;
 	 }
 
 }

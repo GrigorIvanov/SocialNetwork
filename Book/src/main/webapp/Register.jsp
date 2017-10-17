@@ -74,13 +74,15 @@ $(document).ready(function() {
     
     
     <div class="content">
+    <br>
     <input name="username" type="text" class="input username" value="Username" onfocus="this.value=''" />
     <input name="password" type="password" class="input password" value="Password" onfocus="this.value=''" />
     <br>
+    <br>
     <input name="email" type="email" class="input email" value="Email" onfocus="this.value=''" />
     <br>
-    <label>birth date</label>
-    <input name="date" type="date"  value="Birth date"  />
+   <span><font size="3" color="#151414">Birth date:</font></span>
+    <input name="date" type="date" class="input date"  value="Birth date" onfocus="this.value=''"  />
     </div>
     
     
