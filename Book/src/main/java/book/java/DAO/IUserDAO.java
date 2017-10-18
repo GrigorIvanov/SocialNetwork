@@ -12,5 +12,8 @@ public interface IUserDAO  {
 	User getUserById(int userId) throws UserExeption;
 
 	User getUserByEmail(String email) throws UserExeption;
-
+	
+	void addFriend(User adder, String email);
+	
+	void removeFriend(User remover, String email);
 }
