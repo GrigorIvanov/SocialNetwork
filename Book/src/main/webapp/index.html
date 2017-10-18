@@ -1,108 +1,82 @@
 <!DOCTYPE html>
-<html class="no-js">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Login Form</title>
-        <meta name="description" content="javaBook">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        
-
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link href="./css/style.css" rel="stylesheet" type="text/css" />
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
-    </head>
-    <body>
-        
-   
-     
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-        
-        <script type="text/javascript">
-$(document).ready(function() {
-    $(".username").focus(function() {
-        $(".user-icon").css("left","-48px");
-    });
-    $(".username").blur(function() {
-        $(".user-icon").css("left","0px");
-    });
-    
-    $(".password").focus(function() {
-        $(".pass-icon").css("left","-48px");
-    });
-    $(".password").blur(function() {
-        $(".pass-icon").css("left","0px");
-    });
-});
-</script>
-
-       
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
-        </script>
-</head>
-    
-    <div id="wrapper">
-    
-    <div class="user-icon"></div>
-    <div class="pass-icon"></div>
-    
-
-   
-    <form name="login-form" class="login-form" action="./Log" method="post">
-
-    
-    <div class="header">
-    <h1>Login</h1>
-
-   <span><font size="3" color="#151414">Type your information to log in.</font></span>
-    </div>
-    
-    
-    
-    <div class="content">
-    <input name="email" type="text" class="input username" value="Email" onfocus="this.value=''" />
-    <input name="password" type="password" class="input password" value="Password" onfocus="this.value=''" />
-    </div>
-    
-    
-    
-    <div class="footer">
-        <input type="submit" name="submit" value="Login" class="button" />
-       
-    </div>
-    
-
-    </form>
-    
-     <form name="login-form" class="login-form" action="./Register.jsp" method="post">
-     
-    
-     
-      <span><font size="3" color="#151414">You don't have registration? You can register here: </font></span>
-     
-     <input type="submit" name="submit" value="Register" class="register" />
-    
-     </form>
-    
-
-    </div>
-    
-
-        <div class="gradient"></div>
-
-    </body>
-</html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Login & Sign Up Form Concept</title>
   
+  
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,300'>
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+  <div class="cotn_principal">
+<div class="cont_centrar">
+
+  <div class="cont_login">
+<div class="cont_info_log_sign_up">
+      <div class="col_md_login">
+<div class="cont_ba_opcitiy">
+        
+        <form action = "./Login" method = "post">
+        <h2>LOGIN</h2>  
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> 
+  <button class="btn_login" onclick="cambiar_login()">LOGIN</button>
+  </div>
+  </div>
+<div class="col_md_sign_up">
+<div class="cont_ba_opcitiy">
+  <h2>SIGN UP</h2>
+	</form>
+  
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+  <button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN UP</button>
+</div>
+  </div>
+       </div>
+
+    
+    <div class="cont_back_info">
+       <div class="cont_img_back_grey">
+       <img src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d" alt="" />
+       </div>
+       
+    </div>
+<div class="cont_forms" >
+    <div class="cont_img_back_">
+       <img src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d" alt="" />
+       </div>
+ <div class="cont_form_login">
+<a href="#" onclick="ocultar_login_sign_up()" ><i class="material-icons">&#xE5C4;</i></a>
+   <h2>LOGIN</h2>
+ <input name = "name" type="text" placeholder="Email" />
+<input name = "password" type="password" placeholder="Password" />
+<button class="btn_login" onclick="cambiar_login()">LOGIN</button>
+  </div>
+  
+   <div class="cont_form_sign_up">
+<a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
+     <h2>SIGN UP</h2>
+<input name = "email" type="text" placeholder="Email" />
+<input name = "username "type="text" placeholder="User" />
+<input name = "password"type="password" placeholder="Password" />
+<input name = "confPassword"type="password" placeholder="Confirm Password" />
+<button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN UP</button>
+
+  </div>
+
+    </div>
+    
+  </div>
+ </div>
+</div>
+  
+    <script  src="js/index.js"></script>
+
+</body>
+</html>
