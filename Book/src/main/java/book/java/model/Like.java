@@ -5,7 +5,6 @@ public class Like {
 	private Post post;
 	
 	public Like(User userWhoLikedIt, Post post) {
-		super();
 		this.setUserWhoLikedIt(userWhoLikedIt);
 		this.setPost(post);
 	}
