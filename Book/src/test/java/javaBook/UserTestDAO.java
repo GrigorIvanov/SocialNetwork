@@ -12,8 +12,8 @@ import org.junit.Test;
 
 import book.java.DAO.AbstractDAO;
 import book.java.DAO.UserDAO;
+import book.java.exceptions.UserExeption;
 import book.java.model.User;
-import book.java.model.UserExeption;
 
 public class UserTestDAO extends AbstractDAO  {
 

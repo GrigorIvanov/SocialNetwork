@@ -1,5 +1,7 @@
 package book.java.model;
 
+import book.java.exceptions.InvalidDataException;
+
 public class User {
 
 	private int userId;
@@ -19,8 +21,9 @@ public class User {
 		this.setEmail(email);
 		this.setPassword(password);
 	}
+
 	public User(int id, String firstName, String lastName, String email, String birthDate, String password) {
-		this(firstName,lastName, email, birthDate, password);
+		this(firstName, lastName, email, birthDate, password);
 		this.setUserId(id);
 	}
 
@@ -29,8 +32,8 @@ public class User {
 	}
 
 	public void setUserId(int id) {
-		if(isNotNull(id)){
-		this.userId = id;
+		if (isNotNull(id)) {
+			this.userId = id;
 		}
 	}
 
@@ -39,10 +42,14 @@ public class User {
 	}
 
 	public void setFirstName(String firstName) {
-		if (isNotNull(firstName)) {
-			this.firstName = firstName;
-		} else {
-			// throw new InvalidDataException("The given name is invalid")
+		try {
+			if (isNotNull(firstName)) {
+				this.firstName = firstName;
+			} else {
+				throw new InvalidDataException("The given name is invalid");
+			}
+		} catch (InvalidDataException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -51,10 +58,14 @@ public class User {
 	}
 
 	public void setLastName(String lastName) {
-		if (isNotNull(lastName)) {
-			this.lastName = lastName;
-		} else {
-			// throw new InvalidDataException("The given name is invalid")
+		try {
+			if (isNotNull(lastName)) {
+				this.lastName = lastName;
+			} else {
+				throw new InvalidDataException("The given name is invalid");
+			}
+		} catch (InvalidDataException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -63,10 +74,14 @@ public class User {
 	}
 
 	public void setEmail(String email) {
-		if (isNotNull(email)) {
-			this.email = email;
-		} else {
-			// throw new InvalidDataException("The given email is invalid")
+		try{
+			if (isValidEmail(email)) {
+				this.email = email;
+			} else {
+				 throw new InvalidDataException("The given email is invalid");
+			}
+		}catch(InvalidDataException e){
+			e.printStackTrace();
 		}
 	}
 
@@ -75,10 +90,14 @@ public class User {
 	}
 
 	public void setBirthDate(String birthDate) {
-		if (isNotNull(birthDate)) {
-			this.birthDate = birthDate;
-		} else {
-			// throw new InvalidDataException("The given birthdate is invalid")
+		try{
+			if (isNotNull(birthDate)) {
+				this.birthDate = birthDate;
+			} else {
+				throw new InvalidDataException("The given birthdate is invalid");
+			}
+		}catch(InvalidDataException e){
+			e.printStackTrace();
 		}
 	}
 
@@ -99,5 +118,12 @@ public class User {
 			return true;
 		}
 	}
-
+	
+	public boolean isValidEmail(String emai){
+		if(email.contains("@") && isNotNull(email)){
+			return true;
+		}
+		return false;
+	}
+	
 }

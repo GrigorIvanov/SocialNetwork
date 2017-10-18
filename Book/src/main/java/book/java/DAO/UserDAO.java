@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import book.java.exceptions.UserExeption;
 import book.java.model.DBConnection;
 import book.java.model.User;
-import book.java.model.UserExeption;
 
 public class UserDAO extends AbstractDAO implements IUserDAO {
 

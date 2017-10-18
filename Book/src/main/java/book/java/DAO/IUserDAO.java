@@ -1,7 +1,7 @@
 package book.java.DAO;
 
+import book.java.exceptions.UserExeption;
 import book.java.model.User;
-import book.java.model.UserExeption;
 
 public interface IUserDAO  {
 

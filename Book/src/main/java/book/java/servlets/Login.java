@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import book.java.DAO.UserDAO;
+import book.java.exceptions.UserExeption;
 import book.java.model.User;
-import book.java.model.UserExeption;
 
 
 @WebServlet("/Log")
