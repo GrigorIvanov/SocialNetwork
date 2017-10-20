@@ -35,6 +35,14 @@ public class Conversation {
 	public void setTitle(String text) {
 		this.title = text;
 	}
+
+	public List getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List messages) {
+		this.messages = messages;
+	}
 	
 }
 
