@@ -1,6 +1,6 @@
 package book.java.model;
 
-import java.util.HashMap;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,8 +14,9 @@ public class User {
 	private String email;
 	private String password;
 	private Map<String, User> friendlist= new ConcurrentHashMap <String, User>();
+	private Map<Integer, Conversation> chat= new ConcurrentHashMap<Integer, Conversation>();
 	
-	
+
 	java.util.Date dt = new java.util.Date();
 	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	String birthDate = sdf.format(dt);
@@ -47,10 +48,11 @@ public class User {
 	public Map getFriendlist() {
 		return friendlist;
 	}
+	public Map<Integer, Conversation> getChat() {
+		return chat;
+	}
 	
-//	public void setFriendlist(Map friendlist) {
-//		this.friendlist = friendlist;		
-//	}
+	
 
 	public String getFirstName() {
 		return firstName;
