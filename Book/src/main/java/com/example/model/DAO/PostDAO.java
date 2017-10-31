@@ -81,4 +81,10 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 		return null;
 	}
 
+	@Override
+	public List<User> getAllPeopleWhoLikeThisPost() {
+		
+		return null;
+	}
+
 }

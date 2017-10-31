@@ -18,4 +18,6 @@ public interface IUserDAO  {
 	void addFriend(User adder, String email);
 	
 	void removeFriend(User remover, String email);
+	
+	//TODO like unlike post
 }
