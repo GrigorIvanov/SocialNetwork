@@ -7,10 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.example.model.DBConnection;
 import com.example.model.Post;
 import com.example.model.User;
-
+@Component
 public class PostDAO extends AbstractDAO implements IPostDAO {
 
 	private static final String REMOVE_POST_STATEMENT = "DELETE FROM Posts WHERE post_id= ?";
@@ -18,18 +20,19 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 
 	public void addPost(Post post) {
 		if (post != null) {
-
+			System.out.println("asd");
 			try {
 				PreparedStatement ps = getCon().prepareStatement(ADD_POST_STATEMENT,
 						Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, post.getContent());
-				ps.setObject(2, post.getPostedBy());
+				ps.setObject(2, post.getPostedBy().getUserId());
 				
 
 				ps.executeUpdate();
 				ResultSet rs = ps.getGeneratedKeys();
 				rs.next();
 				post.setPostId(rs.getInt(1));
+				post.getPostedBy().getPosts().put(post.getPostId(), post);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

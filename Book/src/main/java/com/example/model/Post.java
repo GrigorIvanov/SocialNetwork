@@ -10,6 +10,11 @@ public class Post {
 		this.setPostedBy(postedBy);
 	}
 
+	@Override
+	public String toString() {
+		return "Post [postId=" + postId + ", content=" + content + ", postedBy=" + postedBy + "]";
+	}
+
 	public Post(int postId, String content, User postedBy) {
 		this(content,postedBy);
 		this.postId = postId;

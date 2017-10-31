@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.exceptions.UserExeption;
 import com.example.model.DBConnection;
+import com.example.model.Post;
 import com.example.model.User;
 
 @Component
@@ -18,6 +19,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 
 	private static final String SELECT_USER_BY_EMAIL_STATEMENT = "SELECT * FROM users WHERE email = ?";
 	private static final String INSERT_INTO_FRIENDS_STATEMENT = "INSERT INTO Friends VALUES ( ?, ?)";
+	private static final String INSERT_INTO_POSTS_STATEMENT = "INSERT INTO Posts VALUES ( ?, ?, ?)";
 	private static final String SELECT_USER_BY_ID_STATEMENT = "SELECT * FROM Users WHERE user_id= ?";
 	private static final String DELETE_USER_STATEMENT = "DELETE FROM Users WHERE user_id= ?";
 	private static final String ADD_USER_STATEMENT = "INSERT INTO Users VALUES (null, ? , ? , ?, ?, md5(?))";
@@ -110,6 +112,19 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 			}
 		} catch (UserExeption e) {
 			System.out.println("This user can't be added to your friendslist");
+		} catch(SQLException e){
+			System.out.println("This friend can't be added");
+		}
+	}
+	public void addPost(User adder, Post post) {
+		try {
+			if(!((adder.equals(null) && post.equals(null)))){
+				adder.getPosts().put(post.getPostId(),post);
+				PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_POSTS_STATEMENT, Statement.RETURN_GENERATED_KEYS);
+				ps.setInt(1, post.getPostId());
+				ps.setString(2, post.getContent());
+				ps.setInt(3, adder.getUserId());
+			}
 		} catch(SQLException e){
 			System.out.println("This friend can't be added");
 		}

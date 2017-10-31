@@ -15,7 +15,11 @@ public class User {
 	private String password;
 	private Map<String, User> friendlist= new ConcurrentHashMap <String, User>();
 	private Map<Integer, Conversation> chat= new ConcurrentHashMap<Integer, Conversation>();
-	
+	private Map<Integer, Post> posts = new ConcurrentHashMap<Integer, Post>();
+
+	public Map<Integer, Post> getPosts() {
+		return posts;
+	}
 
 	java.util.Date dt = new java.util.Date();
 	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
