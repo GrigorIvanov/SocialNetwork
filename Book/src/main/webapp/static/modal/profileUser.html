@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">More About {{name.name}}</h4>
+</div>
+
+<div class="modal-body">
+    <center>
+        <img class="img-responsive img-thumbnail"ng-src="{{name.photo}}"></a>
+        <h3 class="media-heading">{{name.name}} {{name.lastname}} <small>USA</small></h3>
+    </center>
+    <hr>
+    <center>
+        <p class="text-left"><strong>Bio </strong><br><br>
+            {{name.description}}</p>
+        <br>
+    </center>
+</div>
+
+<div class="modal-footer">
+    <center>
+        <button type="button" class="btn btn-default" ng-click="Close()">I've heard enough about {{name.name}}</button>
+    </center>
+</div>
