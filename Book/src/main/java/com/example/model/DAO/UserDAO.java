@@ -105,10 +105,10 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		try {
 			if(getUserByEmail(email).isValidEmail(email) && getUserByEmail(email)!= null){
 				//we should check if he is in the DB
-				adder.getFriendlist().put(email,getUserByEmail(email));
 				PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_FRIENDS_STATEMENT, Statement.RETURN_GENERATED_KEYS);
 				ps.setInt(1, adder.getUserId());
 				ps.setInt(2, getUserByEmail(email).getUserId());
+				adder.getFriendlist().add(getUserByEmail(email));
 			}
 		} catch (UserExeption e) {
 			System.out.println("This user can't be added to your friendslist");
@@ -119,7 +119,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 	public void addPost(User adder, Post post) {
 		try {
 			if(!((adder.equals(null) && post.equals(null)))){
-				adder.getPosts().put(post.getPostId(),post);
+				adder.getPosts().add(post);
 				PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_POSTS_STATEMENT, Statement.RETURN_GENERATED_KEYS);
 				ps.setInt(1, post.getPostId());
 				ps.setString(2, post.getContent());
@@ -133,7 +133,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 	public void removeFriend(User remover, String email) {
 		try {
 			if(getUserByEmail(email).isValidEmail(email)){
-				if(getUserByEmail(email).getFriendlist().containsKey(email)){
+				if(getUserByEmail(email).getFriendlist().contains(getUserByEmail(email))){
 					remover.getFriendlist().remove(email);
 					int removedFriend= getUserByEmail(email).getUserId();
 			//		PreparedStatement ps = getCon().prepareStatement("DELETE FROM Friends WHERE friend_id= removedFriend ");
