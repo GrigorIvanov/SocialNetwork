@@ -32,7 +32,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 				ResultSet rs = ps.getGeneratedKeys();
 				rs.next();
 				post.setPostId(rs.getInt(1));
-				post.getPostedBy().getPosts().put(post.getPostId(), post);
+				post.getPostedBy().getPosts().add(post);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -45,6 +45,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 				PreparedStatement ps= getCon().prepareStatement(REMOVE_POST_STATEMENT);
 				ps.setInt(1, postId);
 				ps.executeUpdate();
+				getPostById(postId).getPostedBy().getPosts().remove(getPostById(postId));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} 

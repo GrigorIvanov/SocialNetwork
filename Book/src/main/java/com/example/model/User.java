@@ -1,26 +1,38 @@
 package com.example.model;
 
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 import com.example.exceptions.InvalidDataException;
 
 public class User {
 
 	private int userId;
+	
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
-	private Map<String, User> friendlist= new ConcurrentHashMap <String, User>();
-	private Map<Integer, Conversation> chat= new ConcurrentHashMap<Integer, Conversation>();
-	private Map<Integer, Post> posts = new ConcurrentHashMap<Integer, Post>();
+	
+	private List<User> friendlist = Collections.synchronizedList(new ArrayList<User>());
+	private List<Conversation> chat = Collections.synchronizedList(new ArrayList<Conversation>());
+	private List<Post> posts = Collections.synchronizedList(new ArrayList<Post>());
 
-	public Map<Integer, Post> getPosts() {
+	public List<Post> getPosts() {
 		return posts;
 	}
 
+	public List<User> getFriendlist() {
+		return friendlist;
+	}
+	
+	public List<Conversation> getChat() {
+		return chat;
+	}
+	
 	java.util.Date dt = new java.util.Date();
 	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	String birthDate = sdf.format(dt);
@@ -45,21 +57,15 @@ public class User {
 	public int getUserId() {
 		return userId;
 	}
-
-
+	
+	
 	public void setUserId(int id) {
 		if (isNotNull(id)) {
 			this.userId = id;
 		}
 	}
-	
-	public Map getFriendlist() {
-		return friendlist;
-	}
-	public Map<Integer, Conversation> getChat() {
-		return chat;
-	}
-	
+
+
 	
 
 	public String getFirstName() {

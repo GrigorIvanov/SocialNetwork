@@ -26,8 +26,8 @@ public class ConversationDAO extends AbstractDAO implements IConversationDAO{
 				ResultSet rs = ps.getGeneratedKeys();
 				rs.next();
 				convo.setConversationId(rs.getInt(1));
-				convo.getMembers().put(member.getEmail(),member);
-				member.getChat().put(convo.getConversationId(),convo);
+				convo.getMembers().add(member);
+				member.getChat().add(convo);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -37,8 +37,8 @@ public class ConversationDAO extends AbstractDAO implements IConversationDAO{
 	
 
 	public void AddUserToConversation(User user, Conversation convo) {
-		convo.getMembers().put(user.getEmail(), user);
-		user.getChat().put(convo.getConversationId(),convo);
+		convo.getMembers().add(user);
+		user.getChat().add(convo);
 	}
 
 }
