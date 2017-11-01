@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.example.exceptions.PostExeption;
 import com.example.exceptions.UserExeption;
 import com.example.model.Post;
 import com.example.model.User;
@@ -63,7 +64,7 @@ public class Login extends HttpServlet {
 	}
 	
 	@RequestMapping(value="/user",method = RequestMethod.GET)
-	public String users(Model model, HttpServletRequest request) throws UserExeption {
+	public String users(Model model, HttpServletRequest request) throws UserExeption, PostExeption {
 		int id  = users.addUser(new User("Someone", "Smith", "eXtreamEmail@gmail.com", "1983-3-17", "testPass123"));
 		User u = users.getUserById(id);
 		posts.addPost(new Post("something", u));

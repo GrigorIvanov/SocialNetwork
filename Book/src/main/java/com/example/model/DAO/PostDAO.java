@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.example.exceptions.PostExeption;
 import com.example.model.DBConnection;
 import com.example.model.Post;
 import com.example.model.User;
@@ -18,7 +19,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 	private static final String REMOVE_POST_STATEMENT = "DELETE FROM Posts WHERE post_id= ?";
 	private static final String ADD_POST_STATEMENT = "INSERT INTO Posts VALUES (null, ? , ? )";
 
-	public void addPost(Post post) {
+	public int addPost(Post post) throws PostExeption {
 		if (post != null) {
 			System.out.println("asd");
 			try {
@@ -26,20 +27,20 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 						Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, post.getContent());
 				ps.setObject(2, post.getPostedBy().getUserId());
-				
-
 				ps.executeUpdate();
+				
 				ResultSet rs = ps.getGeneratedKeys();
 				rs.next();
-				post.setPostId(rs.getInt(1));
 				post.getPostedBy().getPosts().add(post);
+				return rs.getInt(1);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new PostExeption( "Can't add a new post",e);
 			}
 		}
+		return 0;
 	}
 
-	public void removePost(int postId) {
+	public void removePost(int postId) throws PostExeption {
 		if(postId != 0){ 
 			try {
 				PreparedStatement ps= getCon().prepareStatement(REMOVE_POST_STATEMENT);
@@ -47,7 +48,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 				ps.executeUpdate();
 				getPostById(postId).getPostedBy().getPosts().remove(getPostById(postId));
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new PostExeption( "Can't delete this post",e);
 			} 
 		}		
 	}
