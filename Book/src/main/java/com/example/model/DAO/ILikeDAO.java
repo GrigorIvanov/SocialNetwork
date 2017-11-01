@@ -5,7 +5,7 @@ import com.example.model.Like;
 import com.example.model.Post;
 
 public interface ILikeDAO {
-	void addLike(Like like) throws InvalidLikeException;
+	int addLike(Like like) throws InvalidLikeException;
 
 	void removeLike(Like like) throws InvalidLikeException;
 }

@@ -26,7 +26,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 				PreparedStatement ps = getCon().prepareStatement(ADD_POST_STATEMENT,
 						Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, post.getContent());
-				ps.setObject(2, post.getPostedBy().getUserId());
+				ps.setInt(2, post.getPostedBy().getUserId());
 				ps.executeUpdate();
 				
 				ResultSet rs = ps.getGeneratedKeys();
