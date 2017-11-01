@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.example.model.DAO.IPostDAO;
 import com.example.model.DAO.IUserDAO;
 import com.example.model.DAO.UserDAO;
 import com.example.exceptions.UserExeption;
+import com.example.model.Post;
 import com.example.model.User;
 
 @Controller
@@ -29,22 +31,24 @@ public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
-	UserDAO users;
+	IUserDAO users;
+	@Autowired
+	IPostDAO posts;
 	
 	
-	@RequestMapping(value="/asd",method = RequestMethod.GET)
-	public String login(Model model, HttpServletRequest request) {
-		return "index.html";
+	@RequestMapping(value="/login",method = RequestMethod.GET)
+	public String login(Model model) {
+		return "login";
 	}
 	
 	@RequestMapping(value="/user",method = RequestMethod.GET)
 	public String users(Model model, HttpServletRequest request) throws UserExeption {
 		int id  = users.addUser(new User("Someone", "Smith", "eXtreamEmail@gmail.com", "1983-3-17", "testPass123"));
 		User u = users.getUserById(id);
-		 //= new User("Emil", "Uzunov", "asd@", "1992-11-7", "asd");
-//		User u = users.getUserByEmail(request.getParameter(email));
+		posts.addPost(new Post("something", u));
 		model.addAttribute(u);
-//		System.out.println(request.getAttribute("firstName"));
+		model.addAttribute(u.getPosts());
+
 		u.getBirthDate();
 		return "users";
 	}

@@ -9,14 +9,16 @@
 <title>Users</title>
 </head>
 <body>
-	<h1>${user.firstName}${user.lastName}</h1>
+	<h1>${user.firstName} ${user.lastName}</h1>
 	<p>${user.email}</p>
 	<p>${user.birthDate}</p>
 	<p>${user.password}</p>
 	
-	<c:forEach var="post" items="&{user.posts}">
+	<c:forEach var="post" items="${user.posts}">
 		<li><c:out value="${post}" /></li>
 	</c:forEach>
+	
+
 
 </body>
 </html>
