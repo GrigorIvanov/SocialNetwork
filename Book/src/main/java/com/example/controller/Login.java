@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -38,6 +39,26 @@ public class Login extends HttpServlet {
 	
 	@RequestMapping(value="/login",method = RequestMethod.GET)
 	public String login(Model model) {
+		User user = new User();
+		return "login";
+	}
+	@RequestMapping(value="/login",method = RequestMethod.POST)
+	public String loginFeedback(@ModelAttribute User user) {
+		System.out.println(user);
+				
+		return "login";
+	}
+	
+	@RequestMapping(value="/register",method = RequestMethod.GET)
+	public String register(Model model) {
+		User user = new User();
+		model.addAttribute(user);
+		return "login";
+	}
+	@RequestMapping(value="/register",method = RequestMethod.POST)
+	public String registerFeedback(@ModelAttribute User user) {
+		System.out.println(user);
+				
 		return "login";
 	}
 	

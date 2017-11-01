@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html >
 <head>
@@ -41,7 +46,7 @@
        </div>
 
     
-<form action = "./Login" method = "post">
+<form:form commandName="login">
     <div class="cont_back_info">
        <div class="cont_img_back_grey">
        <img src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d" alt="" />
@@ -55,25 +60,25 @@
  <div class="cont_form_login">
 <a href="#" onclick="ocultar_login_sign_up()" ><i class="material-icons">&#xE5C4;</i></a>
    <h2>LOGIN</h2>
- <input name = "email" type="text" placeholder="Email" />
-<input name = "password" type="password" placeholder="Password" />
+ <input name = "email" type="text" placeholder="Email"path="email" />
+<input name = "password" type="password" placeholder="Password"path="password" />
 <button class="btn_login" onclick="cambiar_login()">LOGIN</button>
   </div>
-</form>
+</form:form>
   
-<form action = "./Register" method = "post">
+<form:form commandName="register">
    <div class="cont_form_sign_up">
 <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
      <h2>SIGN UP</h2>
-<input name = "email" type="text" placeholder="Email" />
-<input name = "username "type="text" placeholder="User" />
-<input name = "password"type="password" placeholder="Password" />
+<input name = "email" type="text" placeholder="Email" path="email"/>
+<input name = "username "type="text" placeholder="User" path="username"/>
+<input name = "password"type="password" placeholder="Password"path="password" />
 <input name = "confPassword"type="password" placeholder="Confirm Password" />
 <button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN UP</button>
 
   </div>
 
-</form>
+</form:form>
     </div>
     
   </div>
