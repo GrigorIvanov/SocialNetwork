@@ -5,15 +5,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.stereotype.Component;
 
 import com.example.exceptions.InvalidDataException;
 
 public class User {
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", friendlist=" + friendlist + ", chat=" + chat + ", posts=" + posts
+				+ ", dt=" + dt + ", sdf=" + sdf + ", birthDate=" + birthDate + "]";
+	}
 
 	private int userId;
-	
 	private String firstName;
 	private String lastName;
+	@NotBlank
 	private String email;
 	private String password;
 	

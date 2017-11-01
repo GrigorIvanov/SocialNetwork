@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.example.model.DAO.IPostDAO;
-import com.example.model.DAO.IUserDAO;
-import com.example.model.DAO.UserDAO;
 import com.example.exceptions.UserExeption;
 import com.example.model.Post;
 import com.example.model.User;
+import com.example.model.DAO.IPostDAO;
+import com.example.model.DAO.IUserDAO;
+import com.example.model.DAO.UserDAO;
 
 @Controller
 @SessionAttributes("user")
@@ -37,13 +36,14 @@ public class Login extends HttpServlet {
 	IPostDAO posts;
 	
 	
-	@RequestMapping(value="/login",method = RequestMethod.GET)
+	@RequestMapping(value="/index",method = RequestMethod.GET)
 	public String login(Model model) {
 		User user = new User();
+		model.addAttribute(user);
 		return "login";
 	}
-	@RequestMapping(value="/login",method = RequestMethod.POST)
-	public String loginFeedback(@ModelAttribute User user) {
+	@RequestMapping(value="/index",method = RequestMethod.POST)
+	public String loginFeedback(@ModelAttribute("user") User user) {
 		System.out.println(user);
 				
 		return "login";
