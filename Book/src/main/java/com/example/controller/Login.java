@@ -3,6 +3,7 @@ package com.example.controller;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,10 +46,12 @@ public class Login extends HttpServlet {
 		return "login";
 	}
 	@RequestMapping(value="/index",method = RequestMethod.POST)
-	public String loginFeedback(@ModelAttribute("user") User user) {
-		System.out.println(user);
-				
-		return "login";
+	public String loginFeedback(@ModelAttribute("user") User user) throws UserExeption, PostExeption {
+		//int id  = users.addUser(new User("Someone", "Smith", "eXtreamEmail@gmail.com", "1983-3-17", "testPass123"));
+		int id  = users.addUser(new User(user.getFirstName(),user.getLastName(),user.getEmail(),"1983-3-17",user.getPassword()));
+		User u = users.getUserById(id);
+		posts.addPost(new Post("something", u));
+		return "home";
 	}
 	
 	@RequestMapping(value="/register",method = RequestMethod.GET)
@@ -57,10 +61,11 @@ public class Login extends HttpServlet {
 		return "login";
 	}
 	@RequestMapping(value="/register",method = RequestMethod.POST)
-	public String registerFeedback(@ModelAttribute User user) {
-		System.out.println(user);
-				
-		return "login";
+	public String registerFeedback(@ModelAttribute User user) throws UserExeption, PostExeption {
+		int id  = users.addUser(new User(user.getFirstName(),user.getLastName(),user.getEmail(),"1983-3-17",user.getPassword()));
+		User u = users.getUserById(id);
+		posts.addPost(new Post("something", u));
+		return "home";
 	}
 	
 	@RequestMapping(value="/user",method = RequestMethod.GET)

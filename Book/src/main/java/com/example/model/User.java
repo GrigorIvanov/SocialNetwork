@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.stereotype.Component;
 
 import com.example.exceptions.InvalidDataException;
 
