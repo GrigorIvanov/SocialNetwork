@@ -3,22 +3,23 @@ package com.example.controller;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.PostExeption;
 import com.example.exceptions.UserExeption;
 import com.example.model.Post;
@@ -30,7 +31,7 @@ import com.example.model.DAO.UserDAO;
 @Controller
 @SessionAttributes("user")
 //@WebServlet("/Log")
-public class Login extends HttpServlet {
+public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
@@ -46,11 +47,15 @@ public class Login extends HttpServlet {
 		return "login";
 	}
 	@RequestMapping(value="/index",method = RequestMethod.POST)
-	public String loginFeedback(@ModelAttribute("user") User user) throws UserExeption, PostExeption {
+	public String loginFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result) throws UserExeption, PostExeption, InvalidDataException {
 		//int id  = users.addUser(new User("Someone", "Smith", "eXtreamEmail@gmail.com", "1983-3-17", "testPass123"));
+		if(!result.hasErrors()) {
 		int id  = users.addUser(new User(user.getFirstName(),user.getLastName(),user.getEmail(),"1983-3-17",user.getPassword()));
 		User u = users.getUserById(id);
 		posts.addPost(new Post("something", u));
+		}else {
+			return "error";
+		}
 		return "home";
 	}
 	
@@ -61,15 +66,19 @@ public class Login extends HttpServlet {
 		return "login";
 	}
 	@RequestMapping(value="/register",method = RequestMethod.POST)
-	public String registerFeedback(@ModelAttribute User user) throws UserExeption, PostExeption {
+	public String registerFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result) throws UserExeption, PostExeption, InvalidDataException {
+		if(!result.hasErrors()) {
 		int id  = users.addUser(new User(user.getFirstName(),user.getLastName(),user.getEmail(),"1983-3-17",user.getPassword()));
 		User u = users.getUserById(id);
 		posts.addPost(new Post("something", u));
 		return "home";
+		}else {
+			return "error";
+		}
 	}
 	
 	@RequestMapping(value="/user",method = RequestMethod.GET)
-	public String users(Model model, HttpServletRequest request) throws UserExeption, PostExeption {
+	public String users(Model model, HttpServletRequest request) throws UserExeption, PostExeption, InvalidDataException {
 		int id  = users.addUser(new User("Someone", "Smith", "eXtreamEmail@gmail.com", "1983-3-17", "testPass123"));
 		User u = users.getUserById(id);
 		posts.addPost(new Post("something", u));
@@ -92,6 +101,10 @@ public class Login extends HttpServlet {
 			response.getWriter().println("404");
 			e.printStackTrace();
 		}//This will be ud.getUserByEmail(email);
+ catch (InvalidDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(user.getEmail().equals(email)&&matching(password, user.getPassword())){
 			response.getWriter().println("Nike");
 			//Redirect to the main page.

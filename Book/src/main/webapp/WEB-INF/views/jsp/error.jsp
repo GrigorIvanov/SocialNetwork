@@ -7,6 +7,6 @@
 <title>Error Page</title>
 </head>
 <body>
-		<img src="images/errorpage.png">
+		<img src="img/errorpage.png">
 </body>
 </html>

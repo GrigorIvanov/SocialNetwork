@@ -12,7 +12,7 @@
 
 
 <link rel='stylesheet prefetch'
-	href='https://fonts.googleapis.com/css?family=Open+Sans:400,300'>
+	href='https://fonts.googleapis.com/css?family=Open+Sans:500,400'>
 <link rel='stylesheet prefetch'
 	href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 
@@ -86,10 +86,17 @@
 							path="firstName" />
 							<form:input name="lastName" type="text" placeholder="Last Name"
 							path="lastName" />
+							
+							
 						<form:input name="email" type="text" placeholder="Email"
 							path="email" />
+							
 						<form:input name="password" type="password" placeholder="Password"
 							path="password" />
+							
+							<form:input name="passwordAgain" type="password" placeholder="Repeat password"
+							path="password" />
+							
 						<form:button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN
 							UP</form:button>
 

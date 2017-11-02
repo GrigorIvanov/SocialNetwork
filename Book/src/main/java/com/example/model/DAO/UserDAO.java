@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 import org.springframework.stereotype.Component;
 
+import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.UserExeption;
 import com.example.model.DBConnection;
 import com.example.model.Post;
@@ -57,7 +58,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		}
 	}
 
-	public User getUserById(int userId) throws UserExeption {
+	public User getUserById(int userId) throws UserExeption, InvalidDataException {
 		try {
 			PreparedStatement ps = getCon().prepareStatement(SELECT_USER_BY_ID_STATEMENT);
 			ps.setInt(1, userId);
@@ -81,7 +82,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 
 	
 
-	 public User getUserByEmail(String email) throws UserExeption {
+	 public User getUserByEmail(String email) throws UserExeption, InvalidDataException {
 		 Connection con= DBConnection.getInstance().getConnection();
 		 try {
 			 PreparedStatement ps= con.prepareStatement(SELECT_USER_BY_EMAIL_STATEMENT);
@@ -101,7 +102,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		 }
 	 }
 
-	public void addFriend(User adder, String email) {
+	public void addFriend(User adder, String email) throws InvalidDataException {
 		try {
 			if(getUserByEmail(email).isValidEmail(email) && getUserByEmail(email)!= null){
 				//we should check if he is in the DB
@@ -130,7 +131,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		}
 	}
 
-	public void removeFriend(User remover, String email) {
+	public void removeFriend(User remover, String email) throws InvalidDataException {
 		try {
 			if(getUserByEmail(email).isValidEmail(email)){
 				if(getUserByEmail(email).getFriendlist().contains(getUserByEmail(email))){

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.example.exceptions.InvalidDataException;
@@ -18,10 +19,13 @@ public class User {
 	}
 
 	private int userId;
-	private String firstName;
-	private String lastName;
 	@NotBlank
+	private String firstName;
+	@NotBlank
+	private String lastName;
+	@Email
 	private String email;
+	@NotBlank
 	private String password;
 	
 	private List<User> friendlist = Collections.synchronizedList(new ArrayList<User>());
@@ -44,7 +48,7 @@ public class User {
 	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	String birthDate = sdf.format(dt);
 
-	public User(String firstName, String lastName, String email, String birthDate, String password) {
+	public User(String firstName, String lastName, String email, String birthDate, String password) throws InvalidDataException {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setBirthDate(birthDate);
@@ -52,7 +56,7 @@ public class User {
 		this.setPassword(password);
 	}
 
-	public User(int id, String firstName, String lastName, String email, String birthDate, String password) {
+	public User(int id, String firstName, String lastName, String email, String birthDate, String password) throws InvalidDataException {
 		this(firstName, lastName, email, birthDate, password);
 		this.setUserId(id);
 	}
@@ -111,16 +115,12 @@ public class User {
 		return email;
 	}
 
-	public void setEmail(String email) {
-		try{
+	public void setEmail(String email) throws InvalidDataException {
 			if (isValidEmail(email)) {
 				this.email = email;
 			} else {
 				 throw new InvalidDataException("The given email is invalid");
 			}
-		}catch(InvalidDataException e){
-			e.printStackTrace();
-		}
 	}
 
 	public String getBirthDate() {
@@ -150,18 +150,18 @@ public class User {
 	}
 
 	public boolean isNotNull(Object o) {
-		if (o.equals(null)) {
-			return false;
-		} else {
+		if (!o.equals(null)&&o.toString().trim().length()>0) {
 			return true;
+		} else {
+			return false;
 		}
 	}
 	
-	public boolean isValidEmail(String emai){
-		//if(email.contains("@") && isNotNull(email)){
+	public boolean isValidEmail(String email){
+		if(isNotNull(email) && email.contains("@")){
 			return true;
-		//}
-		//return false;
+		}
+		return false;
 	}
 	
 }
