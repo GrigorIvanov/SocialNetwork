@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.example.exceptions.InvalidDataException;
@@ -20,12 +21,16 @@ public class User {
 
 	private int userId;
 	@NotBlank
+	@Length(max = 30)
 	private String firstName;
 	@NotBlank
+	@Length(max = 30)
 	private String lastName;
 	@Email
+	@Length(max = 30)
 	private String email;
 	@NotBlank
+	@Length(min = 6, max = 30)
 	private String password;
 	
 	private List<User> friendlist = Collections.synchronizedList(new ArrayList<User>());
@@ -48,16 +53,19 @@ public class User {
 	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	String birthDate = sdf.format(dt);
 
-	public User(String firstName, String lastName, String email, String birthDate, String password) throws InvalidDataException {
+	public User(String firstName, String lastName, String email,  String password) throws InvalidDataException {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
-		this.setBirthDate(birthDate);
+		this.setEmail(email);
+		this.setPassword(password);
+	}
+	public User(String email, String password) throws InvalidDataException {
 		this.setEmail(email);
 		this.setPassword(password);
 	}
 
-	public User(int id, String firstName, String lastName, String email, String birthDate, String password) throws InvalidDataException {
-		this(firstName, lastName, email, birthDate, password);
+	public User(int id, String firstName, String lastName, String email,  String password) throws InvalidDataException {
+		this(firstName, lastName, email,  password);
 		this.setUserId(id);
 	}
 	
@@ -71,9 +79,9 @@ public class User {
 	
 	
 	public void setUserId(int id) {
-		if (isNotNull(id)) {
+		
 			this.userId = id;
-		}
+		
 	}
 
 
@@ -84,15 +92,9 @@ public class User {
 	}
 
 	public void setFirstName(String firstName) {
-		try {
-			if (isNotNull(firstName)) {
+		
 				this.firstName = firstName;
-			} else {
-				throw new InvalidDataException("The given name is invalid");
-			}
-		} catch (InvalidDataException e) {
-			e.printStackTrace();
-		}
+			
 	}
 
 	public String getLastName() {
@@ -100,15 +102,9 @@ public class User {
 	}
 
 	public void setLastName(String lastName) {
-		try {
-			if (isNotNull(lastName)) {
+		
 				this.lastName = lastName;
-			} else {
-				throw new InvalidDataException("The given name is invalid");
-			}
-		} catch (InvalidDataException e) {
-			e.printStackTrace();
-		}
+			
 	}
 
 	public String getEmail() {
@@ -116,27 +112,9 @@ public class User {
 	}
 
 	public void setEmail(String email) throws InvalidDataException {
-			if (isValidEmail(email)) {
+			
 				this.email = email;
-			} else {
-				 throw new InvalidDataException("The given email is invalid");
-			}
-	}
-
-	public String getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(String birthDate) {
-		try{
-			if (isNotNull(birthDate)) {
-				this.birthDate = birthDate;
-			} else {
-				throw new InvalidDataException("The given birthdate is invalid");
-			}
-		}catch(InvalidDataException e){
-			e.printStackTrace();
-		}
+			
 	}
 
 	public String getPassword() {
@@ -144,21 +122,15 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		if (isNotNull(password)) {
+		
 			this.password = password;
-		}
+		
 	}
 
-	public boolean isNotNull(Object o) {
-		if (!o.equals(null)&&o.toString().trim().length()>0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+
 	
 	public boolean isValidEmail(String email){
-		if(isNotNull(email) && email.contains("@")){
+		if(email!=null && email.contains("@")){
 			return true;
 		}
 		return false;

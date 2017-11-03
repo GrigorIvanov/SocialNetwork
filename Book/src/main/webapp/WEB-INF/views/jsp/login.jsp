@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login & Sign Up Form Concept</title>
 
 
@@ -32,15 +32,18 @@
 
 
 							<h2>LOGIN</h2>
-							<p>Enter your credentials to log in.</p>
+							<p><c:out value = "${fieldError}"/></p>
+							<c:out value="${error}"/>
+							<p><c:out value = "${objectError}"/></p>
+							<p><c:out value = "${text}"/></p>
 							<button class="btn_login" onclick="cambiar_login()">LOGIN</button>
 						</div>
 					</div>
 					<div class="col_md_sign_up">
 						<div class="cont_ba_opcitiy">
 							<h2>SIGN UP</h2>
-
-
+							<c:out value = "${field}"/>
+							<p>${error}</p>
 							<button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN
 								UP</button>
 
@@ -69,9 +72,11 @@
 							<a href="#" onclick="ocultar_login_sign_up()"><i
 								class="material-icons">&#xE5C4;</i></a>
 							<h2>LOGIN</h2>
+							<p><c:out value = "${fieldError}"/></p>
+							<c:out value="${fieldError}" escapeXml="false" />
 							<form:input name="email" type="text" placeholder="Email"
 								path="email" />
-							<form:input name="password" type="password"
+						<form:input name="password" type="password"
 								placeholder="Password" path="password" />
 							<form:button class="btn_login" onclick="cambiar_login()">LOGIN</form:button>
 						</div>
@@ -82,21 +87,26 @@
 						<a href="#" onclick="ocultar_login_sign_up()"><i
 							class="material-icons">&#xE5C4;</i></a>
 						<h2>SIGN UP</h2>
+						<p>${fieldError}</p>
+						<p>${objectError}</p>
+						<p>${text}</p>
 						<form:input name="firstName" type="text" placeholder="First Name"
 							path="firstName" />
-							<form:input name="lastName" type="text" placeholder="Last Name"
+						<form:input name="lastName" type="text" placeholder="Last Name"
 							path="lastName" />
-							
-							
+
+
 						<form:input name="email" type="text" placeholder="Email"
 							path="email" />
-							
+							<p><c:out value = "${fieldError}"/></p>
+							<c:out value="${fieldError}" escapeXml="false" />
+
 						<form:input name="password" type="password" placeholder="Password"
 							path="password" />
-							
-							<form:input name="passwordAgain" type="password" placeholder="Repeat password"
-							path="password" />
-							
+
+						<form:input name="passwordAgain" type="password"
+							placeholder="Repeat password" path="password" />
+
 						<form:button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN
 							UP</form:button>
 

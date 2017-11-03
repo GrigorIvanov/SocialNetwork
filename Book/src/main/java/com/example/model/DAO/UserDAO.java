@@ -23,7 +23,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 	private static final String INSERT_INTO_POSTS_STATEMENT = "INSERT INTO Posts VALUES ( ?, ?, ?)";
 	private static final String SELECT_USER_BY_ID_STATEMENT = "SELECT * FROM Users WHERE user_id= ?";
 	private static final String DELETE_USER_STATEMENT = "DELETE FROM Users WHERE user_id= ?";
-	private static final String ADD_USER_STATEMENT = "INSERT INTO Users VALUES (null, ? , ? , ?, ?, md5(?))";
+	private static final String ADD_USER_STATEMENT = "INSERT INTO Users VALUES (null, ? , ? , ?, md5(?))";
 
 	public int addUser(User user) throws UserExeption {
 		if (user != null) {
@@ -32,8 +32,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 				ps.setString(1, user.getFirstName());
 				ps.setString(2, user.getLastName());
 				ps.setString(3, user.getEmail());
-				ps.setString(4, user.getBirthDate());
-				ps.setString(5, user.getPassword());
+				ps.setString(4, user.getPassword());
 				ps.executeUpdate();
 				ResultSet rs = ps.getGeneratedKeys();
 				rs.next();
@@ -71,7 +70,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 			String birthDate = result.getString(5);
 			String password = result.getString(6);
 
-			return new User(id, firstName, lastName, email, birthDate, password);
+			return new User(id, firstName, lastName, email, password);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -94,7 +93,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 			 String userEmail = result.getString(1);
 			 String birthDate = result.getString(5);
 			 String password = result.getString(6);
-			 return new User(firstName ,lastName ,userEmail ,birthDate ,password);
+			 return new User(firstName ,lastName ,userEmail  ,password);
 	
 		 } catch (SQLException e) {
 			 e.printStackTrace();
