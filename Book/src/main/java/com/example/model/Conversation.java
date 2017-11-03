@@ -19,6 +19,10 @@ public class Conversation {
 		this.title = text;
 	}
 
+	public Conversation(String title) {
+		this.title = title;
+	}
+
 	public int getConversationId() {
 		return conversationId;
 	}

@@ -39,6 +39,7 @@ public class ConversationDAO extends AbstractDAO implements IConversationDAO{
 	
 
 	public void AddUserToConversation(User user, Conversation convo) {
+		//TODO add db things;
 		convo.getMembers().add(user);
 		user.getChat().add(convo);
 	}
