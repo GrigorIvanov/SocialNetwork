@@ -56,12 +56,12 @@ public class LoginController extends HttpServlet {
 		}else {
 		
 
-			String error = result.getFieldError().getDefaultMessage();
+			String error = result.getFieldError().getDefaultMessage().toString();
 			String field = result.getFieldError().getField().toString();
-			model.addAttribute("field", field);
-			model.addAttribute("error", error);
+			String errorMessage = field+" "+error;
+			model.addAttribute("error", errorMessage);
 			
-		return "redirect:index";
+		return "login";
 		}
 		return "error";
 	}
@@ -86,12 +86,13 @@ public class LoginController extends HttpServlet {
 			return "home";
 		} else {
 			
-			String error = result.getFieldError().getDefaultMessage();
+			String error = result.getFieldError().getDefaultMessage().toString();
 			String field = result.getFieldError().getField().toString();
-			model.addAttribute("field", field);
-			model.addAttribute("error", error);
+			String errorMessage = field+" "+error;
+			model.addAttribute("error", errorMessage);
+			System.out.println(errorMessage);
 			
-			return "redirect:index";
+			return "login";
 		}
 	}
 

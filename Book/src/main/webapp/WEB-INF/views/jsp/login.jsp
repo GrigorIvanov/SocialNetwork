@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login & Sign Up Form Concept</title>
+<title>Login  Sign Up Form Concept</title>
 
 
 <link rel='stylesheet prefetch'
@@ -32,18 +32,15 @@
 
 
 							<h2>LOGIN</h2>
-							<p><c:out value = "${fieldError}"/></p>
-							<c:out value="${error}"/>
-							<p><c:out value = "${objectError}"/></p>
-							<p><c:out value = "${text}"/></p>
+							<c:out value = "${error}"/>
+							
 							<button class="btn_login" onclick="cambiar_login()">LOGIN</button>
 						</div>
 					</div>
 					<div class="col_md_sign_up">
 						<div class="cont_ba_opcitiy">
 							<h2>SIGN UP</h2>
-							<c:out value = "${field}"/>
-							<p>${error}</p>
+							<c:out value = "${error}"/>
 							<button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN
 								UP</button>
 
@@ -72,8 +69,7 @@
 							<a href="#" onclick="ocultar_login_sign_up()"><i
 								class="material-icons">&#xE5C4;</i></a>
 							<h2>LOGIN</h2>
-							<p><c:out value = "${fieldError}"/></p>
-							<c:out value="${fieldError}" escapeXml="false" />
+							<c:out value = "${error}"/>
 							<form:input name="email" type="text" placeholder="Email"
 								path="email" />
 						<form:input name="password" type="password"
@@ -82,14 +78,12 @@
 						</div>
 				</form:form>
 
-				<form:form commandName="user">
+				<form:form commandName="user" action = "register">
 					<div class="cont_form_sign_up">
 						<a href="#" onclick="ocultar_login_sign_up()"><i
 							class="material-icons">&#xE5C4;</i></a>
 						<h2>SIGN UP</h2>
-						<p>${fieldError}</p>
-						<p>${objectError}</p>
-						<p>${text}</p>
+						<c:out value = "${error}"/>
 						<form:input name="firstName" type="text" placeholder="First Name"
 							path="firstName" />
 						<form:input name="lastName" type="text" placeholder="Last Name"
@@ -98,8 +92,7 @@
 
 						<form:input name="email" type="text" placeholder="Email"
 							path="email" />
-							<p><c:out value = "${fieldError}"/></p>
-							<c:out value="${fieldError}" escapeXml="false" />
+							
 
 						<form:input name="password" type="password" placeholder="Password"
 							path="password" />
