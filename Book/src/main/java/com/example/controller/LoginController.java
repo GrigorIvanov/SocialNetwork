@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ import com.example.model.DAO.IPostDAO;
 import com.example.model.DAO.IUserDAO;
 
 @Controller
-@SessionAttributes("user")
+//@SessionAttributes("user")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,13 +45,15 @@ public class LoginController extends HttpServlet {
 		return "login";
 	}
 	
+	//@ModelAttribute("user");
 	@RequestMapping(value = "/index", method = RequestMethod.POST)
-	public String loginFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result )
+	public String loginFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session )
 			throws UserExeption, PostExeption, InvalidDataException {
+		System.out.println();
 		if (!result.hasErrors()) {
 			
 			User u = users.getUserByEmail(user.getEmail());
-			if (matching(u.getPassword(), user.getPassword())) {
+			if (matching(u.getPassword(), user.getPassword())&& session.getAttribute("user")!=null) {
 				
 				return "home";
 			}
@@ -79,11 +82,9 @@ public class LoginController extends HttpServlet {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result,HttpServletRequest request)
+	public String registerFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session )
 			throws UserExeption, PostExeption, InvalidDataException {
-			String pas = request.getParameter("confirmPassword");
-			System.out.println(pas);
-		if (!result.hasErrors()) {
+		if (!result.hasErrors() && session.getAttribute("user")!=null) {
 			User u = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
 			System.out.println(u);
 			int id = users.addUser(u);
@@ -101,16 +102,7 @@ public class LoginController extends HttpServlet {
 		}
 	}
 
-//	@RequestMapping(value = "/user", method = RequestMethod.GET)
-//	public String users(Model model, HttpServletRequest request)
-//			throws UserExeption, PostExeption, InvalidDataException {
-//		int id = users.addUser(new User("Someone", "Smith", "eXtreamEmail@gmail.com", "testPass123"));
-//		User u = users.getUserById(id);
-//		posts.addPost(new Post("something", u));
-//		model.addAttribute(u);
-//		model.addAttribute(u.getPosts());
-//		return "users";
-//	}
+
 
 	/**
 	 * This method is comparing two md5 Strings and returns true if they mach.
