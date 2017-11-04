@@ -16,6 +16,7 @@ import com.example.model.User;
 @Component
 public class PostDAO extends AbstractDAO implements IPostDAO {
 
+	private static final String GET_POST_BY_ID_STATEMENT = "SELECT * FROM Posts WHERE post_id= ?";
 	private static final String REMOVE_POST_STATEMENT = "DELETE FROM Posts WHERE post_id= ?";
 	private static final String ADD_POST_STATEMENT = "INSERT INTO Posts VALUES (null, ? , ? )";
 
@@ -57,10 +58,10 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 	public Post getPostById(int postId) {
 		Connection con= DBConnection.getInstance().getConnection();
 		try {
-			PreparedStatement ps= con.prepareStatement("SELECT * FROM posts WHERE post_id= ?");
+			PreparedStatement ps= con.prepareStatement(GET_POST_BY_ID_STATEMENT);
 			ps.setInt(1, postId);
 			ResultSet result= ps.executeQuery();
-			
+			result.next();
 			int id=result.getInt(1);
 			String content =result.getString(2);
 			

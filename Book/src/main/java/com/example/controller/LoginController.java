@@ -28,14 +28,13 @@ import com.example.model.DAO.IPostDAO;
 import com.example.model.DAO.IUserDAO;
 
 @Controller
-//@SessionAttributes("user")
+@SessionAttributes("user")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
 	IUserDAO users;
-	@Autowired
-	IPostDAO posts;
+	
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String login(Model model) {
@@ -53,6 +52,12 @@ public class LoginController extends HttpServlet {
 		if (!result.hasErrors()) {
 			
 			User u = users.getUserByEmail(user.getEmail());
+			user.setEmail(u.getEmail());
+			user.setFirstName(u.getFirstName());
+			//user.setUserId(u.getUserId());
+			user.setLastName(u.getLastName());
+			user.setUserId(u.getUserId());
+			System.out.println(u.getUserId());
 			if (matching(u.getPassword(), user.getPassword())&& session.getAttribute("user")!=null) {
 				
 				return "home";
@@ -89,6 +94,14 @@ public class LoginController extends HttpServlet {
 			System.out.println(u);
 			int id = users.addUser(u);
 			u.setUserId(id);
+			users.getUserById(id);
+			u.setUserId(id);
+			
+			user.setEmail(u.getEmail());
+			user.setFirstName(u.getFirstName());
+			user.setUserId(u.getUserId());
+			user.setLastName(u.getLastName());
+			user.setUserId(u.getUserId());
 			return "home";
 		} else {
 			

@@ -88,11 +88,12 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 			 ps.setString(1, email);
 			 ResultSet result = ps.executeQuery();
 			 result.next();
+			 int id = result.getInt(1);
 			 String firstName = result.getString(2);
 			 String lastName = result.getString(3);
 			 String userEmail = result.getString(4);
 			 String password = result.getString(5);
-			 return new User(firstName ,lastName ,userEmail  ,password);
+			 return new User(id,firstName ,lastName ,userEmail  ,password);
 	
 		 } catch (SQLException e) {
 			 e.printStackTrace();

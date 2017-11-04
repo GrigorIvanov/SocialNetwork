@@ -3,32 +3,40 @@ package com.example.model;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Post {
 	private int postId;
+	@NotBlank
 	private String content;
-	private User postedBy;
-	private Map <String, User> peopleWhoLikeIt = new ConcurrentHashMap();
-	
-	
-	public Post(String content, User postedBy) {
+	private int postedBy;
+	private String urlPicture;
+	private Map<String, Integer> peopleWhoLikeIt = new ConcurrentHashMap();
+
+	public Post(String content, int postedBy) {
 		this.setContent(content);
 		this.setPostedBy(postedBy);
 	}
-	
 
-	
+	public Post() {
+
+	}
 
 	@Override
 	public String toString() {
 		return "Post [postId=" + postId + ", content=" + content + ", postedBy=" + postedBy + "]";
 	}
 
-	public Map<String, User> getPeopleWhoLikeIt() {
+	public Map<String, Integer> getPeopleWhoLikeIt() {
 		return peopleWhoLikeIt;
 	}
-	
-	public Post(int postId, String content, User postedBy) {
-		this(content,postedBy);
+
+	public Post(int postId, String content, int postedBy) {
+		this(content, postedBy);
 		this.postId = postId;
 	}
 
@@ -37,7 +45,7 @@ public class Post {
 	}
 
 	public void setPostId(int postId) {
-		if(isNotNull(postId)){
+		if (isNotNull(postId)) {
 			this.postId = postId;
 		}
 	}
@@ -47,20 +55,21 @@ public class Post {
 	}
 
 	public void setContent(String content) {
-		if(isNotNull(content)){
+		if (isNotNull(content)) {
 			this.content = content;
 		}
 	}
 
-	public User getPostedBy() {
+	public int getPostedBy() {
 		return postedBy;
 	}
 
-	public void setPostedBy(User postedBy) {
-		if(isNotNull(postedBy)){
+	public void setPostedBy(int postedBy) {
+		if (postedBy != 0) {
 			this.postedBy = postedBy;
 		}
 	}
+
 	public boolean isNotNull(Object o) {
 		if (o.equals(null)) {
 			return false;
@@ -68,6 +77,5 @@ public class Post {
 			return true;
 		}
 	}
-	
-	
+
 }

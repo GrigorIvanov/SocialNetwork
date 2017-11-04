@@ -15,7 +15,7 @@
 					href="#about" class="w3-bar-item w3-button">Photos</a> <a
 					href="#contact" class="w3-bar-item w3-button">Friends</a> <a
 					href="#contact" class="w3-bar-item w3-button">Messages</a> <a
-					href="#contact" class="w3-bar-item w3-button">Posts</a>
+					href="post" class="w3-bar-item w3-button">Posts</a>
 			</div>
 		</div>
 	</div>
