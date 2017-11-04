@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.example.model.Post;
 import com.example.model.User;
 import com.example.model.DAO.IPostDAO;
-import com.example.model.DAO.IUserDAO;
 
 @Controller
 @SessionAttributes("user")
@@ -23,10 +22,7 @@ public class PostController {
 
 	@Autowired
 	IPostDAO posts;
-	@Autowired
-	IUserDAO users;
-	
-	
+
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
 	public String login(Model model, HttpSession session) {
 		if (session.getAttribute("user") != null) {
@@ -43,16 +39,15 @@ public class PostController {
 			HttpSession session) {
 		try {
 			if (!result.hasErrors() && session.getAttribute("user") != null) {
-				User u = ((User)session.getAttribute("user"));
-				User p  = users.getUserById(u.getUserId());
-				System.err.println(p);
-				post.setPostedBy(p);
+				User u = (User) session.getAttribute("user");
+				System.err.println(u);
+				post.setPostedBy(u.getUserId());
 				int id = posts.addPost(post);
-				Post w = posts.getPostById(id);
+				Post p = posts.getPostById(id);
 				
 				
 
-				System.err.println(w);
+				System.err.println(p);
 				System.err.println(post.getPostId());
 				System.err.println(post.getContent());
 				return "home";

@@ -1,21 +1,30 @@
 package com.example.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Like {
-	private User userWhoLikedIt;
+	
+	private int userWhoLikedIt;
 	private Post post;
 	
-	public Like(User userWhoLikedIt, Post post) {
+	public Like(int userWhoLikedIt, Post post) {
 		this.setUserWhoLikedIt(userWhoLikedIt);
 		this.setPost(post);
 	}
+	public Like() {
+		
+	}
 
-	public User getUserWhoLikedIt() {
+
+	public int getUserWhoLikedIt() {
 		return userWhoLikedIt;
 	}
 
-	public void setUserWhoLikedIt(User userWhoLikedIt) {
-		if(isNotNull(userWhoLikedIt))
+	public void setUserWhoLikedIt(int userWhoLikedIt) {
+		if(userWhoLikedIt!=0)
 			this.userWhoLikedIt = userWhoLikedIt;
+		
 	}
 
 	public Post getPost() {

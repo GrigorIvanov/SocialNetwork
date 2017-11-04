@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,19 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.PostExeption;
 import com.example.exceptions.UserExeption;
-import com.example.model.Post;
 import com.example.model.User;
-import com.example.model.DAO.IPostDAO;
 import com.example.model.DAO.IUserDAO;
 
 @Controller
@@ -46,7 +42,7 @@ public class LoginController extends HttpServlet {
 	
 	//@ModelAttribute("user");
 	@RequestMapping(value = "/index", method = RequestMethod.POST)
-	public String loginFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session )
+	public String loginFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session,RedirectAttributes redir)
 			throws UserExeption, PostExeption, InvalidDataException {
 		System.out.println();
 		if (!result.hasErrors()) {
@@ -59,8 +55,9 @@ public class LoginController extends HttpServlet {
 			user.setUserId(u.getUserId());
 			System.out.println(u.getUserId());
 			if (matching(u.getPassword(), user.getPassword())&& session.getAttribute("user")!=null) {
-				
-				return "home";
+				System.out.println(session.getAttribute("user"));
+				//redir.addAttribute("user", session.getAttribute("user"));
+				return "redirect:/home";
 			}
 		}else {
 		
@@ -87,7 +84,7 @@ public class LoginController extends HttpServlet {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session )
+	public String registerFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session, RedirectAttributes redir)
 			throws UserExeption, PostExeption, InvalidDataException {
 		if (!result.hasErrors() && session.getAttribute("user")!=null) {
 			User u = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
@@ -102,7 +99,9 @@ public class LoginController extends HttpServlet {
 			user.setUserId(u.getUserId());
 			user.setLastName(u.getLastName());
 			user.setUserId(u.getUserId());
-			return "home";
+			System.out.println(session.getAttribute("user"));
+			//redir.addAttribute("user", session.getAttribute("user"));
+			return "redirect:/home";
 		} else {
 			
 			String error = result.getFieldError().getDefaultMessage().toString();
