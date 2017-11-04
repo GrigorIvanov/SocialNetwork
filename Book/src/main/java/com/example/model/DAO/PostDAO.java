@@ -26,7 +26,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 				PreparedStatement ps = getCon().prepareStatement(ADD_POST_STATEMENT,
 						Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, post.getContent());
-				ps.setInt(2, post.getPostedBy().getUserId());
+				ps.setInt(2, post.getPostedBy().getUserId());//maybe some check for the user_id
 				ps.executeUpdate();
 				
 				ResultSet rs = ps.getGeneratedKeys();
@@ -36,8 +36,9 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 			} catch (SQLException e) {
 				throw new PostExeption( "Can't add a new post",e);
 			}
+		}else {
+			throw new PostExeption( "The post doesnt exist");
 		}
-		return 0;
 	}
 
 	public void removePost(int postId) throws PostExeption {
