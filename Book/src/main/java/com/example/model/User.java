@@ -47,7 +47,7 @@ public class User {
 //	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //	String birthDate = sdf.format(dt);
 
-	public User(String firstName, String lastName, String email,  String password) throws InvalidDataException {
+	public User(String firstName, String lastName, String email,  String password)  {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setEmail(email);
@@ -58,7 +58,7 @@ public class User {
 		this.setPassword(password);
 	}
 
-	public User(int id, String firstName, String lastName, String email,  String password) throws InvalidDataException {
+	public User(int id, String firstName, String lastName, String email,  String password)  {
 		this(firstName, lastName, email,  password);
 		this.setUserId(id);
 	}
@@ -105,7 +105,7 @@ public class User {
 		return email;
 	}
 
-	public void setEmail(String email) throws InvalidDataException {
+	public void setEmail(String email)  {
 			
 				this.email = email;
 			

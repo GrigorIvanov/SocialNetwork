@@ -15,10 +15,11 @@ import com.example.model.DBConnection;
 import com.example.model.Post;
 import com.example.model.User;
 
+
 @Component
 public class UserDAO extends AbstractDAO implements IUserDAO {
 
-	private static final String SELECT_USER_BY_EMAIL_STATEMENT = "SELECT * FROM users WHERE email = ?";
+	private static final String SELECT_USER_BY_EMAIL_STATEMENT = "SELECT * FROM Users WHERE email = ?";
 	private static final String INSERT_INTO_FRIENDS_STATEMENT = "INSERT INTO Friends VALUES ( ?, ?)";
 	private static final String INSERT_INTO_POSTS_STATEMENT = "INSERT INTO Posts VALUES ( ?, ?, ?)";
 	private static final String SELECT_USER_BY_ID_STATEMENT = "SELECT * FROM Users WHERE user_id= ?";
@@ -89,7 +90,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 			 result.next();
 			 String firstName = result.getString(2);
 			 String lastName = result.getString(3);
-			 String userEmail = result.getString(1);
+			 String userEmail = result.getString(4);
 			 String password = result.getString(5);
 			 return new User(firstName ,lastName ,userEmail  ,password);
 	

@@ -100,7 +100,7 @@
 							path="password" />
 
 
-						<form:input name="confirmPassword" type="password" placeholder="Confirm Password" />
+						
 						
 
 						<form:button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN

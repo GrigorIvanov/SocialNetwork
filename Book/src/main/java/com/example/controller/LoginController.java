@@ -28,7 +28,6 @@ import com.example.model.DAO.IUserDAO;
 
 @Controller
 @SessionAttributes("user")
-// @WebServlet("/Log")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
