@@ -32,7 +32,7 @@
 
 
 							<h2>LOGIN</h2>
-							<c:out value = "${error}"/>
+							<c:out value = "${loginError}"/>
 							
 							<button class="btn_login" onclick="cambiar_login()">LOGIN</button>
 						</div>
@@ -40,7 +40,7 @@
 					<div class="col_md_sign_up">
 						<div class="cont_ba_opcitiy">
 							<h2>SIGN UP</h2>
-							<c:out value = "${error}"/>
+							<c:out value = "${registerError}"/>
 							<button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN
 								UP</button>
 
@@ -69,11 +69,13 @@
 							<a href="#" onclick="ocultar_login_sign_up()"><i
 								class="material-icons">&#xE5C4;</i></a>
 							<h2>LOGIN</h2>
-							<c:out value = "${error}"/>
+							<c:out value = "${loginError}"/>
 							<form:input name="email" type="text" placeholder="Email"
 								path="email" />
 						<form:input name="password" type="password"
 								placeholder="Password" path="password" />
+								<form:hidden path="firstName" value = "FirstNameExample" />
+								<form:hidden path="lastName" value = "LastNameExample" />
 							<form:button class="btn_login" onclick="cambiar_login()">LOGIN</form:button>
 						</div>
 				</form:form>
@@ -83,7 +85,7 @@
 						<a href="#" onclick="ocultar_login_sign_up()"><i
 							class="material-icons">&#xE5C4;</i></a>
 						<h2>SIGN UP</h2>
-						<c:out value = "${error}"/>
+						<c:out value = "${registerError}"/>
 						<form:input name="firstName" type="text" placeholder="First Name"
 							path="firstName" />
 						<form:input name="lastName" type="text" placeholder="Last Name"
@@ -97,8 +99,9 @@
 						<form:input name="password" type="password" placeholder="Password"
 							path="password" />
 
-						<form:input name="passwordAgain" type="password"
-							placeholder="Repeat password" path="password" />
+
+						<form:input name="confirmPassword" type="password" placeholder="Confirm Password" />
+						
 
 						<form:button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN
 							UP</form:button>

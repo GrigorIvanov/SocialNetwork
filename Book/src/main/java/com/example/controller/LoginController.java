@@ -41,13 +41,15 @@ public class LoginController extends HttpServlet {
 	public String login(Model model) {
 		User user = new User();
 		model.addAttribute(user);
+
 		return "login";
 	}
 	
 	@RequestMapping(value = "/index", method = RequestMethod.POST)
-	public String loginFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result)
+	public String loginFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result )
 			throws UserExeption, PostExeption, InvalidDataException {
 		if (!result.hasErrors()) {
+			
 			User u = users.getUserByEmail(user.getEmail());
 			if (matching(u.getPassword(), user.getPassword())) {
 				
@@ -58,8 +60,9 @@ public class LoginController extends HttpServlet {
 
 			String error = result.getFieldError().getDefaultMessage().toString();
 			String field = result.getFieldError().getField().toString();
-			String errorMessage = field+" "+error;
-			model.addAttribute("error", errorMessage);
+			String loginErrorMessage = field+" "+error;
+			model.addAttribute("loginError", loginErrorMessage);
+			
 			
 		return "login";
 		}
@@ -70,42 +73,45 @@ public class LoginController extends HttpServlet {
 	public String register(Model model) {
 		User user = new User();
 		model.addAttribute(user);
+		
+		String confirmPassword = "";
+		model.addAttribute("confirmPassword", confirmPassword);
 		return "register";
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result)
+	public String registerFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result,HttpServletRequest request)
 			throws UserExeption, PostExeption, InvalidDataException {
+			String pas = request.getParameter("confirmPassword");
+			System.out.println(pas);
 		if (!result.hasErrors()) {
-		
-			
-			int id = users.addUser(new User(user.getFirstName(), user.getLastName(), user.getEmail(), 
-					user.getPassword()));
-			User u = users.getUserById(id);
-			//posts.addPost(new Post("something", u));
+			User u = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
+			System.out.println(u);
+			int id = users.addUser(u);
+			u.setUserId(id);
 			return "home";
 		} else {
 			
 			String error = result.getFieldError().getDefaultMessage().toString();
 			String field = result.getFieldError().getField().toString();
-			String errorMessage = field+" "+error;
-			model.addAttribute("error", errorMessage);
-			System.out.println(errorMessage);
+			String registerErrorMessage = field+" "+error;
+			model.addAttribute("registerError", registerErrorMessage);
+			System.out.println(registerErrorMessage);
 			
 			return "login";
 		}
 	}
 
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String users(Model model, HttpServletRequest request)
-			throws UserExeption, PostExeption, InvalidDataException {
-		int id = users.addUser(new User("Someone", "Smith", "eXtreamEmail@gmail.com", "testPass123"));
-		User u = users.getUserById(id);
-		posts.addPost(new Post("something", u));
-		model.addAttribute(u);
-		model.addAttribute(u.getPosts());
-		return "users";
-	}
+//	@RequestMapping(value = "/user", method = RequestMethod.GET)
+//	public String users(Model model, HttpServletRequest request)
+//			throws UserExeption, PostExeption, InvalidDataException {
+//		int id = users.addUser(new User("Someone", "Smith", "eXtreamEmail@gmail.com", "testPass123"));
+//		User u = users.getUserById(id);
+//		posts.addPost(new Post("something", u));
+//		model.addAttribute(u);
+//		model.addAttribute(u.getPosts());
+//		return "users";
+//	}
 
 	/**
 	 * This method is comparing two md5 Strings and returns true if they mach.

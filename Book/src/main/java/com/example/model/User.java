@@ -12,13 +12,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.example.exceptions.InvalidDataException;
 
 public class User {
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", friendlist=" + friendlist + ", chat=" + chat + ", posts=" + posts
-				+ ", dt=" + dt + ", sdf=" + sdf + ", birthDate=" + birthDate + "]";
-	}
-
+	
 	private int userId;
 	@NotBlank
 	@Length(max = 30)
@@ -49,9 +43,9 @@ public class User {
 		return chat;
 	}
 	
-	java.util.Date dt = new java.util.Date();
-	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	String birthDate = sdf.format(dt);
+//	java.util.Date dt = new java.util.Date();
+//	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//	String birthDate = sdf.format(dt);
 
 	public User(String firstName, String lastName, String email,  String password) throws InvalidDataException {
 		this.setFirstName(firstName);
@@ -135,5 +129,13 @@ public class User {
 		}
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", friendlist=" + friendlist + ", chat=" + chat + ", posts=" + posts + "]";
+	}
+	
+	
 	
 }

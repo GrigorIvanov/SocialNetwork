@@ -67,8 +67,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 			String firstName = result.getString(2);
 			String lastName = result.getString(3);
 			String email = result.getString(4);
-			String birthDate = result.getString(5);
-			String password = result.getString(6);
+			String password = result.getString(5);
 
 			return new User(id, firstName, lastName, email, password);
 
@@ -91,8 +90,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 			 String firstName = result.getString(2);
 			 String lastName = result.getString(3);
 			 String userEmail = result.getString(1);
-			 String birthDate = result.getString(5);
-			 String password = result.getString(6);
+			 String password = result.getString(5);
 			 return new User(firstName ,lastName ,userEmail  ,password);
 	
 		 } catch (SQLException e) {
