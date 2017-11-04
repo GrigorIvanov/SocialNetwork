@@ -136,7 +136,12 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 				if(getUserByEmail(email).getFriendlist().contains(getUserByEmail(email))){
 					remover.getFriendlist().remove(email);
 					int removedFriend= getUserByEmail(email).getUserId();
-			//		PreparedStatement ps = getCon().prepareStatement("DELETE FROM Friends WHERE friend_id= removedFriend ");
+					PreparedStatement ps = getCon().prepareStatement("DELETE FROM Friends WHERE friend_id= ? AND user_id = ? ");
+					
+					ps.setInt(1, removedFriend);
+					ps.setInt(2, remover.getUserId());
+					ps.executeUpdate();	
+					
 				}
 				else{
 					System.out.println("There is no such user in your friendslist");
@@ -144,6 +149,8 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 			}
 		} catch (UserExeption e) {
 			System.out.println("This user can't be removed from your friendslist");
+		} catch (SQLException e) {
+			throw new InvalidDataException ("The sql statement is wrong");
 		}
 	}
 

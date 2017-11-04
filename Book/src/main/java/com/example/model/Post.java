@@ -1,5 +1,8 @@
 package com.example.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,7 +18,7 @@ public class Post {
 	private String content;
 	private int postedBy;
 	private String urlPicture;
-	private Map<String, Integer> peopleWhoLikeIt = new ConcurrentHashMap();
+	private List<Integer> peopleWhoLikeIt = Collections.synchronizedList(new ArrayList<Integer>());
 
 	public Post(String content, int postedBy) {
 		this.setContent(content);
@@ -31,7 +34,7 @@ public class Post {
 		return "Post [postId=" + postId + ", content=" + content + ", postedBy=" + postedBy + "]";
 	}
 
-	public Map<String, Integer> getPeopleWhoLikeIt() {
+	public List<Integer> getPeopleWhoLikeIt() {
 		return peopleWhoLikeIt;
 	}
 

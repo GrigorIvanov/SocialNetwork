@@ -11,15 +11,15 @@ import com.example.model.Like;
 public class LikeDAO extends AbstractDAO implements ILikeDAO {
 
 	//private static final String ADD_LIKE_STATEMENT = "INSERT INTO Likes VALUES(null, ? )";
-	private static final String ADD_LIKE_STATEMENT = "INSERT INTO Likes VALUES(?, ? )";
+	private static final String ADD_LIKE_STATEMENT = "INSERT INTO Likes VALUES(?, ?)";
 
 	@Override
 	public void addLike(Like like) throws InvalidLikeException {
 		if (like != null) {
-			if(!(like.getPost().getPeopleWhoLikeIt().containsKey(like.getUserWhoLikedIt().getEmail()))){
+			if(!(like.getPost().getPeopleWhoLikeIt().contains(like.getUserWhoLikedIt().getEmail()))){
 				like.getPost().getPeopleWhoLikeIt()
-					.put(like.getUserWhoLikedIt().getEmail(), like.getUserWhoLikedIt());
-			//TODO db needed ? 
+					.add(like.getUserWhoLikedIt().getUserId());
+			
 				try {
 					PreparedStatement ps = getCon().prepareStatement(ADD_LIKE_STATEMENT);
 					ps.setInt(1,like.getPost().getPostId());
@@ -31,7 +31,6 @@ public class LikeDAO extends AbstractDAO implements ILikeDAO {
 					throw new InvalidLikeException("You can't like this");
 				}
 				
-				
 			}else{
 				throw new InvalidLikeException( "You have already liked it");
 			}
@@ -41,8 +40,9 @@ public class LikeDAO extends AbstractDAO implements ILikeDAO {
 	@Override
 	public void removeLike(Like like) throws InvalidLikeException {
 		if (like != null) {
-			if(like.getPost().getPeopleWhoLikeIt().containsKey(like.getUserWhoLikedIt().getEmail())){
+			if(like.getPost().getPeopleWhoLikeIt().contains(like.getUserWhoLikedIt().getEmail())){
 				like.getPost().getPeopleWhoLikeIt().remove(like.getUserWhoLikedIt().getEmail());
+				
 			}else{
 				throw new InvalidLikeException ( "You havent liked the post");
 			}
