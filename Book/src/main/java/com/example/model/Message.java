@@ -3,11 +3,11 @@ package com.example.model;
 public class Message {
 	private int messageId;
 	private Conversation convo;
-	private String sender;
+	private User sender;
 	private String content;
 	
 	
-	public Message(int messageId, Conversation convo, String sender, String content) {
+	public Message(int messageId, Conversation convo, User sender, String content) {
 		this.messageId = messageId;
 		this.convo = convo;
 		this.sender = sender;
@@ -15,12 +15,12 @@ public class Message {
 	}
 
 	
-	public String getSender() {
+	public User getSender() {
 		return sender;
 	}
 
 
-	public void setSender(String string) {
+	public void setSender(User string) {
 		this.sender = string;
 	}
 

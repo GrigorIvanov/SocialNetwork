@@ -11,7 +11,7 @@ import com.example.model.User;
 
 public class MessageDAO extends AbstractDAO implements IMessageDAO{
 
-	private static final String ADD_MESSAGE_STATEMENT = "INSERT INTO Messages Values (null, ?, ?)";
+	private static final String ADD_MESSAGE_STATEMENT = "INSERT INTO Messages Values (null, ?, ?,?)";
 
 	public void sendMessage(User sender, Message message, Conversation convo) {
 		if (convo != null && sender != null && message != null) {
@@ -21,11 +21,10 @@ public class MessageDAO extends AbstractDAO implements IMessageDAO{
 						Statement.RETURN_GENERATED_KEYS);
 				ps.setInt(1, convo.getConversationId());
 				ps.setString(2, message.getContent());
-				//
-				//Maybe add sender in DB ? 
-				message.setSender(sender.getEmail());
-				//
+				ps.setInt(3, sender.getUserId());
+				
 				ps.executeUpdate();
+				message.setSender(sender);
 				ResultSet rs = ps.getGeneratedKeys();
 				rs.next();
 				convo.setConversationId(rs.getInt(1));

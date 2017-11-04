@@ -68,7 +68,7 @@ public class UserTestDAO extends AbstractDAO  {
 		assertNotNull(user.getEmail());
 		
 		// Remove the testUser
-		//userDao.removeUser(id);
+		userDao.removeUser(id);
 
 	}
 

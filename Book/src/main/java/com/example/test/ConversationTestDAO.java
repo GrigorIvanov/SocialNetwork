@@ -18,8 +18,8 @@ public class ConversationTestDAO extends AbstractDAO{
 
 	private ConversationDAO testDAO= new ConversationDAO();
 	private Conversation testConvo= new Conversation("HIRE US");
-	private User testUser1=new User(3,"Kobrata", "Pulew", "klichko@nestruwa.bg", "produljawamenapred"); 
-	private User testUser2=new User(2,"Vlado", "Klitchko", "Nqkuw@amatior.bg","silensum,sponqma");
+	private User testUser1=new User("Kobrata", "Pulew", "klichko@nestruwa.bg", "produljawamenapred"); 
+	private User testUser2=new User("Vlado", "Klitchko", "Nqkuw@amatior.bg","silensum,sponqma");
 	
 	@Test
 	public void testMakingConversatinAndAddingUsers() throws ConversationException, SQLException, UserExeption {
