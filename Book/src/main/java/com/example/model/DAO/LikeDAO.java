@@ -10,23 +10,23 @@ import com.example.model.Like;
 
 public class LikeDAO extends AbstractDAO implements ILikeDAO {
 
-	private static final String ADD_LIKE_STATEMENT = "INSERT INTO Likes VALUES(null, ? )";
+	//private static final String ADD_LIKE_STATEMENT = "INSERT INTO Likes VALUES(null, ? )";
+	private static final String ADD_LIKE_STATEMENT = "INSERT INTO Likes VALUES(?, ? )";
 
 	@Override
-	public int addLike(Like like) throws InvalidLikeException {
+	public void addLike(Like like) throws InvalidLikeException {
 		if (like != null) {
 			if(!(like.getPost().getPeopleWhoLikeIt().containsKey(like.getUserWhoLikedIt().getEmail()))){
 				like.getPost().getPeopleWhoLikeIt()
 					.put(like.getUserWhoLikedIt().getEmail(), like.getUserWhoLikedIt());
 			//TODO db needed ? 
 				try {
-					PreparedStatement ps = getCon().prepareStatement(ADD_LIKE_STATEMENT,
-							Statement.RETURN_GENERATED_KEYS);
-					ps.setInt(1,like.getUserWhoLikedIt().getUserId());
+					PreparedStatement ps = getCon().prepareStatement(ADD_LIKE_STATEMENT);
+					ps.setInt(1,like.getPost().getPostId());
+					ps.setInt(2,like.getUserWhoLikedIt().getUserId());
+				
 					ps.executeUpdate();
-					ResultSet rs = ps.getGeneratedKeys();
-					rs.next();
-					return rs.getInt(1);
+					
 				} catch (SQLException e) {
 					throw new InvalidLikeException("You can't like this");
 				}
@@ -36,7 +36,6 @@ public class LikeDAO extends AbstractDAO implements ILikeDAO {
 				throw new InvalidLikeException( "You have already liked it");
 			}
 		}
-		return 0;
 	}
 
 	@Override
