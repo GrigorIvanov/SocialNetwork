@@ -25,8 +25,26 @@ public class Post {
 		this.setPostedBy(postedBy);
 	}
 
+	
+	
+	public Post(String content, int postedBy, String urlPicture) {
+		this.setContent(content);
+		this.setPostedBy(postedBy);
+		this.setUrlPicture(urlPicture);
+	}
+
+
+
 	public Post() {
 
+	}
+
+	public String getUrlPicture() {
+		return urlPicture;
+	}
+
+	public void setUrlPicture(String urlPicture) {
+			this.urlPicture = urlPicture;
 	}
 
 	@Override
