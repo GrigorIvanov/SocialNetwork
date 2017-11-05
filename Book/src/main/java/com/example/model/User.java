@@ -28,20 +28,55 @@ public class User {
 	private String profilPic;
 
 	private List<User> friendlist = Collections.synchronizedList(new ArrayList<User>());
-	private List<Conversation> chat = Collections.synchronizedList(new ArrayList<Conversation>());
+	private List<Conversation> conversations = Collections.synchronizedList(new ArrayList<Conversation>());
 	private List<Post> posts = Collections.synchronizedList(new ArrayList<Post>());
 
-	public List<Post> getPosts() {
-		return posts;
+	public void addFriend(User user) {
+		if(user!=null) {
+		this.friendlist.add(user);
+		}
+	}
+	public void removeFriend(User user) {
+		if(user!=null) {
+		this.friendlist.remove(user);
+		}
+	}
+	
+	public List<User> getFriends(){
+		return Collections.unmodifiableList(this.friendlist);
+	}
+	
+	public void addConversation(Conversation conv) {
+		if(conv!=null) {
+		this.conversations.add(conv);
+		}
+	}
+	public void removeConversation(Conversation conv) {
+		if(conv!=null) {
+		this.conversations.remove(conv);
+		}
+	}
+	
+	public List<Conversation> getConversations(){
+		return Collections.unmodifiableList(this.conversations);
+	}
+	
+	public void addPost(Post post) {
+		if(post!=null) {
+		this.posts.add(post);
+		}
+	}
+	public void removePost(Post post) {
+		if(post!=null) {
+		this.conversations.remove(post);
+		}
+	}
+	
+	public List<Post> getPosts(){
+		return Collections.unmodifiableList(this.posts);
 	}
 
-	public List<User> getFriendlist() {
-		return friendlist;
-	}
-
-	public List<Conversation> getChat() {
-		return chat;
-	}
+	
 
 	// java.util.Date dt = new java.util.Date();
 	// java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd
@@ -140,7 +175,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", friendlist=" + friendlist + ", chat=" + chat + ", posts=" + posts + "]";
+				+ ", password=" + password + ", friendlist=" + friendlist + ", chat=" + conversations + ", posts=" + posts + "]";
 	}
 
 }
