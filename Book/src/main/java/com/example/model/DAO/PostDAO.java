@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -124,9 +125,35 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 	}
 
 	@Override
-	public List<User> getAllPeopleWhoLikeThisPost() {
+	public List<User> getAllPeopleWhoLikeThisPost(Post post) throws PostExeption {
 
-		return null;
+		
+		List likes=new ArrayList<User>();
+		
+			PreparedStatement ps;
+			try {
+				ps = getCon().prepareStatement("SELECT * FROM Likes WHERE post_id=?");
+				ps.setInt(1, post.getPostId());
+				
+				ResultSet rs=ps.executeQuery();
+				while(rs.next()) {
+					User user=new User();
+					user.setUserId(rs.getInt("user_id"));
+					user.setFirstName(rs.getString("first_name"));
+					user.setLastName(rs.getString("last_name"));
+					user.setEmail(rs.getString("email"));
+					user.setPassword(rs.getString("password"));
+					if(rs.getString("photo_id")!= null) {
+						user.setProfilPic(rs.getString("profil_id"));
+					}
+					likes.add(user);
+					
+				}
+				
+				return likes;
+			} catch (SQLException e) {
+				throw new PostExeption("You can't see the people, who like it");
+			}
 	}
 
 	@Override

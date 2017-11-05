@@ -8,7 +8,6 @@ import com.example.exceptions.UserExeption;
 import com.example.model.Like;
 @Component
 public interface ILikeDAO {
-	void addLike(Like like) throws InvalidLikeException, UserExeption, InvalidDataException;
+	void clickLike(Like like) throws InvalidLikeException, UserExeption, InvalidDataException;
 
-	void removeLike(Like like) throws InvalidLikeException, UserExeption, InvalidDataException;
 }

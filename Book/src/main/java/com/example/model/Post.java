@@ -21,7 +21,7 @@ public class Post {
 	@NotBlank
 	private Date date;
 	private String urlPicture;
-	private List<Integer> peopleWhoLikeIt = Collections.synchronizedList(new ArrayList<Integer>());
+	//private List<Integer> peopleWhoLikeIt = Collections.synchronizedList(new ArrayList<Integer>());
 
 	public Post(String content, int postedBy, Date date) {
 		this.setContent(content);
@@ -81,9 +81,7 @@ public class Post {
 		return "Post [postId=" + postId + ", content=" + content + ", postedBy=" + postedBy + "]";
 	}
 
-	public List<Integer> getPeopleWhoLikeIt() {
-		return peopleWhoLikeIt;
-	}
+	
 
 
 	public int getPostId() {
