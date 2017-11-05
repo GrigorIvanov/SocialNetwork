@@ -10,8 +10,10 @@
 </head>
 <body>
 
-	<form:form commandName="post">
-		<form:input name="content" type="text" placeholder="Contetn:" path="content" />
+	<form:form enctype="multipart/form-data" commandName="post">
+		<form:input path = "file" type = "file" name = "fileName" placeholder = "file"/>
+		<form:input path = "content"  type = "text" name = "content" placeholder = "Contetn:" />
+		
 		<input type="submit" value="submit" />
 	</form:form>
 	

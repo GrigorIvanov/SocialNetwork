@@ -42,7 +42,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 
 					ResultSet rs = ps.getGeneratedKeys();
 					rs.next();
-					userDao.getUserById(post.getPostedBy()).getPosts().add(post);
+					userDao.getUserById(post.getPostedBy()).addPost(post);
 					return rs.getInt(1);
 				} catch (SQLException e) {
 					throw new PostExeption("Can't add a new post", e);

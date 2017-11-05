@@ -12,7 +12,7 @@
 
 
 <link rel='stylesheet prefetch'
-	href='https://fonts.googleapis.com/css?family=Open+Sans:500,400'>
+	href = 'https://fonts.googleapis.com/css?family=Open+Sans:500,400'>
 <link rel='stylesheet prefetch'
 	href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 

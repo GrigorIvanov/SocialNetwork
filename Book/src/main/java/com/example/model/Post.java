@@ -3,18 +3,17 @@ package com.example.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class Post {
 	private int postId;
-	@NotBlank
+	//@NotBlank
+	private MultipartFile file;
+
+
 	private String content;
 	private int postedBy;
 	private String urlPicture;
@@ -76,9 +75,9 @@ public class Post {
 	}
 
 	public void setContent(String content) {
-		if (isNotNull(content)) {
+		
 			this.content = content;
-		}
+		
 	}
 
 	public int getPostedBy() {
@@ -97,6 +96,15 @@ public class Post {
 		} else {
 			return true;
 		}
+	}
+	public MultipartFile getFile() {
+		return file;
+	}
+
+
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 }
