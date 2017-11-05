@@ -20,5 +20,6 @@ public interface IUserDAO  {
 	
 	void removeFriend(User remover, String email) throws InvalidDataException;
 	
+	void changeProfilPic(String photo, User user) throws InvalidDataException;
 	//TODO like unlike post
 }

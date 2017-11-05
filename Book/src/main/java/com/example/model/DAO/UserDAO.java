@@ -19,9 +19,11 @@ import com.example.model.User;
 @Component
 public class UserDAO extends AbstractDAO implements IUserDAO {
 
+	private static final String UPDATE_PICTURE_STATEMENT = "UPDATE Users SET photo_id= ? WHERE user_id = ? ";
+	private static final String DELETE_FRIEND_STATEMENT = "DELETE FROM Friends WHERE friend_id= ? AND user_id = ? ";
 	private static final String SELECT_USER_BY_EMAIL_STATEMENT = "SELECT * FROM Users WHERE email = ?";
 	private static final String INSERT_INTO_FRIENDS_STATEMENT = "INSERT INTO Friends VALUES ( ?, ?)";
-	private static final String INSERT_INTO_POSTS_STATEMENT = "INSERT INTO Posts VALUES ( ?, ?, ?)";
+	//private static final String INSERT_INTO_POSTS_STATEMENT = "INSERT INTO Posts VALUES ( ?, ?, ?)";
 	private static final String SELECT_USER_BY_ID_STATEMENT = "SELECT * FROM Users WHERE user_id= ?";
 	private static final String DELETE_USER_STATEMENT = "DELETE FROM Users WHERE user_id= ?";
 	private static final String ADD_USER_STATEMENT = "INSERT INTO Users VALUES (null, ? , ? , ?, md5(?))";
@@ -116,19 +118,20 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 			System.out.println("This friend can't be added");
 		}
 	}
-	public void addPost(User adder, Post post) {
-		try {
-			if(!((adder.equals(null) && post.equals(null)))){
-				adder.getPosts().add(post);
-				PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_POSTS_STATEMENT, Statement.RETURN_GENERATED_KEYS);
-				ps.setInt(1, post.getPostId());
-				ps.setString(2, post.getContent());
-				ps.setInt(3, adder.getUserId());
-			}
-		} catch(SQLException e){
-			System.out.println("This friend can't be added");
-		}
-	}
+	
+//	public void addPost(User adder, Post post) {
+//		try {
+//			if(!((adder.equals(null) && post.equals(null)))){
+//				adder.getPosts().add(post);
+//				PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_POSTS_STATEMENT, Statement.RETURN_GENERATED_KEYS);
+//				ps.setInt(1, post.getPostId());
+//				ps.setString(2, post.getContent());
+//				ps.setInt(3, adder.getUserId());
+//			}
+//		} catch(SQLException e){
+//			System.out.println("This post can't be added");
+//		}
+//	}
 
 	public void removeFriend(User remover, String email) throws InvalidDataException {
 		try {
@@ -136,7 +139,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 				if(getUserByEmail(email).getFriendlist().contains(getUserByEmail(email))){
 					remover.getFriendlist().remove(email);
 					int removedFriend= getUserByEmail(email).getUserId();
-					PreparedStatement ps = getCon().prepareStatement("DELETE FROM Friends WHERE friend_id= ? AND user_id = ? ");
+					PreparedStatement ps = getCon().prepareStatement(DELETE_FRIEND_STATEMENT);
 					
 					ps.setInt(1, removedFriend);
 					ps.setInt(2, remover.getUserId());
@@ -152,6 +155,23 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		} catch (SQLException e) {
 			throw new InvalidDataException ("The sql statement is wrong");
 		}
+	}
+
+	@Override
+	public void changeProfilPic(String photo, User user) throws InvalidDataException {
+		if(photo != null && user != null) {
+			user.setProfilPic(photo);
+			try {
+				PreparedStatement ps = getCon().prepareStatement(UPDATE_PICTURE_STATEMENT );
+				ps.setString(1,photo);
+				ps.setInt(2, user.getUserId());
+				ps.executeUpdate();
+				
+			} catch (SQLException e) {
+				throw new InvalidDataException ("The photo can't be added");
+			}
+			
+		}	
 	}
 
 	
