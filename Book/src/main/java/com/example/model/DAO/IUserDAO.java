@@ -1,9 +1,12 @@
 package com.example.model.DAO;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.UserExeption;
+import com.example.model.Post;
 import com.example.model.User;
 @Component
 public interface IUserDAO  {
@@ -21,5 +24,7 @@ public interface IUserDAO  {
 	void removeFriend(User remover, String email) throws InvalidDataException;
 	
 	void changeProfilPic(String photo, User user) throws InvalidDataException;
+	List <Post> showAllPosts(User user) throws InvalidDataException;
+
 	//TODO like unlike post
 }

@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -174,7 +177,30 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		}	
 	}
 
-	
+	public List showAllPosts(User user) throws InvalidDataException{
+		List posts = new ArrayList<Post>();
+		try {
+			PreparedStatement ps=getCon().prepareStatement("SELECT * FROM Posts WHERE user_id=?");
+			ps.setInt(1, user.getUserId());
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Post post=new Post();
+				post.setPostedBy(user.getUserId());
+				post.setPostId(rs.getInt("post_id"));
+				post.setContent(rs.getString("content"));
+				post.setDate(rs.getTimestamp("date"));
+				if(rs.getString("photo") != null) {
+					post.setUrlPicture(rs.getString("photo"));
+				}
+				posts.add(post);
+			}
+			return posts;
+		} catch (SQLException e) {
+			throw new InvalidDataException( "Mysql statement failed");
+		}
+		
+	}
 
 }
 
