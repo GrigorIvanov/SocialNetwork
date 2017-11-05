@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +23,11 @@ import com.example.model.User;
 @Component
 public class PostDAO extends AbstractDAO implements IPostDAO {
 
-	private static final String ADD_POST_WITH_PHOTO_STATEMENT = "INSERT INTO Posts VALUES (null,?,?,?)";
+	private static final String ADD_POST_WITH_PHOTO_STATEMENT = "INSERT INTO Posts VALUES (null,?,?,?,?)";
 	private static final String UPDATE_PHOTO_STATEMENT = "UPDATE Posts SET photo = ? WHERE post_id = ?";
 	private static final String GET_POST_BY_ID_STATEMENT = "SELECT * FROM Posts WHERE post_id= ?";
 	private static final String REMOVE_POST_STATEMENT = "DELETE FROM Posts WHERE post_id= ?";
-	private static final String ADD_POST_STATEMENT = "INSERT INTO Posts VALUES (null, ? , ? )";
+	private static final String ADD_POST_STATEMENT = "INSERT INTO Posts VALUES (null, ? , ?,? )";
 
 	@Autowired
 	private IUserDAO userDao;
@@ -38,6 +41,8 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 							Statement.RETURN_GENERATED_KEYS);
 					ps.setString(1, post.getContent());
 					ps.setInt(2, post.getPostedBy());// maybe some check for the user_id
+					ps.setDate(3, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
+
 					ps.executeUpdate();
 
 					ResultSet rs = ps.getGeneratedKeys();
@@ -56,6 +61,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 					ps.setString(1, post.getContent());
 					ps.setInt(2, post.getPostedBy());// maybe some check for the user_id
 					ps.setString(3, post.getUrlPicture());
+					ps.setDate(4, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
 					ps.executeUpdate();
 					ResultSet rs = ps.getGeneratedKeys();
 					rs.next();
@@ -99,12 +105,13 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 
 			// if(result.getObject(3) instanceof User){ IT GIVES SOME ERROR
 			int postedBy = result.getInt(3);
+			Date date= result.getDate(4);
 			// }else{
 			// User postedBy=null;
 			// TODO Throw exception;
 			// }
 
-			return new Post(id, content, postedBy);
+			return new Post(id, content, postedBy,date);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -113,14 +120,40 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 	}
 
 	public List<Post> getAllPosts() {
-		// TODO TOBEDONE
+
 		return null;
 	}
 
 	@Override
-	public List<User> getAllPeopleWhoLikeThisPost() {
+	public List<User> getAllPeopleWhoLikeThisPost(Post post) throws PostExeption {
 
-		return null;
+		
+		List likes=new ArrayList<User>();
+		
+			PreparedStatement ps;
+			try {
+				ps = getCon().prepareStatement("SELECT * FROM Likes WHERE post_id=?");
+				ps.setInt(1, post.getPostId());
+				
+				ResultSet rs=ps.executeQuery();
+				while(rs.next()) {
+					User user=new User();
+					user.setUserId(rs.getInt("user_id"));
+					user.setFirstName(rs.getString("first_name"));
+					user.setLastName(rs.getString("last_name"));
+					user.setEmail(rs.getString("email"));
+					user.setPassword(rs.getString("password"));
+					if(rs.getString("photo_id")!= null) {
+						user.setProfilPic(rs.getString("profil_id"));
+					}
+					likes.add(user);
+					
+				}
+				
+				return likes;
+			} catch (SQLException e) {
+				throw new PostExeption("You can't see the people, who like it");
+			}
 	}
 
 	@Override

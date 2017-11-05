@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -19,6 +22,7 @@ import com.example.model.User;
 @Component
 public class UserDAO extends AbstractDAO implements IUserDAO {
 
+	private static final String SHOW_ALL_POSTS_STATEMENT = "SELECT * FROM Posts WHERE user_id=?";
 	private static final String UPDATE_PICTURE_STATEMENT = "UPDATE Users SET photo_id= ? WHERE user_id = ? ";
 	private static final String DELETE_FRIEND_STATEMENT = "DELETE FROM Friends WHERE friend_id= ? AND user_id = ? ";
 	private static final String SELECT_USER_BY_EMAIL_STATEMENT = "SELECT * FROM Users WHERE email = ?";
@@ -110,7 +114,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 				PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_FRIENDS_STATEMENT, Statement.RETURN_GENERATED_KEYS);
 				ps.setInt(1, adder.getUserId());
 				ps.setInt(2, getUserByEmail(email).getUserId());
-				adder.getFriendlist().add(getUserByEmail(email));
+				adder.getFriends().add(getUserByEmail(email));
 			}
 		} catch (UserExeption e) {
 			System.out.println("This user can't be added to your friendslist");
@@ -136,8 +140,8 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 	public void removeFriend(User remover, String email) throws InvalidDataException {
 		try {
 			if(getUserByEmail(email).isValidEmail(email)){
-				if(getUserByEmail(email).getFriendlist().contains(getUserByEmail(email))){
-					remover.getFriendlist().remove(email);
+				if(getUserByEmail(email).getFriends().contains(getUserByEmail(email))){
+					remover.getFriends().remove(email);
 					int removedFriend= getUserByEmail(email).getUserId();
 					PreparedStatement ps = getCon().prepareStatement(DELETE_FRIEND_STATEMENT);
 					
@@ -174,7 +178,30 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		}	
 	}
 
-	
+	public List showAllPosts(User user) throws InvalidDataException{
+		List posts = new ArrayList<Post>();
+		try {
+			PreparedStatement ps=getCon().prepareStatement(SHOW_ALL_POSTS_STATEMENT);
+			ps.setInt(1, user.getUserId());
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Post post=new Post();
+				post.setPostedBy(user.getUserId());
+				post.setPostId(rs.getInt("post_id"));
+				post.setContent(rs.getString("content"));
+				post.setDate(rs.getTimestamp("date"));
+				if(rs.getString("photo") != null) {
+					post.setUrlPicture(rs.getString("photo"));
+				}
+				posts.add(post);
+			}
+			return posts;
+		} catch (SQLException e) {
+			throw new InvalidDataException( "Mysql statement failed");
+		}
+		
+	}
 
 }
 

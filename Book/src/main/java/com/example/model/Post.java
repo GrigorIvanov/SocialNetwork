@@ -2,6 +2,7 @@ package com.example.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -16,15 +17,23 @@ public class Post {
 
 	private String content;
 	private int postedBy;
+	@NotBlank
+	private Date date;
 	private String urlPicture;
-	private List<Integer> peopleWhoLikeIt = Collections.synchronizedList(new ArrayList<Integer>());
+	//private List<Integer> peopleWhoLikeIt = Collections.synchronizedList(new ArrayList<Integer>());
 
-	public Post(String content, int postedBy) {
+	public Post(String content, int postedBy, Date date) {
 		this.setContent(content);
 		this.setPostedBy(postedBy);
+		this.setDate(date);
 	}
 
-	
+	public Post (String content, int postedBy, String urlPicture, Date date) {
+		this.setContent(content);
+		this.setPostedBy(postedBy);
+		this.setUrlPicture(urlPicture);
+		this.setDate(date);
+	}
 	
 	public Post(String content, int postedBy, String urlPicture) {
 		this.setContent(content);
@@ -37,6 +46,21 @@ public class Post {
 	public Post() {
 
 	}
+	
+	
+	
+
+	public Date getDate() {
+		return date;
+	}
+
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
 
 	public String getUrlPicture() {
 		return urlPicture;
@@ -46,19 +70,18 @@ public class Post {
 			this.urlPicture = urlPicture;
 	}
 
+	public Post(int postId, String content, int postedBy, Date date) {
+		this(content, postedBy,date);
+		this.postId = postId;
+	}
+
 	@Override
 	public String toString() {
 		return "Post [postId=" + postId + ", content=" + content + ", postedBy=" + postedBy + "]";
 	}
 
-	public List<Integer> getPeopleWhoLikeIt() {
-		return peopleWhoLikeIt;
-	}
+	
 
-	public Post(int postId, String content, int postedBy) {
-		this(content, postedBy);
-		this.postId = postId;
-	}
 
 	public int getPostId() {
 		return postId;
