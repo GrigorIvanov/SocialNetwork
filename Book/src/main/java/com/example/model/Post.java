@@ -17,7 +17,7 @@ public class Post {
 
 	private String content;
 	private int postedBy;
-	@NotBlank
+	//@NotBlank
 	private Date date;
 	private String urlPicture;
 	//private List<Integer> peopleWhoLikeIt = Collections.synchronizedList(new ArrayList<Integer>());

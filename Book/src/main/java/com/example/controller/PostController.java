@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.validation.Valid;
 
+
+
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 
 import com.example.model.Post;
 import com.example.model.User;
@@ -40,6 +43,8 @@ public class PostController extends HttpServlet {
 			FileItem file = null;
 			model.addAttribute(post);
 			request.setAttribute("file", file);
+			
+
 		}
 
 		return "post";
@@ -56,36 +61,37 @@ public class PostController extends HttpServlet {
 			if (!result.hasErrors() && session.getAttribute("user") != null) {
 				post.setPostedBy(u.getUserId());
 				
-				System.out.println(post);
-				//int id = posts.addPost(post);
-				//Post p = posts.getPostById(id);
 				
-				 // gets absolute path of the web application
-		        String applicationPath = request.getServletContext().getRealPath("");
-		        String[] pat= applicationPath.split("/.metadata/");
-		        applicationPath = pat[0];
-		        System.out.println(applicationPath);
-		        // constructs path of the directory to save uploaded file
-		        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
-		         
-		        // creates the save directory if it does not exists
-		        File fileSaveDir = new File(uploadFilePath);
-		        if (!fileSaveDir.exists()) {
-		            fileSaveDir.mkdirs();
-		        }
-		        System.out.println("Upload File Directory="+fileSaveDir.getAbsolutePath());
-		        
-		        String fileName = null;
-		        //Get all the parts from request and write it to the file on server
-		       // for (Part part : request.getParts()) {
-		        
-		            fileName = post.getFile().getName();
-		            ((Part) post.getFile()).write(uploadFilePath + File.separator + fileName);
-		            System.out.println("asdasd");
-		      //  }
+//				System.out.println(post);
+				int id = posts.addPost(post);
+				Post p = posts.getPostById(id);
+//				
+//				 // gets absolute path of the web application
+//		        String applicationPath = request.getServletContext().getRealPath("");
+//		        String[] pat= applicationPath.split("/.metadata/");
+//		        applicationPath = pat[0];
+//		        System.out.println(applicationPath);
+//		        // constructs path of the directory to save uploaded file
+//		        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
+//		         
+//		        // creates the save directory if it does not exists
+//		        File fileSaveDir = new File(uploadFilePath);
+//		        if (!fileSaveDir.exists()) {
+//		            fileSaveDir.mkdirs();
+//		        }
+//		        System.out.println("Upload File Directory="+fileSaveDir.getAbsolutePath());
+//		        
+//		        String fileName = null;
+//		        //Get all the parts from request and write it to the file on server
+//		       // for (Part part : request.getParts()) {
+//		        
+//		            fileName = post.getFile().getName();
+//		            ((Part) post.getFile()).write(uploadFilePath + File.separator + fileName);
+//		            System.out.println("asdasd");
+//		      //  }
 		 
-		        request.setAttribute("message", fileName + " File uploaded successfully!");
-				return "home";
+		     //   request.setAttribute("message", fileName + " File uploaded successfully!");
+				return "upload";
 	
 			} else {
 
@@ -93,7 +99,7 @@ public class PostController extends HttpServlet {
 				String field = result.getFieldError().getField().toString();
 				String loginErrorMessage = field + " " + error;
 				model.addAttribute("loginError", loginErrorMessage);
-System.out.println(loginErrorMessage);
+				System.out.println(loginErrorMessage);
 				return "error";
 			}
 			}
@@ -102,20 +108,18 @@ System.out.println(loginErrorMessage);
 			return "error";
 		}
 		
+	
+	}@RequestMapping(value = "/upload", method = RequestMethod.GET )
+	public String upload(Model model, HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		if (session.getAttribute("user") != null) {
+			
+		}
+
+		return "home";
 	}
 	
-	 private String getFileName(Part part) {
-	        String contentDisp = part.getHeader("content-disposition");
-	        System.out.println("content-disposition header= "+contentDisp);
-	        String[] tokens = contentDisp.split(";");
-	        for (String token : tokens) {
-	            if (token.trim().startsWith("filename")) {
-	                return token.substring(token.indexOf("=") + 2, token.length()-1);
-	            }
-	        }
-	        return "";
-	    }
-	}
+}
+	
 
 
 	
