@@ -63,12 +63,12 @@ public class User {
 	
 	public void addPost(Post post) {
 		if(post!=null) {
-		this.posts.add(post);
+			this.posts.add(post);
 		}
 	}
 	public void removePost(Post post) {
 		if(post!=null) {
-		this.conversations.remove(post);
+			this.conversations.remove(post);
 		}
 	}
 	

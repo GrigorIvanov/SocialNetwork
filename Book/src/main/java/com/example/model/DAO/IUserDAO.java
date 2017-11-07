@@ -24,7 +24,11 @@ public interface IUserDAO  {
 	void removeFriend(User remover, String email) throws InvalidDataException;
 	
 	void changeProfilPic(String photo, User user) throws InvalidDataException;
+	
 	List <Post> showAllPosts(User user) throws InvalidDataException;
 
-	//TODO like unlike post
+	void changeFirstName(User user, String firstname) throws InvalidDataException;
+	
+	void changeLastName(User user, String lasttname) throws InvalidDataException;
+
 }

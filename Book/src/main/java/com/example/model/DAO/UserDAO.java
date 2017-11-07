@@ -204,5 +204,33 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		
 	}
 
+	@Override
+	public void changeFirstName(User user, String firstname) throws InvalidDataException {
+		try {
+			PreparedStatement ps=getCon().prepareStatement("UPDATE Users SET first_name = ? WHERE user_id=?");
+			ps.setString(1, firstname);
+			ps.setInt(2, user.getUserId());
+			ps.executeUpdate();
+		
+		} catch (SQLException e) {
+			throw new InvalidDataException("You can't change your firstName");
+		}
+		
+	}
+	
+	@Override
+	public void changeLastName(User user, String lastname) throws InvalidDataException {
+		try {
+			PreparedStatement ps=getCon().prepareStatement("UPDATE Users SET last_name = ? WHERE user_id=?");
+			ps.setString(1, lastname);
+			ps.setInt(2, user.getUserId());
+			ps.executeUpdate();
+		
+		} catch (SQLException e) {
+			throw new InvalidDataException("You can't change your firstName");
+		}
+		
+	}
+
 }
 

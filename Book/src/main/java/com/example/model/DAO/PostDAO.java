@@ -151,4 +151,48 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 
 	}
 
+	@Override
+	public void changeContent(String content, Post post) throws PostExeption, UserExeption, InvalidDataException {
+		try {
+			userDao.getUserById(post.getPostedBy()).removePost(post);
+			PreparedStatement ps= getCon().prepareStatement("UPDATE Posts SET content= ? WHERE post_id= ?") ;
+			ps.setString(1, content);
+			ps.setInt(2, post.getPostedBy());
+			ps.executeQuery();
+			userDao.getUserById(post.getPostedBy()).addPost(post);
+
+		} catch (SQLException e) {
+			throw new PostExeption("The content of the post can't be changed");
+		}
+		
+		
+	}
+
+	@Override
+	public List<Post> getPostsOfUser(User user) throws PostExeption {
+		try {
+			PreparedStatement ps = getCon().prepareStatement( "SELECT * FROM Posts WHERE user_id=?" );
+			ps.setInt(1, user.getUserId());
+			ResultSet result=ps.executeQuery();
+			List posts=new ArrayList<Post>();
+			while(result.next()) {
+				int id= result.getInt("post_id");
+				String content=result.getString("content");
+				String photo=null;
+				if(result.getString("photo") != null){
+					photo=result.getString("photo");
+				}
+				Date d = result.getDate("date");
+				Post post= new Post(id,content,user.getUserId(),d,photo);
+				posts.add(post);
+			}
+			return posts;
+		} catch (SQLException e) {
+			throw new PostExeption("You can't get the user posts");
+		}
+		
+	}
+	
+	
+
 }

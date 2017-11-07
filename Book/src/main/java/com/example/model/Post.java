@@ -12,20 +12,34 @@ import org.springframework.web.multipart.MultipartFile;
 public class Post {
 	private int postId;
 	//@NotBlank
-	private MultipartFile file;
+	//private MultipartFile file;
 
 
 	private String content;
+
+
+
 	private int postedBy;
 	//@NotBlank
 	private Date date;
 	private String urlPicture;
 	//private List<Integer> peopleWhoLikeIt = Collections.synchronizedList(new ArrayList<Integer>());
 
+	
+	
 	public Post(String content, int postedBy, Date date) {
 		this.setContent(content);
 		this.setPostedBy(postedBy);
 		this.setDate(date);
+	}
+	
+	public Post(int postId, String content, int postedBy, Date date, String urlPicture) {
+		super();
+		this.postId = postId;
+		this.content = content;
+		this.postedBy = postedBy;
+		this.date = date;
+		this.urlPicture = urlPicture;
 	}
 
 	public Post (String content, int postedBy, String urlPicture, Date date) {
@@ -120,14 +134,15 @@ public class Post {
 			return true;
 		}
 	}
-	public MultipartFile getFile() {
-		return file;
-	}
-
-
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
+	
+//	public MultipartFile getFile() {
+//		return file;
+//	}
+//
+//
+//
+//	public void setFile(MultipartFile file) {
+//		this.file = file;
+//	}
 
 }
