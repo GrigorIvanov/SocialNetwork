@@ -30,104 +30,121 @@ public class LoginController extends HttpServlet {
 
 	@Autowired
 	IUserDAO users;
-	
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String login(Model model) {
-		User user = new User();
-		model.addAttribute(user);
+		try {
+			User user = new User();
+			model.addAttribute(user);
 
-		return "login";
-	}
-	
-	//@ModelAttribute("user");
-	@RequestMapping(value = "/index", method = RequestMethod.POST)
-	public String loginFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session,RedirectAttributes redir)
-			throws UserExeption, PostExeption, InvalidDataException {
-		System.out.println();
-		if (!result.hasErrors()) {
-			
-			User u = users.getUserByEmail(user.getEmail());
-			user.setEmail(u.getEmail());
-			user.setFirstName(u.getFirstName());
-			//user.setUserId(u.getUserId());
-			user.setLastName(u.getLastName());
-			user.setUserId(u.getUserId());
-			
-			//TODO
-			//user.getPosts().addAll(postsOfUser);
-			
-			System.out.println(u.getUserId());
-			if (matching(u.getPassword(), user.getPassword())&& session.getAttribute("user")!=null) {
-				System.out.println(session.getAttribute("user"));
-				//redir.addAttribute("user", session.getAttribute("user"));
-				return "redirect:/home";
-			}
-		}else {
-		
-
-			String error = result.getFieldError().getDefaultMessage().toString();
-			String field = result.getFieldError().getField().toString();
-			String loginErrorMessage = field+" "+error;
-			model.addAttribute("loginError", loginErrorMessage);
-			
-			
-		return "login";
+			return "login";
+		} catch (Exception e) {
+			return "index";
 		}
-		return "error";
+
 	}
-	
+
+	// @ModelAttribute("user");
+	@RequestMapping(value = "/index", method = RequestMethod.POST)
+	public String loginFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result,
+			HttpSession session, RedirectAttributes redir) throws UserExeption, PostExeption, InvalidDataException {
+		try {
+			System.out.println();
+			if (!result.hasErrors()) {
+
+				User u = users.getUserByEmail(user.getEmail());
+				user.setEmail(u.getEmail());
+				user.setFirstName(u.getFirstName());
+				// user.setUserId(u.getUserId());
+				user.setLastName(u.getLastName());
+				user.setUserId(u.getUserId());
+
+				// TODO
+				// user.getPosts().addAll(postsOfUser);
+
+				System.out.println(u.getUserId());
+				if (matching(u.getPassword(), user.getPassword()) && session.getAttribute("user") != null) {
+					System.out.println(session.getAttribute("user"));
+					// redir.addAttribute("user", session.getAttribute("user"));
+					return "redirect:/home";
+				}
+			} else {
+
+				String error = result.getFieldError().getDefaultMessage().toString();
+				String field = result.getFieldError().getField().toString();
+				String loginErrorMessage = field + " " + error;
+				model.addAttribute("loginError", loginErrorMessage);
+
+				return "login";
+			}
+			return "error";
+		} catch (Exception e) {
+			return "error";
+		}
+
+	}
+
 	@RequestMapping(value = "/registrer", method = RequestMethod.GET)
 	public String register(Model model) {
-		User user = new User();
-		model.addAttribute(user);
-		
-		String confirmPassword = "";
-		model.addAttribute("confirmPassword", confirmPassword);
-		return "register";
-	}
-	
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session, RedirectAttributes redir)
-			throws UserExeption, PostExeption, InvalidDataException {
-		if (!result.hasErrors() && session.getAttribute("user")!=null) {
-			User u = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
-			System.out.println(u);
-			int id = users.addUser(u);
-			u.setUserId(id);
-			users.getUserById(id);
-			u.setUserId(id);
-			
-			user.setEmail(u.getEmail());
-			user.setFirstName(u.getFirstName());
-			user.setUserId(u.getUserId());
-			user.setLastName(u.getLastName());
-			user.setUserId(u.getUserId());
-			System.out.println(session.getAttribute("user"));
-			//redir.addAttribute("user", session.getAttribute("user"));
-			return "redirect:/home";
-		} else {
-			
-			String error = result.getFieldError().getDefaultMessage().toString();
-			String field = result.getFieldError().getField().toString();
-			String registerErrorMessage = field+" "+error;
-			model.addAttribute("registerError", registerErrorMessage);
-			System.out.println(registerErrorMessage);
-			
-			return "login";
+		try {
+			User user = new User();
+			model.addAttribute(user);
+
+			String confirmPassword = "";
+			model.addAttribute("confirmPassword", confirmPassword);
+			return "register";
+		} catch (Exception e) {
+			return "error";
 		}
+
 	}
 
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String registerFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result,
+			HttpSession session, RedirectAttributes redir)
 
+			throws UserExeption, PostExeption, InvalidDataException {
+		try {
+			if (!result.hasErrors() && session.getAttribute("user") != null) {
+				User u = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
+				System.out.println(u);
+				int id = users.addUser(u);
+				u.setUserId(id);
+				users.getUserById(id);
+				u.setUserId(id);
+
+				user.setEmail(u.getEmail());
+				user.setFirstName(u.getFirstName());
+				user.setUserId(u.getUserId());
+				user.setLastName(u.getLastName());
+				user.setUserId(u.getUserId());
+				System.out.println(session.getAttribute("user"));
+				// redir.addAttribute("user", session.getAttribute("user"));
+				return "redirect:/home";
+			} else {
+
+				String error = result.getFieldError().getDefaultMessage().toString();
+				String field = result.getFieldError().getField().toString();
+				String registerErrorMessage = field + " " + error;
+				model.addAttribute("registerError", registerErrorMessage);
+				System.out.println(registerErrorMessage);
+
+				return "login";
+			}
+		} catch (Exception e) {
+			return "error";
+		}
+
+	}
 
 	/**
 	 * This method is comparing two md5 Strings and returns true if they mach.
+	 * 
 	 * @param orig
-	 * String
+	 *            String
 	 * @param compare
-	 * String
-	 * @return
-	 * boolean
+	 *            String
+	 * @return boolean
 	 */
 	public static boolean matching(String orig, String compare) {
 		String md5 = null;
