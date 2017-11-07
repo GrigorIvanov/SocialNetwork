@@ -99,9 +99,28 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 		return null;
 	}
 
-	public List<Post> getAllPosts() {
+	public List<Post> getAllPosts() throws PostExeption {
 
-		return null;
+		try {
+			PreparedStatement ps = getCon().prepareStatement( "SELECT * FROM Posts" );
+			ResultSet result=ps.executeQuery();
+			List posts=new ArrayList<Post>();
+			while(result.next()) {
+				int id= result.getInt("post_id");
+				String content=result.getString("content");
+				int user= result.getInt("user_id");
+				String photo=null;
+				if(result.getString("photo") != null){
+					photo=result.getString("photo");
+				}
+				Date date = result.getDate("date");
+				Post post= new Post(id,content,user,date,photo);
+				posts.add(post);
+			}
+			return posts;
+		} catch (SQLException e) {
+			throw new PostExeption("You can't get the user posts");
+		}
 	}
 
 	@Override
@@ -182,8 +201,8 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 				if(result.getString("photo") != null){
 					photo=result.getString("photo");
 				}
-				Date d = result.getDate("date");
-				Post post= new Post(id,content,user.getUserId(),d,photo);
+				Date date = result.getDate("date");
+				Post post= new Post(id,content,user.getUserId(),date,photo);
 				posts.add(post);
 			}
 			return posts;

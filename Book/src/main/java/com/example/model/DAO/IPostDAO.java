@@ -18,7 +18,7 @@ public interface IPostDAO {
 
 	Post getPostById(int postId);
 	
-	List <Post> getAllPosts ();
+	List <Post> getAllPosts () throws PostExeption;
 	
 	void changeContent(String content, Post post) throws PostExeption, UserExeption, InvalidDataException;
 	

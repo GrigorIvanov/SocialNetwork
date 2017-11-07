@@ -8,7 +8,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>MyProject</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -56,6 +55,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>servlets.com</groupId>
+			<artifactId>cos</artifactId>
+			<version>05Nov2002</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -68,4 +72,5 @@
 	</build>
 
 
+	<name>Book</name>
 </project>

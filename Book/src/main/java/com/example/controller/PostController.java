@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.example.exceptions.PostExeption;
 import com.example.model.Post;
 import com.example.model.User;
 import com.example.model.DAO.IPostDAO;
@@ -124,7 +125,7 @@ public class PostController extends HttpServlet {
 
 
 	@RequestMapping(value = "/AllPosts", method = RequestMethod.GET)
-	public String allPosts(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String allPosts(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws PostExeption {
 		if (session.getAttribute("user") != null) {
 			User user = (User) session.getAttribute("user");
 			if (!user.equals(null)) {

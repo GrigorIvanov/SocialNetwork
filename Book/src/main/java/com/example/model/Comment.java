@@ -1,8 +1,16 @@
 package com.example.model;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Comment {
+	
+	@NotNull
 	private Post commentedPost;
+	@NotBlank
 	private String content;
+	@NotNull
 	private User commenter;
 
 	public Comment(Post commentedPost, String content, User commenter) {
