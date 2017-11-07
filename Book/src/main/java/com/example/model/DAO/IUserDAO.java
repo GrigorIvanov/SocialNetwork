@@ -32,4 +32,6 @@ public interface IUserDAO  {
 	void changeLastName(User user, String lasttname) throws InvalidDataException;
 
 	List <User> allUsers() throws InvalidDataException;
+	
+	List <User> allFriends(User user) throws InvalidDataException, UserExeption;
 }

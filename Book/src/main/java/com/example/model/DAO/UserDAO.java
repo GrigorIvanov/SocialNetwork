@@ -18,7 +18,6 @@ import com.example.model.DBConnection;
 import com.example.model.Post;
 import com.example.model.User;
 
-
 @Component
 public class UserDAO extends AbstractDAO implements IUserDAO {
 
@@ -27,7 +26,8 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 	private static final String DELETE_FRIEND_STATEMENT = "DELETE FROM Friends WHERE friend_id= ? AND user_id = ? ";
 	private static final String SELECT_USER_BY_EMAIL_STATEMENT = "SELECT * FROM Users WHERE email = ?";
 	private static final String INSERT_INTO_FRIENDS_STATEMENT = "INSERT INTO Friends VALUES ( ?, ?)";
-	//private static final String INSERT_INTO_POSTS_STATEMENT = "INSERT INTO Posts VALUES ( ?, ?, ?)";
+	// private static final String INSERT_INTO_POSTS_STATEMENT = "INSERT INTO Posts
+	// VALUES ( ?, ?, ?)";
 	private static final String SELECT_USER_BY_ID_STATEMENT = "SELECT * FROM Users WHERE user_id= ?";
 	private static final String DELETE_USER_STATEMENT = "DELETE FROM Users WHERE user_id= ?";
 	private static final String ADD_USER_STATEMENT = "INSERT INTO Users VALUES (null, ? , ? , ?, md5(?),?)";
@@ -40,7 +40,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 				ps.setString(2, user.getLastName());
 				ps.setString(3, user.getEmail());
 				ps.setString(4, user.getPassword());
-				ps.setString(5,"avatar.jpg");
+				ps.setString(5, "avatar.jpg");
 				ps.executeUpdate();
 				ResultSet rs = ps.getGeneratedKeys();
 				rs.next();
@@ -86,161 +86,160 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 
 	}
 
-	
+	public User getUserByEmail(String email) throws UserExeption, InvalidDataException {
+		Connection con = DBConnection.getInstance().getConnection();
+		try {
+			PreparedStatement ps = con.prepareStatement(SELECT_USER_BY_EMAIL_STATEMENT);
+			ps.setString(1, email);
+			ResultSet result = ps.executeQuery();
+			result.next();
+			int id = result.getInt(1);
+			String firstName = result.getString(2);
+			String lastName = result.getString(3);
+			String userEmail = result.getString(4);
+			String password = result.getString(5);
+			return new User(id, firstName, lastName, userEmail, password);
 
-	 public User getUserByEmail(String email) throws UserExeption, InvalidDataException {
-		 Connection con= DBConnection.getInstance().getConnection();
-		 try {
-			 PreparedStatement ps= con.prepareStatement(SELECT_USER_BY_EMAIL_STATEMENT);
-			 ps.setString(1, email);
-			 ResultSet result = ps.executeQuery();
-			 result.next();
-			 int id = result.getInt(1);
-			 String firstName = result.getString(2);
-			 String lastName = result.getString(3);
-			 String userEmail = result.getString(4);
-			 String password = result.getString(5);
-			 return new User(id,firstName ,lastName ,userEmail  ,password);
-	
-		 } catch (SQLException e) {
-			 e.printStackTrace();
-			 throw new UserExeption("Can't find user with that email.", e);
-		 }
-	 }
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new UserExeption("Can't find user with that email.", e);
+		}
+	}
 
 	public void addFriend(User adder, String email) throws InvalidDataException {
 		try {
-			if(getUserByEmail(email).isValidEmail(email) && getUserByEmail(email)!= null){
-				//we should check if he is in the DB
-				PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_FRIENDS_STATEMENT, Statement.RETURN_GENERATED_KEYS);
+			if (getUserByEmail(email).isValidEmail(email) && getUserByEmail(email) != null) {
+				// we should check if he is in the DB
+				PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_FRIENDS_STATEMENT,
+						Statement.RETURN_GENERATED_KEYS);
 				ps.setInt(1, adder.getUserId());
 				ps.setInt(2, getUserByEmail(email).getUserId());
 				adder.getFriends().add(getUserByEmail(email));
 			}
 		} catch (UserExeption e) {
 			System.out.println("This user can't be added to your friendslist");
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			System.out.println("This friend can't be added");
 		}
 	}
-	
-//	public void addPost(User adder, Post post) {
-//		try {
-//			if(!((adder.equals(null) && post.equals(null)))){
-//				adder.getPosts().add(post);
-//				PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_POSTS_STATEMENT, Statement.RETURN_GENERATED_KEYS);
-//				ps.setInt(1, post.getPostId());
-//				ps.setString(2, post.getContent());
-//				ps.setInt(3, adder.getUserId());
-//			}
-//		} catch(SQLException e){
-//			System.out.println("This post can't be added");
-//		}
-//	}
+
+	// public void addPost(User adder, Post post) {
+	// try {
+	// if(!((adder.equals(null) && post.equals(null)))){
+	// adder.getPosts().add(post);
+	// PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_POSTS_STATEMENT,
+	// Statement.RETURN_GENERATED_KEYS);
+	// ps.setInt(1, post.getPostId());
+	// ps.setString(2, post.getContent());
+	// ps.setInt(3, adder.getUserId());
+	// }
+	// } catch(SQLException e){
+	// System.out.println("This post can't be added");
+	// }
+	// }
 
 	public void removeFriend(User remover, String email) throws InvalidDataException {
 		try {
-			if(getUserByEmail(email).isValidEmail(email)){
-				if(getUserByEmail(email).getFriends().contains(getUserByEmail(email))){
+			if (getUserByEmail(email).isValidEmail(email)) {
+				if (getUserByEmail(email).getFriends().contains(getUserByEmail(email))) {
 					remover.getFriends().remove(email);
-					int removedFriend= getUserByEmail(email).getUserId();
+					int removedFriend = getUserByEmail(email).getUserId();
 					PreparedStatement ps = getCon().prepareStatement(DELETE_FRIEND_STATEMENT);
-					
+
 					ps.setInt(1, removedFriend);
 					ps.setInt(2, remover.getUserId());
-					ps.executeUpdate();	
-					
-				}
-				else{
+					ps.executeUpdate();
+
+				} else {
 					System.out.println("There is no such user in your friendslist");
 				}
 			}
 		} catch (UserExeption e) {
 			System.out.println("This user can't be removed from your friendslist");
 		} catch (SQLException e) {
-			throw new InvalidDataException ("The sql statement is wrong");
+			throw new InvalidDataException("The sql statement is wrong");
 		}
 	}
 
 	@Override
 	public void changeProfilPic(String photo, User user) throws InvalidDataException {
-		if(photo != null && user != null) {
+		if (photo != null && user != null) {
 			user.setProfilPic(photo);
 			try {
-				PreparedStatement ps = getCon().prepareStatement(UPDATE_PICTURE_STATEMENT );
-				ps.setString(1,photo);
+				PreparedStatement ps = getCon().prepareStatement(UPDATE_PICTURE_STATEMENT);
+				ps.setString(1, photo);
 				ps.setInt(2, user.getUserId());
 				ps.executeUpdate();
-				
+
 			} catch (SQLException e) {
-				throw new InvalidDataException ("The photo can't be added");
+				throw new InvalidDataException("The photo can't be added");
 			}
-			
-		}	
+
+		}
 	}
 
-	public List showAllPosts(User user) throws InvalidDataException{
+	public List showAllPosts(User user) throws InvalidDataException {
 		List posts = new ArrayList<Post>();
 		try {
-			PreparedStatement ps=getCon().prepareStatement(SHOW_ALL_POSTS_STATEMENT);
+			PreparedStatement ps = getCon().prepareStatement(SHOW_ALL_POSTS_STATEMENT);
 			ps.setInt(1, user.getUserId());
-			
+
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				Post post=new Post();
+			while (rs.next()) {
+				Post post = new Post();
 				post.setPostedBy(user.getUserId());
 				post.setPostId(rs.getInt("post_id"));
 				post.setContent(rs.getString("content"));
 				post.setDate(rs.getTimestamp("date"));
-				if(rs.getString("photo") != null) {
+				if (rs.getString("photo") != null) {
 					post.setUrlPicture(rs.getString("photo"));
 				}
 				posts.add(post);
 			}
 			return posts;
 		} catch (SQLException e) {
-			throw new InvalidDataException( "Mysql statement failed");
+			throw new InvalidDataException("Mysql statement failed");
 		}
-		
+
 	}
 
 	@Override
 	public void changeFirstName(User user, String firstname) throws InvalidDataException {
 		try {
-			PreparedStatement ps=getCon().prepareStatement("UPDATE Users SET first_name = ? WHERE user_id=?");
+			PreparedStatement ps = getCon().prepareStatement("UPDATE Users SET first_name = ? WHERE user_id=?");
 			ps.setString(1, firstname);
 			ps.setInt(2, user.getUserId());
 			ps.executeUpdate();
-		
+
 		} catch (SQLException e) {
 			throw new InvalidDataException("You can't change your firstName");
 		}
-		
+
 	}
-	
+
 	@Override
 	public void changeLastName(User user, String lastname) throws InvalidDataException {
 		try {
-			PreparedStatement ps=getCon().prepareStatement("UPDATE Users SET last_name = ? WHERE user_id=?");
+			PreparedStatement ps = getCon().prepareStatement("UPDATE Users SET last_name = ? WHERE user_id=?");
 			ps.setString(1, lastname);
 			ps.setInt(2, user.getUserId());
 			ps.executeUpdate();
-		
+
 		} catch (SQLException e) {
 			throw new InvalidDataException("You can't change your firstName");
 		}
-		
+
 	}
 
 	@Override
 	public List<User> allUsers() throws InvalidDataException {
-		
+
 		List users = new ArrayList<User>();
 		try {
-			PreparedStatement ps=getCon().prepareStatement("SELECT * FROM Users");			
+			PreparedStatement ps = getCon().prepareStatement("SELECT * FROM Users");
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				User user=new User();
+			while (rs.next()) {
+				User user = new User();
 
 				user.setUserId(rs.getInt("user_id"));
 				user.setEmail(rs.getString("email"));
@@ -248,15 +247,34 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 				user.setLastName(rs.getString("last_name"));
 				user.setPassword(rs.getString("password"));
 				user.setProfilPic(rs.getString("photo_id"));
+
+				users.add(user);
 			}
 			return users;
 		} catch (SQLException e) {
-			throw new InvalidDataException( "Mysql statement failed");
+			throw new InvalidDataException("Mysql statement failed");
 		}
-		
+
 	}
-	
 
-	
+	@Override
+	public List<User> allFriends(User user) throws InvalidDataException, UserExeption {
+		List friends = new ArrayList<User>();
+		try {
+			PreparedStatement ps = getCon().prepareStatement("SELECT * FROM Friends WHERE user_id= ?");
+			ps.setInt(1,user.getUserId());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int friendId = rs.getInt(2);
+				User friend = this.getUserById(friendId);
+
+				if (!user.getFriends().contains(friend)) 
+					friends.add(friend);
+			}
+			return friends;
+		} catch (SQLException e) {
+			throw new InvalidDataException("Mysql statement failed");
+		}
+	}
+
 }
-

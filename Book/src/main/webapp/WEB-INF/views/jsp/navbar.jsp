@@ -36,7 +36,7 @@ body {
 				<a href="ShowAllUserPosts" class="w3-bar-item w3-button">My wall</a><a
 					href="AllPosts" class="w3-bar-item w3-button">Posts</a> <a
 					href="AllPhotos" class="w3-bar-item w3-button">Photos</a> <a
-					href="AllFriends" class="w3-bar-item w3-button">Friends</a> <a
+					href="friends" class="w3-bar-item w3-button">Friends</a> <a
 					href="AllMessages" class="w3-bar-item w3-button">Messages</a> <a
 					href="#contact" class="w3-bar-item w3-button">My profile</a><img
 					src="img/people.png" width='70px' /> <br> <br>
