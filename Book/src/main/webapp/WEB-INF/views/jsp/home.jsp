@@ -1,13 +1,6 @@
 <%@ include file="meta.jsp"%>
 <%@ include file="navbar.jsp"%>
-
-<!-- Header -->
-<header class="w3-display-container w3-content w3-wide"
-	style="max-width: 1500px;" id="home">
-	<img src="img/one.jpg" style="width: 100%">
-	<div class="w3-display-middle w3-margin-top w3-center"></div>
-</header>
-
+<html>
 <!-- Page content -->
 <div class="w3-content w3-padding" style="max-width: 1564px">
 
@@ -21,7 +14,6 @@
 </div>
 <div class="w3-col l3 m6 w3-margin-bottom">
 	<img src="img/net2.jpg" style="width: 100%">
-</div>
 </div>
 <div class="w3-col l3 m6 w3-margin-bottom">
 	<img src="img/net3.jpg" style="width: 100%">

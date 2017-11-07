@@ -1,5 +1,4 @@
 package com.example.model.DAO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,22 +8,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.PostExeption;
 import com.example.exceptions.UserExeption;
 import com.example.model.DBConnection;
 import com.example.model.Post;
 import com.example.model.User;
-
 @Component
 public class PostDAO extends AbstractDAO implements IPostDAO {
-
-	// private static final String ADD_POST_WITH_PHOTO_STATEMENT = "INSERT INTO
-	// Posts VALUES (null,?,?,?,?)";
 	private static final String UPDATE_PHOTO_STATEMENT = "UPDATE Posts SET photo = ? WHERE post_id = ?";
 	private static final String GET_POST_BY_ID_STATEMENT = "SELECT * FROM Posts WHERE post_id= ?";
 	private static final String REMOVE_POST_STATEMENT = "DELETE FROM Posts WHERE post_id= ?";
@@ -83,13 +76,9 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 			int id = result.getInt(1);
 			String content = result.getString(2);
 
-			// if(result.getObject(3) instanceof User){ IT GIVES SOME ERROR
 			int postedBy = result.getInt(3);
 			Date date = result.getDate(4);
-			// }else{
-			// User postedBy=null;
-			// TODO Throw exception;
-			// }
+
 
 			return new Post(id, content, postedBy, date);
 
@@ -102,19 +91,19 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 	public List<Post> getAllPosts() throws PostExeption {
 
 		try {
-			PreparedStatement ps = getCon().prepareStatement( "SELECT * FROM Posts" );
-			ResultSet result=ps.executeQuery();
-			List posts=new ArrayList<Post>();
-			while(result.next()) {
-				int id= result.getInt("post_id");
-				String content=result.getString("content");
-				int user= result.getInt("user_id");
-				String photo=null;
-				if(result.getString("photo") != null){
-					photo=result.getString("photo");
+			PreparedStatement ps = getCon().prepareStatement("SELECT * FROM Posts");
+			ResultSet result = ps.executeQuery();
+			List posts = new ArrayList<Post>();
+			while (result.next()) {
+				int id = result.getInt("post_id");
+				String content = result.getString("content");
+				int user = result.getInt("user_id");
+				String photo = null;
+				if (result.getString("photo") != null) {
+					photo = result.getString("photo");
 				}
 				Date date = result.getDate("date");
-				Post post= new Post(id,content,user,date,photo);
+				Post post = new Post(id, content, user, date, photo);
 				posts.add(post);
 			}
 			return posts;
@@ -167,51 +156,43 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 		} catch (SQLException e) {
 			throw new PostExeption("This picture can't be added to the post");
 		}
-
 	}
-
 	@Override
 	public void changeContent(String content, Post post) throws PostExeption, UserExeption, InvalidDataException {
 		try {
 			userDao.getUserById(post.getPostedBy()).removePost(post);
-			PreparedStatement ps= getCon().prepareStatement("UPDATE Posts SET content= ? WHERE post_id= ?") ;
+			PreparedStatement ps = getCon().prepareStatement("UPDATE Posts SET content= ? WHERE post_id= ?");
 			ps.setString(1, content);
 			ps.setInt(2, post.getPostedBy());
 			ps.executeQuery();
 			userDao.getUserById(post.getPostedBy()).addPost(post);
-
 		} catch (SQLException e) {
 			throw new PostExeption("The content of the post can't be changed");
 		}
-		
-		
 	}
-
 	@Override
 	public List<Post> getPostsOfUser(User user) throws PostExeption {
 		try {
-			PreparedStatement ps = getCon().prepareStatement( "SELECT * FROM Posts WHERE user_id=?" );
+			PreparedStatement ps = getCon().prepareStatement("SELECT * FROM Posts WHERE user_id=?");
 			ps.setInt(1, user.getUserId());
-			ResultSet result=ps.executeQuery();
-			List posts=new ArrayList<Post>();
-			while(result.next()) {
-				int id= result.getInt("post_id");
-				String content=result.getString("content");
-				String photo=null;
-				if(result.getString("photo") != null){
-					photo=result.getString("photo");
+			ResultSet result = ps.executeQuery();
+			List posts = new ArrayList<Post>();
+			while (result.next()) {
+				int id = result.getInt("post_id");
+				String content = result.getString("content");
+				String photo = null;
+				if (result.getString("photo") != null) {
+					photo = result.getString("photo");
 				}
 				Date date = result.getDate("date");
-				Post post= new Post(id,content,user.getUserId(),date,photo);
+				Post post = new Post(id, content, user.getUserId(), date, photo);
 				posts.add(post);
 			}
 			return posts;
 		} catch (SQLException e) {
 			throw new PostExeption("You can't get the user posts");
 		}
-		
+
 	}
-	
-	
 
 }

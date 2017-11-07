@@ -61,8 +61,7 @@ public class LoginController extends HttpServlet {
 				user.setLastName(u.getLastName());
 				user.setUserId(u.getUserId());
 
-				// TODO
-				// user.getPosts().addAll(postsOfUser);
+				users.showAllPosts(user).stream().forEach(post-> user.addPost(post));
 
 				System.out.println(u.getUserId());
 				if (matching(u.getPassword(), user.getPassword()) && session.getAttribute("user") != null) {
@@ -71,7 +70,7 @@ public class LoginController extends HttpServlet {
 					return "redirect:/home";
 				}
 			} else {
-
+				
 				String error = result.getFieldError().getDefaultMessage().toString();
 				String field = result.getFieldError().getField().toString();
 				String loginErrorMessage = field + " " + error;
@@ -81,6 +80,7 @@ public class LoginController extends HttpServlet {
 			}
 			return "error";
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "error";
 		}
 

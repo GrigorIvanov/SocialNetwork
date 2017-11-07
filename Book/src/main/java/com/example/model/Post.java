@@ -11,28 +11,24 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class Post {
 	private int postId;
-	//@NotBlank
-	//private MultipartFile file;
-
+	// @NotBlank
+	// private MultipartFile file;
 
 	private String content;
 
-
-
 	private int postedBy;
-	//@NotBlank
+	// @NotBlank
 	private Date date;
 	private String urlPicture;
-	//private List<Integer> peopleWhoLikeIt = Collections.synchronizedList(new ArrayList<Integer>());
+	// private List<Integer> peopleWhoLikeIt = Collections.synchronizedList(new
+	// ArrayList<Integer>());
 
-	
-	
 	public Post(String content, int postedBy, Date date) {
 		this.setContent(content);
 		this.setPostedBy(postedBy);
 		this.setDate(date);
 	}
-	
+
 	public Post(int postId, String content, int postedBy, Date date, String urlPicture) {
 		super();
 		this.postId = postId;
@@ -42,50 +38,41 @@ public class Post {
 		this.urlPicture = urlPicture;
 	}
 
-	public Post (String content, int postedBy, String urlPicture, Date date) {
+	public Post(String content, int postedBy, String urlPicture, Date date) {
 		this.setContent(content);
 		this.setPostedBy(postedBy);
 		this.setUrlPicture(urlPicture);
 		this.setDate(date);
 	}
-	
+
 	public Post(String content, int postedBy, String urlPicture) {
 		this.setContent(content);
 		this.setPostedBy(postedBy);
 		this.setUrlPicture(urlPicture);
 	}
 
-
-
 	public Post() {
 
 	}
-	
-	
-	
 
 	public Date getDate() {
 		return date;
 	}
 
-
-
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-
 
 	public String getUrlPicture() {
 		return urlPicture;
 	}
 
 	public void setUrlPicture(String urlPicture) {
-			this.urlPicture = urlPicture;
+		this.urlPicture = urlPicture;
 	}
 
 	public Post(int postId, String content, int postedBy, Date date) {
-		this(content, postedBy,date);
+		this(content, postedBy, date);
 		this.postId = postId;
 	}
 
@@ -93,9 +80,6 @@ public class Post {
 	public String toString() {
 		return "Post [postId=" + postId + ", content=" + content + ", postedBy=" + postedBy + "]";
 	}
-
-	
-
 
 	public int getPostId() {
 		return postId;
@@ -112,9 +96,9 @@ public class Post {
 	}
 
 	public void setContent(String content) {
-		
-			this.content = content;
-		
+
+		this.content = content;
+
 	}
 
 	public int getPostedBy() {
@@ -134,15 +118,5 @@ public class Post {
 			return true;
 		}
 	}
-	
-//	public MultipartFile getFile() {
-//		return file;
-//	}
-//
-//
-//
-//	public void setFile(MultipartFile file) {
-//		this.file = file;
-//	}
 
 }

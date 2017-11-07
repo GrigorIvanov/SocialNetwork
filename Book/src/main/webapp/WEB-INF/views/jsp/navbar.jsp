@@ -26,7 +26,7 @@ body {
 	<div class="w3-top">
 		<div class="w3-bar w3-white w3-wide w3-padding w3-card">
 			<img src="img/logo.png" width='200x' />
-			<p class="hello">Hello ,${sessionScope.user.firstName}</p>
+			<p class="hello">Hello ,${sessionScope.user.firstName} ${sessionScope.user.lastName}</p>
 			<input class="searching" id='user' type="text"
 				placeholder="Search User" list="users_list" />
 			<datalist id='users_list'></datalist>
@@ -43,3 +43,12 @@ body {
 			</div>
 		</div>
 	</div>
+
+	<!-- Header -->
+	<header class="w3-display-container w3-content w3-wide"
+		style="max-width: 1500px;" id="home">
+		<img src="img/one.jpg" style="width: 100%">
+		<div class="w3-display-middle w3-margin-top w3-center"></div>
+	</header>
+
+	<br>

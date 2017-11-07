@@ -1,22 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-		
+<%@ include file="meta.jsp"%>
+<%@ include file="navbar.jsp"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Posts</title>
 </head>
 <body>
-
 	<form:form commandName="post">
-		<form:input path = "content"  type = "text" name = "content" placeholder = "Contetn:" />
+		<form:input path="content" type="text" name="content"
+			placeholder="Contetn:" />
 		<input type="submit" value="submit" />
 	</form:form>
-	
-
-	
+	<%@ include file="footer.jsp"%>
 </body>
 </html>

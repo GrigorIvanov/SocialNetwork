@@ -98,12 +98,13 @@ public class PostController extends HttpServlet {
 	@RequestMapping(value = "/AllPosts", method = RequestMethod.GET)
 	public String allPosts(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		try {
+			String id = request.getParameter("postId");
+			int postid = Integer.parseInt(id);
 		if (session.getAttribute("user") != null) {
 			User user = (User) session.getAttribute("user");
 			if (!user.equals(null)) {
-
 				request.setAttribute("posts", posts.getAllPosts());
-				return "showAllPosts";
+				return "AllPosts";
 
 			}
 

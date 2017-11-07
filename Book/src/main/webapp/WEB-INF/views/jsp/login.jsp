@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,6 +56,7 @@
 								src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d"
 								alt="" />
 						</div>
+			
 
 					</div>
 					<div class="cont_forms">
@@ -86,9 +86,10 @@
 							class="material-icons">&#xE5C4;</i></a>
 						<h2>SIGN UP</h2>
 						<c:out value = "${registerError}"/>
-						<form:input name="firstName" type="text" placeholder="First Name"
+						
+						<form:input  name="firstName" type="text" placeholder="First Name"
 							path="firstName" />
-						<form:input name="lastName" type="text" placeholder="Last Name"
+						<form:input  name="lastName" type="text" placeholder="Last Name"
 							path="lastName" />
 
 
