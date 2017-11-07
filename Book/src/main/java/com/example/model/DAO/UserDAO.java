@@ -232,5 +232,31 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		
 	}
 
+	@Override
+	public List<User> allUsers() throws InvalidDataException {
+		
+		List users = new ArrayList<User>();
+		try {
+			PreparedStatement ps=getCon().prepareStatement("SELECT * FROM Users");			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				User user=new User();
+
+				user.setUserId(rs.getInt("user_id"));
+				user.setEmail(rs.getString("email"));
+				user.setFirstName(rs.getString("first_name"));
+				user.setLastName(rs.getString("last_name"));
+				user.setPassword(rs.getString("password"));
+				user.setProfilPic(rs.getString("photo_id"));
+			}
+			return users;
+		} catch (SQLException e) {
+			throw new InvalidDataException( "Mysql statement failed");
+		}
+		
+	}
+	
+
+	
 }
 
