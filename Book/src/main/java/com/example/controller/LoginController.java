@@ -53,6 +53,10 @@ public class LoginController extends HttpServlet {
 			//user.setUserId(u.getUserId());
 			user.setLastName(u.getLastName());
 			user.setUserId(u.getUserId());
+			
+			//TODO
+			//user.getPosts().addAll(postsOfUser);
+			
 			System.out.println(u.getUserId());
 			if (matching(u.getPassword(), user.getPassword())&& session.getAttribute("user")!=null) {
 				System.out.println(session.getAttribute("user"));

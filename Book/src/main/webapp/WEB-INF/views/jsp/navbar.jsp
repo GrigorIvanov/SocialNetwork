@@ -11,11 +11,11 @@
 			<a href="#home" class="w3-bar-item w3-button"> Book</a>
 			<!-- Float links to the right. Hide them on small screens -->
 			<div class="w3-right w3-hide-small">
-				<a href="#projects" class="w3-bar-item w3-button">My wall</a> <a
-					href="#about" class="w3-bar-item w3-button">Photos</a> <a
-					href="#contact" class="w3-bar-item w3-button">Friends</a> <a
-					href="#contact" class="w3-bar-item w3-button">Messages</a> <a
-					href="post" class="w3-bar-item w3-button">Posts</a>
+				<a href="ShowAllUserPosts" class="w3-bar-item w3-button">My wall</a> <a
+					href="AllPhotos" class="w3-bar-item w3-button">Photos</a> <a
+					href="AllFriends" class="w3-bar-item w3-button">Friends</a> <a
+					href="AllMessages" class="w3-bar-item w3-button">Messages</a> <a
+					href="AllPosts" class="w3-bar-item w3-button">Posts</a>
 			</div>
 		</div>
 	</div>
