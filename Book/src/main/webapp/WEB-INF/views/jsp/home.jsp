@@ -4,7 +4,7 @@
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide"
 	style="max-width: 1500px;" id="home">
-	<img src="img/sn.jpg" style="width: 100%">
+	<img src="img/one.jpg" style="width: 100%">
 	<div class="w3-display-middle w3-margin-top w3-center"></div>
 </header>
 

@@ -11,6 +11,7 @@
 	<c:forEach items="${posts}" var="post">
 		<table style="border: 1px solid; text-align: center">
 			<p>Content: ${post.content}</p>
+			<p>Content: ${post.date}</p>
 		</table>
 	</c:forEach>
 </body>

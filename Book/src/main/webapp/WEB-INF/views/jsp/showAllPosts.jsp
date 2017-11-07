@@ -1,5 +1,7 @@
 <%@ include file="meta.jsp"%>
 <%@ include file="navbar.jsp"%>
+
+
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide"
 	style="max-width: 1500px;" id="home">
@@ -9,6 +11,8 @@
 <br>
 <body>
 
+
+
 	<form name="test" method="get" action="post">
 		<input type="submit" value="New post"/> 
 			
@@ -16,11 +20,11 @@
 
 	<c:forEach items="${posts}" var="post">
 		<table style="border: 1px solid; text-align: center">
-
-
-			<p>User first name: ${user.firstName}</p>
-			<p>User last name: ${user.lastName}"</p>
-			<p>Content: ${post.content}</p>
+		<form name="test" method="get" action="upload">
+			<input type="submit" value="Upload Picture"/> 
+		</form>
+		<p>Content: ${post.content}</p>
+		<p>Content: ${post.date}</p>
 
 
 

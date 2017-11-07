@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.io.File;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.example.exceptions.PostExeption;
 import com.example.model.Post;
 import com.example.model.User;
 import com.example.model.DAO.IPostDAO;
@@ -29,11 +30,16 @@ public class PostController extends HttpServlet {
 
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
 	public String login(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		try {
 		if (session.getAttribute("user") != null) {
 			Post post = new Post();
 			model.addAttribute(post);
 		}
 		return "post";
+		}catch (Exception e) {
+			return "error";
+		}
+
 	}
 
 	// @ModelAttribute("post");
@@ -43,44 +49,15 @@ public class PostController extends HttpServlet {
 		try {
 			if (!result.hasErrors() && session.getAttribute("user") != null) {
 
-				// String slash = File.separator;
-				// String UPLOAD_DIR =
-				// "Book"+slash+"src"+slash+"main"+slash+"webapp"+slash+"static"+slash+"img";
-				// String applicationPath = request.getServletContext().getRealPath("");
-				// String[] pat= applicationPath.split(slash+".metadata"+slash);
-				// applicationPath = pat[0];
-				// String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
-				// String file = post.getFile().getAbsolutePath();
-				// System.err.println(file);
-				// System.err.println(post);
-				//
-				//
-				//
-				//
-				// response.setContentType("image/jpeg");
-				// try (BufferedInputStream bis = new BufferedInputStream(new
-				// FileInputStream(new File(uploadFilePath)))) {
-				// do {
-				// int x = bis.read();
-				// if ( x != -1) {
-				// response.getOutputStream().write(x);
-				// } else {
-				// break;
-				// }
-				// }
-				// while(true);
-				// };
-				// response.getOutputStream().close();
-
-				// System.err.println(post);
+				
 
 				post.setPostedBy(((User) (session.getAttribute("user"))).getUserId());
 				int id = posts.addPost(post);
 				Post p = posts.getPostById(id);
-
+				((User)(session.getAttribute("user"))).addPost(p);
 				// ((User)(session.getAttribute("user"))).getPosts().stream().forEach(w ->
 				// System.err.println(w));
-				System.out.println(((User) (session.getAttribute("user"))).getPosts().get(1));
+				((User)(session.getAttribute("user"))).getPosts().stream().forEach(r -> System.out.println(r));
 
 				return "home";
 
@@ -98,38 +75,33 @@ public class PostController extends HttpServlet {
 
 	}
 
-	@RequestMapping(value = "/upload", method = RequestMethod.GET)
-	public String upload(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-		if (session.getAttribute("user") != null) {
-
-		}
-
-		return "home";
-	}
-
 	@RequestMapping(value = "/ShowAllUserPosts", method = RequestMethod.GET)
 	public String posts(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		try {
 		if (session.getAttribute("user") != null) {
 			User user = (User) session.getAttribute("user");
 			if (!user.equals(null)) {
 				request.setAttribute("posts", user.getPosts());
-				request.setAttribute("user", user);
+				//request.setAttribute("user", user);
 				return "showAllPosts";
 
 			}
 
 		}
 		return "error";
+		}catch (Exception e) {
+			return "error";
+		}
+
 	}
 
-
-
 	@RequestMapping(value = "/AllPosts", method = RequestMethod.GET)
-	public String allPosts(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws PostExeption {
+	public String allPosts(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		try {
 		if (session.getAttribute("user") != null) {
 			User user = (User) session.getAttribute("user");
 			if (!user.equals(null)) {
-				
+
 				request.setAttribute("posts", posts.getAllPosts());
 				return "showAllPosts";
 
@@ -137,6 +109,10 @@ public class PostController extends HttpServlet {
 
 		}
 		return "error";
-	}
+		}catch (Exception e) {
+			return "error";
+		}
+
+		}
 
 }
