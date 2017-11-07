@@ -29,7 +29,7 @@ public class ConversationDAO extends AbstractDAO implements IConversationDAO {
 				ResultSet rs = ps.getGeneratedKeys();
 				rs.next();
 				convo.getMembers().add(creator);
-				creator.getChat().add(convo);
+				creator.getConversations().add(convo);
 
 				/**
 				 * here we add now the creator(user) of the chat in the Chat_User table
@@ -55,7 +55,7 @@ public class ConversationDAO extends AbstractDAO implements IConversationDAO {
 				e.printStackTrace();
 			}
 			convo.getMembers().add(user);
-			user.getChat().add(convo);
+			user.getConversations().add(convo);
 
 		} catch (SQLException e) {
 			throw new ConversationException("This user cant be added to the chat", e);
