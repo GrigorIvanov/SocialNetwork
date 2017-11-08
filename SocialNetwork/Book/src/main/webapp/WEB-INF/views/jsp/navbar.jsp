@@ -32,13 +32,13 @@ body {
 			<datalist id='users_list'></datalist>
 
 			<!-- Float links to the right. Hide them on small screens -->
-			<div class="w3-right w3-hide-small">
+				<div class="w3-right w3-hide-small">
 				<a href="ShowAllUserPosts" class="w3-bar-item w3-button">My wall</a><a
 					href="AllPosts" class="w3-bar-item w3-button">Posts</a> <a
-					href="AllPhotos" class="w3-bar-item w3-button">Photos</a> <a
+					href="showAllMyPhotos" class="w3-bar-item w3-button">Photos</a> <a
 					href="friends" class="w3-bar-item w3-button">Friends</a> <a
-					href="showAllMyConversations" class="w3-bar-item w3-button">Messages</a> <a
-					href="MyProfile" class="w3-bar-item w3-button">My profile</a><img
+					href="AllMessages" class="w3-bar-item w3-button">Messages</a> <a
+					href="editProfile" class="w3-bar-item w3-button">My profile</a><img
 					src="img/people.png" width='70px' /> <br> <br>
 			</div>
 		</div>

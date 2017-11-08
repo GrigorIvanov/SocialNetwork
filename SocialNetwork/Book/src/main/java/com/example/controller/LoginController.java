@@ -1,11 +1,10 @@
 package com.example.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -61,7 +60,7 @@ public class LoginController extends HttpServlet {
 				user.setLastName(u.getLastName());
 				user.setUserId(u.getUserId());
 
-				users.showAllPosts(user).stream().forEach(post-> user.addPost(post));
+				users.showAllPosts(user).stream().forEach(post -> user.addPost(post));
 
 				System.out.println(u.getUserId());
 				if (matching(u.getPassword(), user.getPassword()) && session.getAttribute("user") != null) {
@@ -70,7 +69,7 @@ public class LoginController extends HttpServlet {
 					return "redirect:/home";
 				}
 			} else {
-				
+
 				String error = result.getFieldError().getDefaultMessage().toString();
 				String field = result.getFieldError().getField().toString();
 				String loginErrorMessage = field + " " + error;
@@ -139,15 +138,6 @@ public class LoginController extends HttpServlet {
 
 	}
 
-	/**
-	 * This method is comparing two md5 Strings and returns true if they mach.
-	 * 
-	 * @param orig
-	 *            String
-	 * @param compare
-	 *            String
-	 * @return boolean
-	 */
 	public static boolean matching(String orig, String compare) {
 		String md5 = null;
 		try {
@@ -161,6 +151,43 @@ public class LoginController extends HttpServlet {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
+	public String editProfile(HttpServletRequest request, Model model, HttpSession session) {
+		return "MyProfile";
+	}
+
+	@RequestMapping(value = "/changeFirstName", method = RequestMethod.GET)
+	public String editFirstName(HttpServletRequest request, Model model, HttpSession session) {
+		String firstname = request.getParameter("firstName");
+		User user = (User) session.getAttribute("user");
+
+		try {
+			users.changeFirstName(user, firstname);
+		} catch (InvalidDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		user.setFirstName(firstname);
+		session.setAttribute("user", user);
+		return "forward:editProfile";
+	}
+
+	@RequestMapping(value = "/changeLastName", method = RequestMethod.GET)
+	public String editLastName(HttpServletRequest request, Model model, HttpSession session) {
+		String lastname = request.getParameter("lastName");
+		User user = (User) session.getAttribute("user");
+
+		try {
+			users.changeLastName(user, lastname);
+		} catch (InvalidDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		user.setLastName(lastname);
+		session.setAttribute("user", user);
+		return "forward:editProfile";
 	}
 
 }
