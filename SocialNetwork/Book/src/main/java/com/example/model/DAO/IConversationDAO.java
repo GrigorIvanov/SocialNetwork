@@ -12,5 +12,5 @@ public interface IConversationDAO {
 	
 	int MakeConversation(User member, Conversation convo) throws ConversationException, UserExeption;
 	void AddUserToConversation(User user, Conversation convo) throws ConversationException, UserExeption;
-	
+	Conversation getConversationById(int convoId) throws UserExeption;
 }

@@ -1,61 +1,75 @@
 package com.example.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.exceptions.InvalidDataException;
+import com.example.exceptions.InvalidLikeException;
+import com.example.exceptions.PostExeption;
+import com.example.exceptions.UserExeption;
 import com.example.model.Like;
-import com.example.model.Post;
 import com.example.model.User;
 import com.example.model.DAO.ILikeDAO;
+import com.example.model.DAO.IPostDAO;
 
 @Controller
-@SessionAttributes("user")
 public class LikesController {
-	
-	@Autowired
-	ILikeDAO postsDAO;
-	
-	
-	@RequestMapping(value = "/likes", method = RequestMethod.GET)
-	public String like(Model model, HttpSession session) {
-		if (session.getAttribute("user") != null) {
-			Like like = new Like();
-			model.addAttribute(like);
-		}
 
-		return "like";
+	@Autowired
+	ILikeDAO likeDao;
+	IPostDAO postDao;
+
+	@RequestMapping(value = "/newLike", method = RequestMethod.GET)
+	public String likePost(HttpServletRequest request, HttpSession session, Model model) throws UserExeption {
+		String id = request.getParameter("postId");
+		int postid = Integer.parseInt(id);
+		User u = (User) session.getAttribute("user");
+		System.err.println(u);
+		System.err.println(postid);
+		//Like like2=new Like
+		Like like = new Like(u.getUserId(), postDao.getPostById(postid));
+		System.err.println(like);
+
+		try {
+			System.err.println(u);
+			System.err.println(postid);
+			likeDao.clickLike(like);
+			System.err.println(like);
+		} catch (InvalidLikeException e) {
+			e.printStackTrace();
+			return "error";
+		} catch (InvalidDataException e) {
+			System.out.println("Invalid Data");
+			return "error";
+		}
+		return "forward:showLikes";
 	}
 
-	 //@ModelAttribute("like");
-	@RequestMapping(value = "/likes", method = RequestMethod.POST)
-	public String lieked(Model model,@ModelAttribute("like") Like like, BindingResult result, HttpSession session,  RedirectAttributes redir) {
+	@RequestMapping(value = "/showAllLikes", method = RequestMethod.GET)
+	public String showLikes(HttpServletRequest request, Model viewModel) {
+		String postId = request.getParameter("postId");
+		int myPost = Integer.parseInt(postId);
+		List<User> likes = null;
 		try {
-			if (!result.hasErrors() && session.getAttribute("user") != null) {
-				User u = (User) session.getAttribute("user");
-				System.err.println(u);
-				like.getUserWhoLikedIt();
-//				int id = posts.addPost(post);
-//				Post p = posts.getPostById(id);
-				redir.addAttribute(session.getAttribute("user"));
-				return "home";
-
-			} else {
-				return "login";
-			}
-		} catch (Exception e) {
+			likes = postDao.getAllPeopleWhoLikeThisPost(postDao.getPostById(myPost));
+			;
+		} catch (PostExeption e) {
 			e.printStackTrace();
 			return "error";
 		}
+		if (likes == null) {
+			return "error";
+		} else {
+			viewModel.addAttribute(likes);
+			return "showLikes";
+		}
 	}
-
-	
 }

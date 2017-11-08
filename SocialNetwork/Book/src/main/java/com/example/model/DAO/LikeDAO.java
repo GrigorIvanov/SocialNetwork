@@ -17,7 +17,7 @@ import com.example.model.Like;
 public class LikeDAO extends AbstractDAO implements ILikeDAO {
 
 	private static final String UNLIKE_STATEMENT = "DELETE FROM Likes WHERE post_id=? AND user_id= ?";
-	private static final String CHECK_IF_USER_LIKED_IT_STATEMENT = "SELECT * FROM likes WHERE post_id=? and user_id= ? ";
+	private static final String CHECK_IF_USER_LIKED_IT_STATEMENT = "SELECT * FROM Likes WHERE post_id=? and user_id= ? ";
 	private static final String ADD_LIKE_STATEMENT = "INSERT INTO Likes VALUES(?, ?)";
 	
 	

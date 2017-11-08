@@ -26,12 +26,17 @@
 		<form name="upload" method="get">
 			<input type="submit" value="Delete" />
 		</form>
-		<form name="upload" method="get">
-			<input type="submit" value="Like" />
+
+		<form name="test" method="get" action="newLike">
+			<input type="hidden" name="postId" value="${post.postId}" /> <input
+				type="submit" value="Like">
 		</form>
-		<form name="upload" method="get">
-			<input type="submit" value="Show likes" />
+
+		<form name="test" method="get" action="showAllLikes">
+			<input type="hidden" name="postId" value="${post.postId}" /> <input
+				type="submit" value="Show likes">
 		</form>
+
 		<form name="upload" method="get">
 			<input type="submit" value="Show comments" />
 		</form>

@@ -17,15 +17,22 @@
 				<td>${post.date}</td>
 			</tr>
 		</table>
-		<form name="test" method="get">
-			<input type="submit" value="Like" />
+
+
+		<form name="test" method="get" action="newLike">
+			<input type="hidden" name="postId" value="${post.postId}" /> <input
+				type="submit" value="Like">
 		</form>
+
+		<form name="test" method="get" action="showAllLikes">
+			<input type="hidden" name="postId" value="${post.postId}" /> <input
+				type="submit" value="Show likes">
+		</form>
+
 		<form name="test" method="get">
 			<input type="submit" value="Show comments" />
 		</form>
-		<form name="test" method="get">
-			<input type="submit" value="Show likes" />
-		</form>
+
 	</c:forEach>
 </body>
 <%@ include file="footer.jsp"%>

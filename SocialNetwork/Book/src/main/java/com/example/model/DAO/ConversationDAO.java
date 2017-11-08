@@ -2,16 +2,13 @@ package com.example.model.DAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.example.exceptions.ConversationException;
-import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.UserExeption;
 import com.example.model.Conversation;
 import com.example.model.User;
-import com.example.model.DBConnection;
 
 public class ConversationDAO extends AbstractDAO implements IConversationDAO {
 
@@ -60,6 +57,25 @@ public class ConversationDAO extends AbstractDAO implements IConversationDAO {
 		} catch (SQLException e) {
 			throw new ConversationException("This user cant be added to the chat", e);
 		}
+	}
+
+	@Override
+	public Conversation getConversationById(int convoId) throws UserExeption {
+	
+			try {
+				PreparedStatement ps = getCon().prepareStatement("SELECT * FROM Conversations WHERE conversation_id=?");
+				ps.setInt(1, convoId);
+				ResultSet result = ps.executeQuery();
+				result.next();
+				int id = result.getInt(1);
+				String title=result.getString(2);
+
+				return new Conversation(id, title);
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new UserExeption("Can't find user with that ID.", e);
+			}
 	}
 
 }
