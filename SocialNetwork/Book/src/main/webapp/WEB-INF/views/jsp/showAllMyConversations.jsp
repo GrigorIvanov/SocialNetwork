@@ -23,7 +23,7 @@ table, th, td {
 		<div class="cloud x5"></div>
 		</br> </br>
 
-		<form method="get" action="showAllMyPosts">
+		<form method="get" action="home">
 			<input type="submit" value="Back to Homepage" />
 		</form>
 		<c:forEach items="${conversations}" var="conversation">

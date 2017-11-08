@@ -115,7 +115,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 	@Override
 	public List<User> getAllPeopleWhoLikeThisPost(Post post) throws PostExeption {
 
-		List likes = new ArrayList<User>();
+		List<User> likes = new ArrayList<User>();
 
 		PreparedStatement ps;
 		try {
@@ -130,15 +130,16 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 				user.setLastName(rs.getString("last_name"));
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
-				if (rs.getString("photo_id") != null) {
-					user.setProfilPic(rs.getString("profil_id"));
-				}
+//				if (rs.getString("photo_id") != null) {
+					user.setProfilPic(rs.getString("photo_id"));
+//				}
 				likes.add(user);
 
 			}
 
 			return likes;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new PostExeption("You can't see the people, who like it");
 		}
 	}

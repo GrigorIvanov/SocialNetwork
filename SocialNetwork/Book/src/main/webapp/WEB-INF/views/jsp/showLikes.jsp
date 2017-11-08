@@ -9,7 +9,7 @@
 <html>
 <body>
 
-	<c:forEach items="${likes}" var="like">
+	<c:forEach items="${likes}" var="like" >
 		<table style="border: 1px solid; text-align: center">
 			<br>
 			<br>

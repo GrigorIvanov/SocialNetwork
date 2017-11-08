@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.InvalidLikeException;
@@ -21,10 +22,12 @@ import com.example.model.DAO.ILikeDAO;
 import com.example.model.DAO.IPostDAO;
 
 @Controller
+@SessionAttributes("user")
 public class LikesController {
 
 	@Autowired
 	ILikeDAO likeDao;
+	@Autowired
 	IPostDAO postDao;
 
 	@RequestMapping(value = "/newLike", method = RequestMethod.GET)
@@ -32,25 +35,22 @@ public class LikesController {
 		String id = request.getParameter("postId");
 		int postid = Integer.parseInt(id);
 		User u = (User) session.getAttribute("user");
-		System.err.println(u);
-		System.err.println(postid);
+
+		System.out.println(postDao.getPostById(postid));
 		//Like like2=new Like
 		Like like = new Like(u.getUserId(), postDao.getPostById(postid));
 		System.err.println(like);
 
 		try {
-			System.err.println(u);
-			System.err.println(postid);
 			likeDao.clickLike(like);
-			System.err.println(like);
 		} catch (InvalidLikeException e) {
 			e.printStackTrace();
 			return "error";
 		} catch (InvalidDataException e) {
-			System.out.println("Invalid Data");
+			e.printStackTrace();
 			return "error";
 		}
-		return "forward:showLikes";
+		return "showLikes";
 	}
 
 	@RequestMapping(value = "/showAllLikes", method = RequestMethod.GET)
@@ -60,7 +60,6 @@ public class LikesController {
 		List<User> likes = null;
 		try {
 			likes = postDao.getAllPeopleWhoLikeThisPost(postDao.getPostById(myPost));
-			;
 		} catch (PostExeption e) {
 			e.printStackTrace();
 			return "error";

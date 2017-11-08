@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.exceptions.InvalidDataException;
 import com.example.model.User;
@@ -25,6 +26,7 @@ import com.google.gson.GsonBuilder;
 
 
 @Controller
+@SessionAttributes("user")
 public class FriendController {
 
 	@Autowired

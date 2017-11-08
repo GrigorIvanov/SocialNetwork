@@ -1,6 +1,7 @@
 package com.example.controller;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -41,8 +42,8 @@ public class ConversationController {
 	public String showConversations(HttpServletRequest request, HttpSession session, Model viewModel) {
 		try {
 		User user = (User) session.getAttribute("user");
-		ArrayList<Conversation> myconverastions = null;
-		myconverastions = (ArrayList<Conversation>) user.getConversations();
+		List<Conversation> myconverastions = null;
+		myconverastions = user.getConversations();
 		Collection<User> friends = null;
 		try {
 			friends = userDAO.allFriends(user);
@@ -59,7 +60,7 @@ public class ConversationController {
 		}
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "exception";
+			return "error";
 		}
 	}
 
@@ -81,9 +82,9 @@ public class ConversationController {
 			e1.printStackTrace();
 			return "error";
 		}
-		ArrayList<Message> messages = null;
+		List<Message> messages = null;
 		try {
-			messages =   (ArrayList<Message>) convo.getMessages();
+			messages = convo.getMessages();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error";
