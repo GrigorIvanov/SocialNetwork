@@ -13,7 +13,7 @@ public class DBConnection {
 	static private final String DB_PORT = "3306";
 	static private final String DB_DBNAME = "JavaBookDB";
 	static private final String DB_USER = "root";
-	static private final String DB_PASS = "1";
+	static private final String DB_PASS = "root";
 
 	private DBConnection() {
 		try {
