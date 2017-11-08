@@ -14,6 +14,11 @@ public class Conversation {
 	private List<Message> messages = Collections.synchronizedList(new ArrayList<Message>());
 
 	
+	
+	
+	public Conversation() {
+	}
+
 	public Conversation(int conversationId, String text) {
 		this.conversationId = conversationId;
 		this.title = text;

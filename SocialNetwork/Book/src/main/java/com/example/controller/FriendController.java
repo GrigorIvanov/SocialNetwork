@@ -34,9 +34,15 @@ public class FriendController {
 	@RequestMapping(value = "/friends", method = RequestMethod.GET)
 	public String showFriends(HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
-		Collection<User> friends = userDAO;
+		Collection<User> friends = null;
+		try {
+			friends = userDAO.allFriends(user);
+		} catch (InvalidDataException e) {
+			e.printStackTrace();
+			return "error";
+		}
 		model.addAttribute(friends);
-		return "showMyFriends";
+		return "friends";
 	}
 
 

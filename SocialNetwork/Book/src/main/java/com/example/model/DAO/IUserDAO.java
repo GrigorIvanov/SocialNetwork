@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.UserExeption;
+import com.example.model.Conversation;
 import com.example.model.Post;
 import com.example.model.User;
 @Component
@@ -34,5 +35,7 @@ public interface IUserDAO  {
 	List <User> allUsers() throws InvalidDataException;
 
 	List <User> allFriends( User user) throws InvalidDataException;
+	
+	List<Conversation> getAllConversations(User user) throws InvalidDataException;
 
 }

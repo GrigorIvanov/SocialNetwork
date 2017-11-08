@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.UserExeption;
+import com.example.model.Conversation;
 import com.example.model.DBConnection;
 import com.example.model.Post;
 import com.example.model.User;
@@ -255,6 +256,8 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		}
 		
 	}
+	
+	
 
 	@Override
 	public List<User> allFriends(User user) throws InvalidDataException {
@@ -283,6 +286,28 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 			throw new InvalidDataException( "Mysql statement failed");
 		}
 	}
+
+	@Override
+	public List<Conversation> getAllConversations(User user) throws InvalidDataException {
+		List convos=new ArrayList<Conversation>();
+		
+		try {
+			PreparedStatement ps=getCon().prepareStatement("SELECT * FROM Chat_user WHERE user_id=?");
+			ps.setInt(1,user.getUserId() );
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Conversation convo= new Conversation();
+					convo.setConversationId(rs.getInt("conversation_id" ));
+					convo.setTitle(rs.getString("title"));
+				convos.add(convo);
+			}
+			
+			return convos;
+		} catch (SQLException e) {
+			throw new InvalidDataException( "Mysql statement failed");
+		}
+	}
+	
 	
 
 	
