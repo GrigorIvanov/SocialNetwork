@@ -5,15 +5,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.springframework.stereotype.Component;
+
 import com.example.exceptions.ConversationException;
 import com.example.exceptions.UserExeption;
 import com.example.model.Conversation;
 import com.example.model.User;
-
+@Component
 public class ConversationDAO extends AbstractDAO implements IConversationDAO {
 
 	private static final String ADDING_CHAT_USER_STATEMENT = "INSERT INTO Chat_user VALUES (?,?)";
 	private static final String MAKE_CONVERSATION_STATEMENT = "INSERT INTO Conversations VALUES(null, ?)";
+	private static final String INSERT_CONVERSATION_TO_USER= "INSERT INTO Chat_user VALUES (?,?)";
 
 	public int MakeConversation(User creator, Conversation convo) throws ConversationException, UserExeption {
 		if (convo != null && creator != null) {
@@ -56,6 +59,20 @@ public class ConversationDAO extends AbstractDAO implements IConversationDAO {
 
 		} catch (SQLException e) {
 			throw new ConversationException("This user cant be added to the chat", e);
+		}
+	}
+	
+	public void setConversationToUsers(int userId,int conversationId) throws ConversationException {
+		
+		try {
+			PreparedStatement ps = getCon().prepareStatement(INSERT_CONVERSATION_TO_USER, Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, conversationId);
+			ps.setInt(2, userId);
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			rs.next();
+		} catch (SQLException e) {
+			throw new ConversationException("Conversation cannot be received right now, please try again later.");
 		}
 	}
 

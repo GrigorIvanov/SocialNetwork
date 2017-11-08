@@ -3,8 +3,8 @@
 
 <html>
 <body>
-	<form name="upload" method="get">
-		<input type="submit" value="Upload piscture" />
+	<form name="post" method="get" action="post">
+		<input type="submit" value="New post" />
 	</form>
 	<c:forEach items="${posts}" var="post">
 		<table style="border: 1px solid; text-align: center">
@@ -17,9 +17,12 @@
 			<tr>
 				<td>${post.content}</td>
 				<td>${post.date}</td>
+				<td>${post.urlPicture}</td>
 			</tr>
 		</table>
-
+		<form name="upload" method="get">
+			<input type="submit" value="Upload picture" />
+		</form>
 		<form name="test" method="get">
 			<input type="submit" value="Edit" />
 		</form>
