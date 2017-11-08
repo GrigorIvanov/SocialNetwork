@@ -31,14 +31,21 @@ public class Conversation {
 		this.conversationId = conversationId;
 	}
 
-	public List<User> getMembers() {
-		return members;
+	public void addMember(User user) {
+		if(user!=null) {
+			this.members.add(user);
+		}
 	}
-
-	public List<Message> getMessages() {
-		return messages;
+	public void removeMember(User user) {
+		if(user!=null) {
+			this.members.remove(user);
+		}
 	}
-
+	
+	public List<User> getMembers(){
+		return Collections.unmodifiableList(this.members);
+	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -47,9 +54,21 @@ public class Conversation {
 		this.title = text;
 	}
 
-	public void setMessages(List messages) {
-		this.messages = messages;
+	public void addMessage(Message text) {
+		if(text!=null) {
+			this.messages.add(text);
+		}
 	}
+	public void removeMessage(Message text) {
+		if(text!=null) {
+			this.messages.remove(text);
+		}
+	}
+	
+	public List<Message> getMessages(){
+		return Collections.unmodifiableList(this.messages);
+	}
+	
 	
 }
 
