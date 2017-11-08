@@ -3,9 +3,7 @@
 
 <html>
 <body>
-	<form name="test" method="get" action="post">
-		<input type="submit" value="New post" />
-	</form>
+
 	<c:forEach items="${posts}" var="post">
 		<table style="border: 1px solid; text-align: center">
 			<br>
@@ -19,6 +17,15 @@
 				<td>${post.date}</td>
 			</tr>
 		</table>
+		<form name="test" method="get">
+			<input type="submit" value="Like" />
+		</form>
+		<form name="test" method="get">
+			<input type="submit" value="Show comments" />
+		</form>
+		<form name="test" method="get">
+			<input type="submit" value="Show likes" />
+		</form>
 	</c:forEach>
 </body>
 <%@ include file="footer.jsp"%>

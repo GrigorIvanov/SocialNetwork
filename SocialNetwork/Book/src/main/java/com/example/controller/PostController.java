@@ -29,7 +29,7 @@ public class PostController extends HttpServlet {
 	IPostDAO posts;
 
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
-	public String login(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String post(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		try {
 		if (session.getAttribute("user") != null) {
 			Post post = new Post();
@@ -44,7 +44,7 @@ public class PostController extends HttpServlet {
 
 	// @ModelAttribute("post");
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
-	public String loginFeedback(Model model, @Valid @ModelAttribute("post") Post post, BindingResult result,
+	public String posted(Model model, @Valid @ModelAttribute("post") Post post, BindingResult result,
 			HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			if (!result.hasErrors() && session.getAttribute("user") != null) {
@@ -98,8 +98,6 @@ public class PostController extends HttpServlet {
 	@RequestMapping(value = "/AllPosts", method = RequestMethod.GET)
 	public String allPosts(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String id = request.getParameter("postId");
-			int postid = Integer.parseInt(id);
 		if (session.getAttribute("user") != null) {
 			User user = (User) session.getAttribute("user");
 			if (!user.equals(null)) {
@@ -111,6 +109,7 @@ public class PostController extends HttpServlet {
 		}
 		return "error";
 		}catch (Exception e) {
+			e.printStackTrace();
 			return "error";
 		}
 
