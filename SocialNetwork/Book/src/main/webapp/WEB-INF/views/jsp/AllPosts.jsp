@@ -15,6 +15,8 @@
 			<tr>
 				<td>${post.content}</td>
 				<td>${post.date}</td>
+				<td><img src="img/${post.urlPicture}" /></td>
+
 			</tr>
 		</table>
 
@@ -29,7 +31,7 @@
 				type="submit" value="Show likes">
 		</form>
 
-		<form name="test" method="get">
+		<form name="showPostComments" method="get">
 			<input type="submit" value="Show comments" />
 		</form>
 

@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -77,17 +79,33 @@ public class ConversationDAO extends AbstractDAO implements IConversationDAO {
 	}
 
 	@Override
-	public Conversation getConversationById(int convoId) throws UserExeption {
-	
+	public List<Conversation> getConversationById(int userid) throws UserExeption {
+		List<Integer> myConvoId=new ArrayList<Integer>();
+		List<Conversation> myConversations=new ArrayList<Conversation>();
 			try {
-				PreparedStatement ps = getCon().prepareStatement("SELECT * FROM Conversations WHERE conversation_id=?");
-				ps.setInt(1, convoId);
+				
+				PreparedStatement ps = getCon().prepareStatement("SELECT * FROM Chat_user WHERE user_id=?");
+				ps.setInt(1, userid);
 				ResultSet result = ps.executeQuery();
-				result.next();
-				int id = result.getInt(1);
-				String title=result.getString(2);
 
-				return new Conversation(id, title);
+				while(result.next()) {
+					myConvoId.add(result.getInt(1));
+				}
+				
+
+				for (Integer id : myConvoId ) {
+					PreparedStatement ps2=getCon().prepareStatement("SELECT * FROM Conversations WHERE conversation_id=?");
+					ps2.setInt(1, id);
+					ResultSet result2=ps2.executeQuery();
+					Conversation conv= new Conversation();
+					conv.setConversationId(result2.getInt(1));
+					conv.setTitle(result2.getString(2));
+					myConversations.add(conv);
+					
+				}
+				
+				
+				return myConversations;
 
 			} catch (SQLException e) {
 				e.printStackTrace();

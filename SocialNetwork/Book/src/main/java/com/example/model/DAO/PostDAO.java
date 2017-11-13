@@ -122,16 +122,29 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 			ps = getCon().prepareStatement("SELECT * FROM Likes WHERE post_id=?");
 			ps.setInt(1, post.getPostId());
 
+			
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				User user = new User();
-				user.setUserId(rs.getInt("user_id"));
-				user.setFirstName(rs.getString("first_name"));
-				user.setLastName(rs.getString("last_name"));
-				user.setEmail(rs.getString("email"));
-				user.setPassword(rs.getString("password"));
-//				if (rs.getString("photo_id") != null) {
-					user.setProfilPic(rs.getString("photo_id"));
+				User user = null;
+				try {
+					user = userDao.getUserById(rs.getInt(2));
+				} catch (UserExeption e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidDataException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//				User user = new User();
+//				user.setUserId(rs.getInt(1));
+//				user.setFirstName(rs.getString(2));
+//				user.setLastName(rs.getString(3));
+//				user.setEmail(rs.getString(4));
+//				user.setPassword(rs.getString(5));
+////				if (rs.getString("photo_id") != null) {
+//					user.setProfilPic(rs.getString(6));
+					
+					
 //				}
 				likes.add(user);
 

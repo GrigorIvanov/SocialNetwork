@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.exceptions.InvalidDataException;
+import com.example.exceptions.UserExeption;
 import com.example.model.User;
 import com.example.model.DAO.IUserDAO;
 import com.google.gson.Gson;
@@ -38,12 +39,17 @@ public class FriendController {
 		User user = (User) session.getAttribute("user");
 		Collection<User> friends = null;
 		try {
-			friends = userDAO.allFriends(user);
+			try {
+				friends = userDAO.allFriends(user);
+			} catch (UserExeption e) {
+				e.printStackTrace();
+				return "error";
+			}
 		} catch (InvalidDataException e) {
 			e.printStackTrace();
 			return "error";
 		}
-		model.addAttribute(friends);
+		model.addAttribute("friends",friends);
 		return "friends";
 	}
 
@@ -57,6 +63,7 @@ public class FriendController {
 			ArrayList<User> users = null;
 			try {
 				users = (ArrayList<User>) userDAO.allUsers();
+				System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+users.size());
 			} catch (InvalidDataException e) {
 				response.sendRedirect("error");
 				e.printStackTrace();

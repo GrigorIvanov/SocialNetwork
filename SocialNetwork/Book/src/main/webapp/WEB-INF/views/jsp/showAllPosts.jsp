@@ -17,10 +17,11 @@
 			<tr>
 				<td>${post.content}</td>
 				<td>${post.date}</td>
-				<td>${post.urlPicture}</td>
+				<td><img src = "img/${post.urlPicture}"/></td>
+				
 			</tr>
 		</table>
-		<form name="upload" method="get">
+		<form name="upload" method="get" action = "upload">
 			<input type="submit" value="Upload picture" />
 		</form>
 		<form name="test" method="get">
@@ -40,8 +41,9 @@
 				type="submit" value="Show likes">
 		</form>
 
-		<form name="upload" method="get">
-			<input type="submit" value="Show comments" />
+		<form action="showPostComments" method="get">
+			<input type="hidden" name="postId" value="${post.postId}" /> <input
+				type="submit" value="Show comments" />
 		</form>
 	</c:forEach>
 </body>

@@ -34,7 +34,7 @@ public interface IUserDAO  {
 
 	List <User> allUsers() throws InvalidDataException;
 
-	List <User> allFriends( User user) throws InvalidDataException;
+	List <User> allFriends( User user) throws InvalidDataException, UserExeption;
 	
 	List<Conversation> getAllConversations(User user) throws InvalidDataException;
 

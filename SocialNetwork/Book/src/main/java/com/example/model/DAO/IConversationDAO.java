@@ -1,5 +1,7 @@
 package com.example.model.DAO;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.example.exceptions.ConversationException;
@@ -11,6 +13,6 @@ public interface IConversationDAO {
 	
 	int MakeConversation(User member, Conversation convo) throws ConversationException, UserExeption;
 	void AddUserToConversation(User user, Conversation convo) throws ConversationException, UserExeption;
-	Conversation getConversationById(int convoId) throws UserExeption;
+	public List<Conversation> getConversationById(int convoId) throws UserExeption;
 	void setConversationToUsers(int userId, int conversationId) throws ConversationException;
 }

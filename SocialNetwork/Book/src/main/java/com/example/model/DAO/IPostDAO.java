@@ -24,7 +24,7 @@ public interface IPostDAO {
 	
 	void addPicture(String photo, Post post) throws PostExeption, UserExeption, InvalidDataException;
 	
-	List <User> getAllPeopleWhoLikeThisPost(Post post) throws PostExeption;
+	List <User> getAllPeopleWhoLikeThisPost(Post post) throws PostExeption, InvalidDataException;
 	
 	List<Post>getPostsOfUser(User user) throws PostExeption;
 	

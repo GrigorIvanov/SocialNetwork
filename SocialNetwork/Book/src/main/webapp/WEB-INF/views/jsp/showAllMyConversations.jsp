@@ -14,16 +14,10 @@ table, th, td {
 </head>
 <body>
 
-	<div id="clouds">
-		<div class="cloud x1"></div>
-		<!-- Time for multiple clouds to dance around -->
-		<div class="cloud x2"></div>
-		<div class="cloud x3"></div>
-		<div class="cloud x4"></div>
-		<div class="cloud x5"></div>
+
 		</br> </br>
 
-		<form method="get" action="home">
+		<form method="get" action="showAllMyPhotos">
 			<input type="submit" value="Back to Homepage" />
 		</form>
 		<c:forEach items="${conversations}" var="conversation">

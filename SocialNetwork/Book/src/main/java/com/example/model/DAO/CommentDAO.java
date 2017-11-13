@@ -4,17 +4,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.exceptions.CommentException;
 import com.example.exceptions.InvalidDataException;
-import com.example.exceptions.PostExeption;
 import com.example.exceptions.UserExeption;
 import com.example.model.Comment;
-import com.example.model.Post;
 import com.example.model.User;
 
 @Component
@@ -23,6 +21,8 @@ public class CommentDAO extends AbstractDAO implements ICommentDAO {
 	private static final String ADD_COMMENT_STATEMENT = "INSERT INTO Comments VALUES(?,?,?)";
 	private static final String DELETE_COMMENT_BY_ID_SQL = "DELETE FROM Comments WHERE comment_id=?";
 	private static final String UPDATE_COMMENT_BY_ID_SQL = "UPDATE Comments SET text=? WHERE comment_id=?";
+	@Autowired
+	IPostDAO postDAO;
 
 	@Override
 	public void addComment(Comment comment) throws CommentException {
@@ -39,19 +39,18 @@ public class CommentDAO extends AbstractDAO implements ICommentDAO {
 	}
 
 	@Override
-	public List<Comment> showComents(Post post) throws CommentException, UserExeption, InvalidDataException {
+	public List<Comment> showComents(int postId) throws CommentException, UserExeption, InvalidDataException {
 		try {
 			PreparedStatement ps = getCon().prepareStatement("SELECT * FROM Comments WHERE post_id=?");
-			ps.setInt(1, post.getPostId());
+			ps.setInt(1, postId);
 			ResultSet result = ps.executeQuery();
 			List<Comment> comments = new ArrayList<Comment>();
 			while (result.next()) {
-
-				String content = result.getString("text");
-				int userId = result.getInt("user_id");
-				User commenter = new UserDAO().getUserById(post.getPostedBy());
-
-				Comment comment = new Comment(post, content, commenter);
+				Comment comment = new Comment();
+				comment.setCommentedPost(postDAO.getPostById(postId));
+				comment.setContent(result.getString(2));
+				User commenter = new UserDAO().getUserById(result.getInt(3));
+				comment.setCommenter(commenter);
 				comments.add(comment);
 			}
 			return comments;

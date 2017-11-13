@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import java.io.File;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.example.exceptions.PostExeption;
 import com.example.model.Post;
 import com.example.model.User;
 import com.example.model.DAO.IPostDAO;
@@ -114,5 +115,20 @@ public class PostController extends HttpServlet {
 		}
 
 		}
+	@RequestMapping(value = "/showAllMyPhotos", method = RequestMethod.GET)
+	public String viewAllMyPhotos(HttpSession session, Model viewModel)
+			 {
+		
+		ArrayList<Post> listOfPosts = null;
+		try {
+			listOfPosts = (ArrayList<Post>) posts.getAllPosts();
+		} catch (PostExeption e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		viewModel.addAttribute("posts",listOfPosts);
+		System.out.println(listOfPosts);
 
+		return "gallery";
+	}
 }

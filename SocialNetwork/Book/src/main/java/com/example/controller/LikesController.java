@@ -54,12 +54,14 @@ public class LikesController {
 	}
 
 	@RequestMapping(value = "/showAllLikes", method = RequestMethod.GET)
-	public String showLikes(HttpServletRequest request, Model viewModel) {
+	public String showLikes(HttpServletRequest request, Model viewModel) throws InvalidDataException {
 		String postId = request.getParameter("postId");
 		int myPost = Integer.parseInt(postId);
 		List<User> likes = null;
 		try {
-			likes = postDao.getAllPeopleWhoLikeThisPost(postDao.getPostById(myPost));
+			
+				likes = postDao.getAllPeopleWhoLikeThisPost(postDao.getPostById(myPost));
+			
 		} catch (PostExeption e) {
 			e.printStackTrace();
 			return "error";
@@ -67,7 +69,8 @@ public class LikesController {
 		if (likes == null) {
 			return "error";
 		} else {
-			viewModel.addAttribute(likes);
+			viewModel.addAttribute("likes",likes);
+			likes.stream().forEach(l->System.err.println(l));
 			return "showLikes";
 		}
 	}

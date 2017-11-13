@@ -20,6 +20,9 @@ public class Comment {
 		this.setCommenter(commenter);
 	}
 
+	public Comment() {
+	}
+
 	public Post getCommentedPost() {
 		return commentedPost;
 	}

@@ -14,9 +14,11 @@ import com.example.model.User;
 @Component
 public interface ICommentDAO {
 	void addComment(Comment comment) throws CommentException;
-    List<Comment> showComents (Post post) throws CommentException, UserExeption, InvalidDataException;
+
+	public List<Comment> showComents(int postId) throws CommentException, UserExeption, InvalidDataException;
 	void updateComment(int commentId, String content) throws CommentException;
+
 	void deleteComment(int commentId) throws CommentException;
-    
-	//void removeComment(Comment comment);
+
+	// void removeComment(Comment comment);
 }
