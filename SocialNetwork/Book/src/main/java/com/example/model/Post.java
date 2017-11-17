@@ -5,24 +5,26 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class Post {
+	@NotBlank
 	private int postId;
-	// @NotBlank
-	// private MultipartFile file;
-
+	
+	@NotBlank
 	private String content;
 
+	@NotBlank
 	private int postedBy;
-	// @NotBlank
+	
+	@NotBlank
 	private Date date;
+	
 	private String urlPicture;
-	// private List<Integer> peopleWhoLikeIt = Collections.synchronizedList(new
-	// ArrayList<Integer>());
-
+	
 	public Post(String content, int postedBy, Date date) {
 		this.setContent(content);
 		this.setPostedBy(postedBy);

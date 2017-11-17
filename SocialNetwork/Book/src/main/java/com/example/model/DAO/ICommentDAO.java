@@ -20,5 +20,4 @@ public interface ICommentDAO {
 
 	void deleteComment(int commentId) throws CommentException;
 
-	// void removeComment(Comment comment);
 }

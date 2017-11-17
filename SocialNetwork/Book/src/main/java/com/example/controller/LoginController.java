@@ -45,7 +45,6 @@ public class LoginController extends HttpServlet {
 
 	}
 
-	// @ModelAttribute("user");
 	@RequestMapping(value = "/index", method = RequestMethod.POST)
 	public String loginFeedback(Model model, @Valid @ModelAttribute("user") User user, BindingResult result,
 			HttpSession session, RedirectAttributes redir) throws UserExeption, PostExeption, InvalidDataException {

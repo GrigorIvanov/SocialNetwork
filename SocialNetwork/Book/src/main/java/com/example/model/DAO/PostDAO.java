@@ -18,6 +18,8 @@ import com.example.model.Post;
 import com.example.model.User;
 @Component
 public class PostDAO extends AbstractDAO implements IPostDAO {
+	private static final String UPDATE_CONTENT_STATEMENT = "UPDATE Posts SET content= ? WHERE post_id= ?";
+	private static final String GET_ALL_POSTS_BY_USER_STATEMENT = "SELECT * FROM Posts WHERE user_id=?";
 	private static final String UPDATE_PHOTO_STATEMENT = "UPDATE Posts SET photo = ? WHERE post_id = ?";
 	private static final String GET_POST_BY_ID_STATEMENT = "SELECT * FROM Posts WHERE post_id= ?";
 	private static final String REMOVE_POST_STATEMENT = "DELETE FROM Posts WHERE post_id= ?";
@@ -56,8 +58,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 					PreparedStatement ps = getCon().prepareStatement(REMOVE_POST_STATEMENT);
 					ps.setInt(1, postId);
 					ps.executeUpdate();
-					// getPostById(postId).getPostedBy().getPosts().remove(getPostById(postId));
-					// userDao.getUserById(getPostById(postId).getPostedBy()).getPosts().remove(getPostById(postId));
+					
 					userDao.getUserById(getPostById(postId).getPostedBy()).removePost(getPostById(postId));
 				}
 			} catch (SQLException e) {
@@ -129,23 +130,11 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 				try {
 					user = userDao.getUserById(rs.getInt(2));
 				} catch (UserExeption e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InvalidDataException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-//				User user = new User();
-//				user.setUserId(rs.getInt(1));
-//				user.setFirstName(rs.getString(2));
-//				user.setLastName(rs.getString(3));
-//				user.setEmail(rs.getString(4));
-//				user.setPassword(rs.getString(5));
-////				if (rs.getString("photo_id") != null) {
-//					user.setProfilPic(rs.getString(6));
-					
-					
-//				}
+
 				likes.add(user);
 
 			}
@@ -175,7 +164,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 	public void changeContent(String content, Post post) throws PostExeption, UserExeption, InvalidDataException {
 		try {
 			userDao.getUserById(post.getPostedBy()).removePost(post);
-			PreparedStatement ps = getCon().prepareStatement("UPDATE Posts SET content= ? WHERE post_id= ?");
+			PreparedStatement ps = getCon().prepareStatement(UPDATE_CONTENT_STATEMENT);
 			ps.setString(1, content);
 			ps.setInt(2, post.getPostedBy());
 			ps.executeQuery();
@@ -187,7 +176,7 @@ public class PostDAO extends AbstractDAO implements IPostDAO {
 	@Override
 	public List<Post> getPostsOfUser(User user) throws PostExeption {
 		try {
-			PreparedStatement ps = getCon().prepareStatement("SELECT * FROM Posts WHERE user_id=?");
+			PreparedStatement ps = getCon().prepareStatement(GET_ALL_POSTS_BY_USER_STATEMENT);
 			ps.setInt(1, user.getUserId());
 			ResultSet result = ps.executeQuery();
 			List posts = new ArrayList<Post>();

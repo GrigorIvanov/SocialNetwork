@@ -32,33 +32,29 @@ public class PostController extends HttpServlet {
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
 	public String post(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		try {
-		if (session.getAttribute("user") != null) {
-			Post post = new Post();
-			model.addAttribute(post);
-		}
-		return "post";
-		}catch (Exception e) {
+			if (session.getAttribute("user") != null) {
+				Post post = new Post();
+				model.addAttribute(post);
+			}
+			return "post";
+		} catch (Exception e) {
 			return "error";
 		}
 
 	}
 
-	// @ModelAttribute("post");
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
 	public String posted(Model model, @Valid @ModelAttribute("post") Post post, BindingResult result,
 			HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			if (!result.hasErrors() && session.getAttribute("user") != null) {
 
-				
-
 				post.setPostedBy(((User) (session.getAttribute("user"))).getUserId());
 				int id = posts.addPost(post);
 				Post p = posts.getPostById(id);
-				((User)(session.getAttribute("user"))).addPost(p);
-				// ((User)(session.getAttribute("user"))).getPosts().stream().forEach(w ->
-				// System.err.println(w));
-				((User)(session.getAttribute("user"))).getPosts().stream().forEach(r -> System.out.println(r));
+				((User) (session.getAttribute("user"))).addPost(p);
+				
+				((User) (session.getAttribute("user"))).getPosts().stream().forEach(r -> System.out.println(r));
 
 				return "home";
 
@@ -79,18 +75,17 @@ public class PostController extends HttpServlet {
 	@RequestMapping(value = "/ShowAllUserPosts", method = RequestMethod.GET)
 	public String posts(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		try {
-		if (session.getAttribute("user") != null) {
-			User user = (User) session.getAttribute("user");
-			if (!user.equals(null)) {
-				request.setAttribute("posts", user.getPosts());
-				//request.setAttribute("user", user);
-				return "showAllPosts";
+			if (session.getAttribute("user") != null) {
+				User user = (User) session.getAttribute("user");
+				if (!user.equals(null)) {
+					request.setAttribute("posts", user.getPosts());
+					return "showAllPosts";
+
+				}
 
 			}
-
-		}
-		return "error";
-		}catch (Exception e) {
+			return "error";
+		} catch (Exception e) {
 			return "error";
 		}
 
@@ -99,36 +94,38 @@ public class PostController extends HttpServlet {
 	@RequestMapping(value = "/AllPosts", method = RequestMethod.GET)
 	public String allPosts(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		try {
-		if (session.getAttribute("user") != null) {
-			User user = (User) session.getAttribute("user");
-			if (!user.equals(null)) {
-				request.setAttribute("posts", posts.getAllPosts());
-				return "AllPosts";
+			if (session.getAttribute("user") != null) {
+				User user = (User) session.getAttribute("user");
+				if (!user.equals(null)) {
+					request.setAttribute("posts", posts.getAllPosts());
+					return "AllPosts";
+
+				}
 
 			}
-
-		}
-		return "error";
-		}catch (Exception e) {
+			return "error";
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "error";
 		}
 
-		}
-	@RequestMapping(value = "/showAllMyPhotos", method = RequestMethod.GET)
-	public String viewAllMyPhotos(HttpSession session, Model viewModel)
-			 {
-		
-		ArrayList<Post> listOfPosts = null;
-		try {
-			listOfPosts = (ArrayList<Post>) posts.getAllPosts();
-		} catch (PostExeption e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		viewModel.addAttribute("posts",listOfPosts);
-		System.out.println(listOfPosts);
+	}
 
-		return "gallery";
+	@RequestMapping(value = "/showAllMyPhotos", method = RequestMethod.GET)
+	public String viewAllMyPhotos(HttpSession session, Model viewModel) {
+		try {
+			ArrayList<Post> listOfPosts = null;
+			try {
+				listOfPosts = (ArrayList<Post>) posts.getAllPosts();
+			} catch (PostExeption e) {
+				return "error";
+			}
+			viewModel.addAttribute("posts", listOfPosts);
+			System.out.println(listOfPosts);
+
+			return "gallery";
+		} catch (Exception e) {
+			return "error";
+		}
 	}
 }

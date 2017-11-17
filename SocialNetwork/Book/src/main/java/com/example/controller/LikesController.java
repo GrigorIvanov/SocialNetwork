@@ -37,7 +37,6 @@ public class LikesController {
 		User u = (User) session.getAttribute("user");
 
 		System.out.println(postDao.getPostById(postid));
-		//Like like2=new Like
 		Like like = new Like(u.getUserId(), postDao.getPostById(postid));
 		System.err.println(like);
 

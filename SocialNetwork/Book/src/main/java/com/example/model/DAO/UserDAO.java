@@ -28,7 +28,6 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 	private static final String DELETE_FRIEND_STATEMENT = "DELETE FROM Friends WHERE friend_id= ? AND user_id = ? ";
 	private static final String SELECT_USER_BY_EMAIL_STATEMENT = "SELECT * FROM Users WHERE email = ?";
 	private static final String INSERT_INTO_FRIENDS_STATEMENT = "INSERT INTO Friends VALUES ( ?, ?)";
-	//private static final String INSERT_INTO_POSTS_STATEMENT = "INSERT INTO Posts VALUES ( ?, ?, ?)";
 	private static final String SELECT_USER_BY_ID_STATEMENT = "SELECT * FROM Users WHERE user_id= ?";
 	private static final String DELETE_USER_STATEMENT = "DELETE FROM Users WHERE user_id= ?";
 	private static final String ADD_USER_STATEMENT = "INSERT INTO Users VALUES (null, ? , ? , ?, md5(?),?)";
@@ -125,19 +124,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 		}
 	}
 	
-//	public void addPost(User adder, Post post) {
-//		try {
-//			if(!((adder.equals(null) && post.equals(null)))){
-//				adder.getPosts().add(post);
-//				PreparedStatement ps = getCon().prepareStatement(INSERT_INTO_POSTS_STATEMENT, Statement.RETURN_GENERATED_KEYS);
-//				ps.setInt(1, post.getPostId());
-//				ps.setString(2, post.getContent());
-//				ps.setInt(3, adder.getUserId());
-//			}
-//		} catch(SQLException e){
-//			System.out.println("This post can't be added");
-//		}
-//	}
+
 
 	public void removeFriend(User remover, String email) throws InvalidDataException {
 		try {

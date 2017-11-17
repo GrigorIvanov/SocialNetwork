@@ -1,12 +1,10 @@
 package com.example.controller;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.omg.CORBA.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,55 +63,6 @@ public class ConversationController {
 		}
 	}
 
-//	@RequestMapping(value = "/openConversation", method = RequestMethod.GET)
-//	public String openConversation(@ModelAttribute Message message, HttpServletRequest request, Model viewModel,
-//			HttpSession session) {
-//		User user = (User) session.getAttribute("user");
-//		int conversationId = Integer.parseInt(request.getParameter("conversationId"));
-//		Conversation convo;
-//		try {
-//			convo = conversationDAO.getConversationById(conversationId);
-//		} catch (UserExeption e2) {
-//			e2.printStackTrace();
-//			return "error";
-//		}
-//		try {
-//			conversationDAO.MakeConversation(user, convo);
-//		} catch (ConversationException | UserExeption e1) {
-//			e1.printStackTrace();
-//			return "error";
-//		}
-//		List<Message> messages = null;
-//		try {
-//			messages = convo.getMessages();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return "error";
-//		}
-//		if (messages == null) {
-//			return "error";
-//		} else {
-//			viewModel.addAttribute("messages", messages);
-//			return "openConversation";
-//		}
-//	}
-
-//	@RequestMapping(value = "/newMessage", method = RequestMethod.GET)
-//	public synchronized String sendMessage(@ModelAttribute Message message, HttpServletRequest request,
-//			HttpSession session, Model viewModel) {
-//		User user = (User) session.getAttribute("user");
-//		message.setMessageId(user.getUserId());
-//		int conversationId = Integer.parseInt(request.getParameter("conversationId"));
-//		Conversation convo;
-//		try {
-//			convo = conversationDAO.getConversationById(conversationId);
-//			messeageDAO.sendMessage(user, message, convo);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return "error";
-//		}
-//		return "forward:openConversation";
-//	}
 
 	@RequestMapping(value = "/createConversation", method = RequestMethod.GET)
 	public synchronized String createConversation(@ModelAttribute Message message, HttpServletRequest request,

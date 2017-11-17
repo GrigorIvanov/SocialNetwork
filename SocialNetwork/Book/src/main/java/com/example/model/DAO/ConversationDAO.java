@@ -52,7 +52,7 @@ public class ConversationDAO extends AbstractDAO implements IConversationDAO {
 			ps.setInt(1, convo.getConversationId());
 			ps.setInt(2, user.getUserId());
 			try {
-				ps.executeUpdate();// thats the problem in the fucking dao
+				ps.executeUpdate();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

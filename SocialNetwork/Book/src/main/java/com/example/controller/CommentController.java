@@ -29,32 +29,7 @@ public class CommentController {
 	@Autowired
 	IPostDAO postDAO;
 
-	// @RequestMapping(value = "/editcomment", method = RequestMethod.GET)
-	// public String editComment(HttpServletRequest request, Model viewModel) {
-	// int postId = Integer.parseInt(request.getParameter("postId"));
-	// int commentId = Integer.parseInt(request.getParameter("commentId"));
-	// String content = request.getParameter("content");
-	// try {
-	// commentDAO.updateComment(commentId, content);
-	// } catch (CommentException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// return "forward:showPostComments";
-	// }
-	//
-	// @RequestMapping(value = "/deletecomment", method = RequestMethod.GET)
-	// public String deleteComment(HttpServletRequest request, Model viewModel) {
-	// int postId = Integer.parseInt(request.getParameter("postId"));
-	// int commentId = Integer.parseInt(request.getParameter("commentId"));
-	// try {
-	// commentDAO.deleteComment(commentId);
-	// } catch (CommentException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// return "forward:showAlMyComments";
-	// }
+	
 
 	@RequestMapping(value = "/showPostComments", method = RequestMethod.GET)
 	public String showComments(@ModelAttribute Comment comment, @ModelAttribute Post post, HttpServletRequest request,
@@ -70,24 +45,20 @@ public class CommentController {
 				viewModel.addAttribute("commentList", comments);
 				return "showAlMyComments";
 			} catch (UserExeption e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return "error";
 			} catch (InvalidDataException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return "error";
 			}
 		} catch (CommentException e) {
 			e.printStackTrace();
 			return "error";
 		}
-		return "showAlMyComments";
 	}
 
 	@RequestMapping(value = "/newComment", method = RequestMethod.GET)
 	public String createComment(@ModelAttribute Comment comment, Model viewModel, HttpServletRequest request,
 			HttpSession session) {
-		// int postId = Integer.parseInt(request.getParameter("postId"));
-		// User user = (User) session.getAttribute("user");
+	
 		try {
 			commentDAO.addComment(comment);
 			viewModel.addAttribute("comment", comment);

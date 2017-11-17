@@ -78,10 +78,7 @@ public class User {
 
 	
 
-	// java.util.Date dt = new java.util.Date();
-	// java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd
-	// HH:mm:ss");
-	// String birthDate = sdf.format(dt);
+	
 
 	public User(String firstName, String lastName, String email, String password) {
 		this.setFirstName(firstName);
